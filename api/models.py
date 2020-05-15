@@ -10,6 +10,7 @@ class Source(models.Model):
     url = models.URLField(max_length=200, blank=True)
     description = models.TextField(blank=True)
     associated_entities = models.ManyToManyField(Entity)
+    date_retrieved = models.DateTimeField(auto_now_add=True)
 
 
 class Claim(models.Model):
