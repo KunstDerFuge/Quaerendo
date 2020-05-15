@@ -44,10 +44,11 @@ class ClaimEvidence(models.Model):
     source = models.ForeignKey(Source, related_name='cited_in_evidence', on_delete=models.CASCADE)
     evidence_relationship = models.CharField(choices=EvidenceRelationship.choices, max_length=25)
     description = models.TextField(blank=True)
-    verified = models.BooleanField(default=False)
+    community_verified = models.BooleanField(default=False)
+    expert_verified = models.BooleanField(default=False)
 
     def __str__(self):
         verified = 'Verified'
-        if not self.verified:
+        if not self.community_verified:
             verified = 'Unverified'
         return '{} evidence {} {} | {}'.format(verified, self.evidence_relationship, str(self.claim), str(self.source))
