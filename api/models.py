@@ -16,7 +16,7 @@ class Source(models.Model):
     date_retrieved = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return 'Source: {} | {}'.format(self.description[:20], self.url[:20])
+        return 'Source: {} | {}'.format(self.description[:30], self.url[:30])
 
 
 class Claim(models.Model):
@@ -25,7 +25,7 @@ class Claim(models.Model):
     evidence = models.ManyToManyField(Source, through='ClaimEvidence', blank=True)
 
     def __str__(self):
-        return 'Claim: {} | {}'.format(self.description[:20], self.source.url[:20])
+        return 'Claim: {} | {}'.format(self.description[:30], self.source.url[:30])
 
 
 class ClaimEvidence(models.Model):
