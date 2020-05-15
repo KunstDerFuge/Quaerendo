@@ -7,6 +7,7 @@ There are already some well-known fact-checkers out there, but none are perfect.
 ### Problems with existing fact-checkers:
 
 - **They are slow**
+
     Misinformation spreads like wildfire, and we can't always wait for the experts to discover it and write up a full 
     rebuttal.
 
