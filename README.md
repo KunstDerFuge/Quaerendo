@@ -42,7 +42,7 @@ There are already some well-known fact-checkers out there, but none are perfect.
 
 - **They are transparent**
     
-    Without the guise of anonymity, fact-checkers require experts to hedge their reputations on their fact judgements.
+    Without the guise of anonymity, fact-checkers require experts to stake their reputations on their fact judgements.
 
 - **They rely on experts**
 
