@@ -75,4 +75,5 @@ Wikipedia provides a democratic approach to editing that would be very apt here.
 StackExchange organically attracts experts into conversations with laypeople on a very wide variety of topics.
 
 #### [Quora](https://quora.com)
-Like the above, but a little trashier.
+Quora seems to do an even better job of organically attracting experts, but the quality of information here can vary 
+wildly.
