@@ -43,4 +43,4 @@ class ClaimEvidence(models.Model):
     verified = models.BooleanField(default=False)
 
     def __str__(self):
-        return 'Evidence {} claim {} | {}'.format(self.evidence_relationship, str(self.claim), str(self.source))
+        return 'Evidence {} {} | {}'.format(self.evidence_relationship, str(self.claim), str(self.source))
