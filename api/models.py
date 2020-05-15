@@ -12,7 +12,7 @@ class Entity(models.Model):
 class Source(models.Model):
     url = models.URLField(max_length=200, blank=True)
     description = models.TextField(blank=True)
-    associated_entities = models.ManyToManyField(Entity)
+    authors = models.ManyToManyField(Entity)
     date_retrieved = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
