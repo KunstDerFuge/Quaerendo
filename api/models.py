@@ -20,7 +20,7 @@ class Source(models.Model):
 
 
 class Claim(models.Model):
-    source = models.ForeignKey(Source, related_name='related_claims', on_delete=models.CASCADE)
+    source = models.ForeignKey(Source, related_name='source_of_claims', on_delete=models.CASCADE)
     claim_text = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     evidence = models.ManyToManyField(Source, through='ClaimEvidence', blank=True)
@@ -40,8 +40,8 @@ class ClaimEvidence(models.Model):
         DISPUTES = 'DISPUTES'
         DISPROVES = 'DISPROVES'
 
-    claim = models.ForeignKey(Claim, related_name='evidence_claim', on_delete=models.CASCADE)
-    source = models.ForeignKey(Source, related_name='evidence_source', on_delete=models.CASCADE)
+    claim = models.ForeignKey(Claim, related_name='related_evidence', on_delete=models.CASCADE)
+    source = models.ForeignKey(Source, related_name='cited_in_evidence', on_delete=models.CASCADE)
     evidence_relationship = models.CharField(choices=EvidenceRelationship.choices, max_length=25)
     description = models.TextField(blank=True)
     verified = models.BooleanField(default=False)
