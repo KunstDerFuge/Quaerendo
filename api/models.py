@@ -30,4 +30,5 @@ class ClaimEvidence(models.Model):
     claim = models.ForeignKey(Claim, related_name='evidence_claim', on_delete=models.CASCADE)
     source = models.ForeignKey(Source, related_name='evidence_source', on_delete=models.CASCADE)
     evidence_relationship = models.CharField(choices=EvidenceRelationship.choices, max_length=25)
+    description = models.TextField(blank=True)
     verified = models.BooleanField(default=False)
