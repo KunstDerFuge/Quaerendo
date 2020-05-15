@@ -53,6 +53,18 @@ There are already some well-known fact-checkers out there, but none are perfect.
     A 'democratic' approach to fact-checking must not itself be susceptible to propaganda and misinformation.
 
 
+## So how's this going to work?
+
+Imagine the following scenario: a high-profile politician tweets out a claim. A short while later, person A links the 
+tweet on this website as a **claim**. Shortly after that, person B reads the claim and remembers that they saw a study 
+that seemed to disprove this claim. So, they link that source to the claim as **evidence** and submit it as 
+**disproving** the claim. This study is now publically linked as **context** to the claim, but remains flagged as 
+**unverified**. A while after that, a user marked as an expert in this field finds the unverified evidence, and reads 
+the study. While the study disputes the claim, the expert is not convinced it disproves the claim. The expert sends 
+feedback on the evidence to person B with the revision that the evidence only disputes, not disproves the claim. Person 
+B accepts these changes, and now the claim is marked as **disputed** by the verified evidence.
+
+
 ## Some model projects
 This project could take inspiration from some of the best of the web.
 
