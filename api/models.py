@@ -49,6 +49,6 @@ class Evidence(models.Model):
 
     def __str__(self):
         verified = 'Verified'
-        if not self.community_verified:
+        if not self.community_verified and not self.expert_verified:
             verified = 'Unverified'
         return '{} evidence {} {} | {}'.format(verified, self.evidence_relationship, str(self.claim), str(self.source))
