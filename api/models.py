@@ -23,7 +23,7 @@ class Claim(models.Model):
     source = models.ForeignKey(Source, related_name='source_of_claims', on_delete=models.CASCADE)
     claim_text = models.CharField(max_length=200)
     description = models.TextField(blank=True)
-    evidence = models.ManyToManyField(Source, through='ClaimEvidence', blank=True)
+    evidence = models.ManyToManyField(Source, through='Evidence', blank=True)
 
     def __str__(self):
         truncated_claim = self.claim_text[:30].rstrip(' ')
@@ -32,7 +32,7 @@ class Claim(models.Model):
         return 'Claim: "{}" ({})'.format(truncated_claim, self.source.url[:30])
 
 
-class ClaimEvidence(models.Model):
+class Evidence(models.Model):
 
     class EvidenceRelationship(models.TextChoices):
         PROVES = 'PROVES'
