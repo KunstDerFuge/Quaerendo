@@ -1,5 +1,7 @@
 from django.db import models
 
+from users.models import Profile
+
 
 class Entity(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -32,23 +34,31 @@ class Claim(models.Model):
         return 'Claim: "{}" ({})'.format(truncated_claim, self.source.url[:30])
 
 
+class EvidenceRelationship(models.TextChoices):
+    PROVES = 'PROVES'
+    SUPPORTS = 'SUPPORTS'
+    UNRELATED = 'UNRELATED'
+    INCONCLUSIVE = 'INCONCLUSIVE'
+    DISPUTES = 'DISPUTES'
+    DISPROVES = 'DISPROVES'
+
+
 class Evidence(models.Model):
-
-    class EvidenceRelationship(models.TextChoices):
-        PROVES = 'PROVES'
-        SUPPORTS = 'SUPPORTS'
-        DISPUTES = 'DISPUTES'
-        DISPROVES = 'DISPROVES'
-
     claim = models.ForeignKey(Claim, related_name='related_evidence', on_delete=models.CASCADE)
     source = models.ForeignKey(Source, related_name='cited_in_evidence', on_delete=models.CASCADE)
     evidence_relationship = models.CharField(choices=EvidenceRelationship.choices, max_length=25)
     description = models.TextField(blank=True)
     community_verified = models.BooleanField(default=False)
     expert_verified = models.BooleanField(default=False)
+    reviews = models.ForeignKey('EvidenceReview', on_delete=models.CASCADE)
 
     def __str__(self):
         verified = 'Verified'
         if not self.community_verified and not self.expert_verified:
             verified = 'Unverified'
         return '{} evidence {} {} | {}'.format(verified, self.evidence_relationship, str(self.claim), str(self.source))
+
+
+class EvidenceReview(models.Model):
+    reviewer = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    deduced_evidence_relationship = models.CharField(choices=EvidenceRelationship.choices, max_length=25)
