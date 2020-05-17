@@ -21,7 +21,7 @@ class ClaimSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Claim
-        fields = ['claim_text', 'source', 'description']
+        fields = ['claim_text', 'description', 'source']
 
 
 class EvidenceSerializer(serializers.ModelSerializer):
