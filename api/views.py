@@ -11,9 +11,9 @@ class EntitiesList(generics.ListCreateAPIView):
     serializer_class = EntitySerializer
 
 
-class EntitiesDetail(generics.ListCreateAPIView):
+class EntityDetail(generics.RetrieveUpdateAPIView):
     """
-    REST endpoints for viewing and submitting entities
+    REST endpoints for viewing and modifying individual entities
     """
     queryset = Entity.objects.all()
     serializer_class = EntitySerializer
@@ -27,6 +27,14 @@ class SourcesList(generics.ListCreateAPIView):
     serializer_class = SourceSerializer
 
 
+class SourceDetail(generics.RetrieveUpdateAPIView):
+    """
+    REST endpoints for viewing and modifying individual sources
+    """
+    queryset = Source.objects
+    serializer_class = SourceSerializer
+
+
 class ClaimsList(generics.ListCreateAPIView):
     """
     REST endpoints for viewing and submitting claims
@@ -35,9 +43,25 @@ class ClaimsList(generics.ListCreateAPIView):
     serializer_class = ClaimSerializer
 
 
+class ClaimDetail(generics.RetrieveUpdateAPIView):
+    """
+    REST endpoints for viewing and modifying individual claims
+    """
+    queryset = Claim.objects.all()
+    serializer_class = ClaimSerializer
+
+
 class EvidenceList(generics.ListCreateAPIView):
     """
     REST endpoints for viewing and submitting claims
+    """
+    queryset = Evidence.objects.all()
+    serializer_class = EvidenceSerializer
+
+
+class EvidenceDetail(generics.ListCreateAPIView):
+    """
+    REST endpoints for viewing and modifying individual pieces of evidence
     """
     queryset = Evidence.objects.all()
     serializer_class = EvidenceSerializer
