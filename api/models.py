@@ -22,7 +22,7 @@ class Source(models.Model):
 
 
 class Claim(models.Model):
-    source = models.ForeignKey(Source, related_name='source_of_claims', on_delete=models.CASCADE)
+    source = models.ForeignKey(Source, related_name='related_claims', on_delete=models.CASCADE)
     claim_text = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     evidence = models.ManyToManyField(Source, through='Evidence', blank=True)
