@@ -26,7 +26,7 @@ class Claim(models.Model):
     claim_text = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     evidence = models.ManyToManyField(Source, through='Evidence', blank=True)
-    submitted_by = models.ForeignKey(Profile, on_delete=models.DO_NOTHING)
+    submitted_by = models.ForeignKey(Profile, on_delete=models.DO_NOTHING, null=True, blank=True)
 
     def __str__(self):
         truncated_claim = self.claim_text[:30].rstrip(' ')
@@ -51,8 +51,8 @@ class Evidence(models.Model):
     description = models.TextField(blank=True)
     community_verified = models.BooleanField(default=False)
     expert_verified = models.BooleanField(default=False)
-    reviews = models.ForeignKey('EvidenceReview', on_delete=models.CASCADE)
-    submitted_by = models.ForeignKey(Profile, on_delete=models.DO_NOTHING)
+    reviews = models.ForeignKey('EvidenceReview', on_delete=models.CASCADE, null=True, blank=True)
+    submitted_by = models.ForeignKey(Profile, on_delete=models.DO_NOTHING, null=True, blank=True)
 
     def __str__(self):
         verified = 'Verified'
