@@ -1,6 +1,5 @@
 from django.db import models
-
-from users.models import Profile
+from users.models import User
 
 
 class Entity(models.Model):
@@ -26,7 +25,7 @@ class Claim(models.Model):
     claim_text = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     evidence = models.ManyToManyField(Source, through='Evidence', blank=True)
-    submitted_by = models.ForeignKey(Profile, on_delete=models.DO_NOTHING, null=True, blank=True)
+    submitted_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, blank=True)
 
     def __str__(self):
         truncated_claim = self.claim_text[:30].rstrip(' ')
@@ -52,7 +51,7 @@ class Evidence(models.Model):
     community_verified = models.BooleanField(default=False)
     expert_verified = models.BooleanField(default=False)
     reviews = models.ForeignKey('EvidenceReview', on_delete=models.CASCADE, null=True, blank=True)
-    submitted_by = models.ForeignKey(Profile, on_delete=models.DO_NOTHING, null=True, blank=True)
+    submitted_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, blank=True)
 
     def __str__(self):
         verified = 'Verified'
@@ -62,5 +61,9 @@ class Evidence(models.Model):
 
 
 class EvidenceReview(models.Model):
-    reviewer = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    reviewer = models.ForeignKey(User, on_delete=models.CASCADE)
     deduced_evidence_relationship = models.CharField(choices=EvidenceRelationship.choices, max_length=25)
+
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
