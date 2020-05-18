@@ -25,6 +25,9 @@ class Topic(models.Model):
     name = models.CharField(max_length=100, unique=True)
     experts = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
 
+    def __str__(self):
+        return self.name
+
 
 class Claim(models.Model):
     source = models.ForeignKey(Source, related_name='related_claims', on_delete=models.CASCADE)
