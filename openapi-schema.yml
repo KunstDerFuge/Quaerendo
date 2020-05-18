@@ -864,10 +864,23 @@ paths:
                       - DISPROVES
                     description:
                       type: string
-                    community_verified:
-                      type: boolean
-                    expert_verified:
-                      type: boolean
+                    reviews:
+                      properties:
+                        deduced_evidence_relationship:
+                          enum:
+                          - PROVES
+                          - SUPPORTS
+                          - UNRELATED
+                          - INCONCLUSIVE
+                          - DISPUTES
+                          - DISPROVES
+                        additional_comments:
+                          type: string
+                          maxLength: 500
+                      required:
+                      - deduced_evidence_relationship
+                      type: object
+                      readOnly: true
                   required:
                   - evidence_relationship
           description: ''
@@ -890,10 +903,6 @@ paths:
                   - DISPROVES
                 description:
                   type: string
-                community_verified:
-                  type: boolean
-                expert_verified:
-                  type: boolean
               required:
               - evidence_relationship
           application/x-www-form-urlencoded:
@@ -993,10 +1002,23 @@ paths:
                     - DISPROVES
                   description:
                     type: string
-                  community_verified:
-                    type: boolean
-                  expert_verified:
-                    type: boolean
+                  reviews:
+                    properties:
+                      deduced_evidence_relationship:
+                        enum:
+                        - PROVES
+                        - SUPPORTS
+                        - UNRELATED
+                        - INCONCLUSIVE
+                        - DISPUTES
+                        - DISPROVES
+                      additional_comments:
+                        type: string
+                        maxLength: 500
+                    required:
+                    - deduced_evidence_relationship
+                    type: object
+                    readOnly: true
                 required:
                 - evidence_relationship
           description: ''
@@ -1104,10 +1126,23 @@ paths:
                     - DISPROVES
                   description:
                     type: string
-                  community_verified:
-                    type: boolean
-                  expert_verified:
-                    type: boolean
+                  reviews:
+                    properties:
+                      deduced_evidence_relationship:
+                        enum:
+                        - PROVES
+                        - SUPPORTS
+                        - UNRELATED
+                        - INCONCLUSIVE
+                        - DISPUTES
+                        - DISPROVES
+                      additional_comments:
+                        type: string
+                        maxLength: 500
+                    required:
+                    - deduced_evidence_relationship
+                    type: object
+                    readOnly: true
                 required:
                 - evidence_relationship
           description: ''
@@ -1136,10 +1171,6 @@ paths:
                   - DISPROVES
                 description:
                   type: string
-                community_verified:
-                  type: boolean
-                expert_verified:
-                  type: boolean
               required:
               - evidence_relationship
           application/x-www-form-urlencoded:
@@ -1239,10 +1270,23 @@ paths:
                     - DISPROVES
                   description:
                     type: string
-                  community_verified:
-                    type: boolean
-                  expert_verified:
-                    type: boolean
+                  reviews:
+                    properties:
+                      deduced_evidence_relationship:
+                        enum:
+                        - PROVES
+                        - SUPPORTS
+                        - UNRELATED
+                        - INCONCLUSIVE
+                        - DISPUTES
+                        - DISPROVES
+                      additional_comments:
+                        type: string
+                        maxLength: 500
+                    required:
+                    - deduced_evidence_relationship
+                    type: object
+                    readOnly: true
                 required:
                 - evidence_relationship
           description: ''
