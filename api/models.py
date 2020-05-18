@@ -74,4 +74,4 @@ class Comment(models.Model):
     downvoters = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True,
                                    related_name='downvoted_comments')
     text = models.CharField(max_length=500)
-    replies = models.ForeignKey('Comment', on_delete=models.CASCADE, null=True, blank=True)
+    replies = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
