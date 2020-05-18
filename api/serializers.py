@@ -37,4 +37,4 @@ class EvidenceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Evidence
-        fields = ['claim', 'source', 'evidence_relationship', 'description', 'reviews']
+        fields = ['claim', 'source', 'evidence_relationship', 'description', 'reviews', 'is_expert_verified']
