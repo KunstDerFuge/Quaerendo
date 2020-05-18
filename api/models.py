@@ -21,11 +21,17 @@ class Source(models.Model):
         return 'Source: {} ({})'.format(self.description[:30], self.url[:30])
 
 
+class Topic(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    experts = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='expert_in')
+
+
 class Claim(models.Model):
     source = models.ForeignKey(Source, related_name='related_claims', on_delete=models.CASCADE)
     claim_text = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     evidence = models.ManyToManyField(Source, through='Evidence', blank=True)
+    topic = models.ForeignKey(Topic, related_name='claims', on_delete=models.CASCADE, null=True, blank=True)
     submitted_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, null=True, blank=True,
                                      related_name='claims_submitted')
 
