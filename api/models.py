@@ -26,7 +26,8 @@ class Claim(models.Model):
     claim_text = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     evidence = models.ManyToManyField(Source, through='Evidence', blank=True)
-    submitted_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, null=True, blank=True)
+    submitted_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, null=True, blank=True,
+                                     related_name='claims_submitted')
     comments = models.ForeignKey('Comment', on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
@@ -53,7 +54,8 @@ class Evidence(models.Model):
     community_verified = models.BooleanField(default=False)
     expert_verified = models.BooleanField(default=False)
     reviews = models.ForeignKey('EvidenceReview', on_delete=models.CASCADE, null=True, blank=True)
-    submitted_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, null=True, blank=True)
+    submitted_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, null=True, blank=True,
+                                     related_name='evidence_submitted')
 
     def __str__(self):
         verified = 'Verified'
@@ -63,7 +65,7 @@ class Evidence(models.Model):
 
 
 class EvidenceReview(models.Model):
-    reviewer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    reviewer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='evidence_reviews')
     deduced_evidence_relationship = models.CharField(choices=EvidenceRelationship.choices, max_length=25)
 
 
