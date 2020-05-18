@@ -51,18 +51,13 @@ class Evidence(models.Model):
     source = models.ForeignKey(Source, related_name='cited_in_evidence', on_delete=models.CASCADE)
     evidence_relationship = models.CharField(choices=EvidenceRelationship.choices, max_length=25)
     description = models.TextField(blank=True)
-    community_verified = models.BooleanField(default=False)
-    expert_verified = models.BooleanField(default=False)
     reviews = models.ForeignKey('EvidenceReview', on_delete=models.CASCADE, null=True, blank=True)
     submitted_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, null=True, blank=True,
                                      related_name='evidence_submitted')
     comments = models.ForeignKey('Comment', on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
-        verified = 'Verified'
-        if not self.community_verified and not self.expert_verified:
-            verified = 'Unverified'
-        return '{} evidence {} {} | {}'.format(verified, self.evidence_relationship, str(self.claim), str(self.source))
+        return 'Evidence {} {} | {}'.format(verified, self.evidence_relationship, str(self.claim), str(self.source))
 
 
 class EvidenceReview(models.Model):
