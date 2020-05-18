@@ -1,6 +1,8 @@
 ## What is this?
 This is an attempt at creating a democratized, open-source website that does fact checking.
 
+[This project's API](https://app.swaggerhub.com/apis/Ferretech/lens-of-truth-api/1.0.0) conforms to the OpenAPI standard and is automatically documented.
+
 ## What about existing fact-checkers?
 There are already some well-known fact-checkers out there, but none are perfect.
 
