@@ -1,6 +1,4 @@
 from django.conf import settings
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes.fields import GenericForeignKey
 from django.db import models
 from users.models import User
 
@@ -30,7 +28,6 @@ class Claim(models.Model):
     evidence = models.ManyToManyField(Source, through='Evidence', blank=True)
     submitted_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, null=True, blank=True,
                                      related_name='claims_submitted')
-    comments = GenericForeignKey('Comment')
 
     def __str__(self):
         truncated_claim = self.claim_text[:30].rstrip(' ')
@@ -55,8 +52,7 @@ class Evidence(models.Model):
     description = models.TextField(blank=True)
     submitted_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, null=True, blank=True,
                                      related_name='evidence_submitted')
-    comments = GenericForeignKey('Comment')
-    
+
     def __str__(self):
         return 'Evidence {} {} | {}'.format(self.evidence_relationship, str(self.claim), str(self.source))
 
@@ -69,12 +65,14 @@ class EvidenceReview(models.Model):
 
 
 class Comment(models.Model):
-    uuid = models.UUIDField(primary_key=True, editable=False)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='comments')
     upvoters = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True,
                                  related_name='upvoted_comments')
     downvoters = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True,
                                    related_name='downvoted_comments')
     text = models.CharField(max_length=500)
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    content_object = GenericForeignKey('content_type', 'uuid')
+    parent_comment = models.ForeignKey('self', blank=True, null=True, on_delete=models.CASCADE, related_name='replies')
+    parent_evidence = models.ForeignKey(Evidence, blank=True, null=True, on_delete=models.CASCADE,
+                                        related_name='comments')
+    parent_evidence_review = models.ForeignKey(EvidenceReview, blank=True, null=True, on_delete=models.CASCADE,
+                                               related_name='comments')
