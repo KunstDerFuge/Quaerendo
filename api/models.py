@@ -56,6 +56,7 @@ class Evidence(models.Model):
     reviews = models.ForeignKey('EvidenceReview', on_delete=models.CASCADE, null=True, blank=True)
     submitted_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, null=True, blank=True,
                                      related_name='evidence_submitted')
+    comments = models.ForeignKey('Comment', on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         verified = 'Verified'
