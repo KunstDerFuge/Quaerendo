@@ -53,7 +53,6 @@ class Evidence(models.Model):
     source = models.ForeignKey(Source, related_name='cited_in_evidence', on_delete=models.CASCADE)
     evidence_relationship = models.CharField(choices=EvidenceRelationship.choices, max_length=25)
     description = models.TextField(blank=True)
-    reviews = models.ForeignKey('EvidenceReview', on_delete=models.CASCADE, null=True, blank=True)
     submitted_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, null=True, blank=True,
                                      related_name='evidence_submitted')
     comments = GenericForeignKey('Comment')
@@ -63,6 +62,7 @@ class Evidence(models.Model):
 
 
 class EvidenceReview(models.Model):
+    evidence = models.ForeignKey(Evidence, on_delete=models.CASCADE, related_name='reviews')
     reviewer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='evidence_reviews')
     deduced_evidence_relationship = models.CharField(choices=EvidenceRelationship.choices, max_length=25)
     additional_comments = models.CharField(max_length=500, blank=True)
