@@ -23,7 +23,7 @@ class Source(models.Model):
 
 class Topic(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    experts = models.ManyToManyField(settings.AUTH_USER_MODEL)
+    experts = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
 
 
 class Claim(models.Model):
