@@ -57,7 +57,7 @@ class Evidence(models.Model):
     comments = models.ForeignKey('Comment', on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
-        return 'Evidence {} {} | {}'.format(verified, self.evidence_relationship, str(self.claim), str(self.source))
+        return 'Evidence {} {} | {}'.format(self.evidence_relationship, str(self.claim), str(self.source))
 
 
 class EvidenceReview(models.Model):
