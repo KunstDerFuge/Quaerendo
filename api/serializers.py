@@ -23,12 +23,12 @@ class TopicSerializer(serializers.ModelSerializer):
 
 
 class ClaimSerializer(serializers.ModelSerializer):
-    source = SourceSerializer(read_only=True)
+    source_of_claim = SourceSerializer(read_only=True)
     topic = TopicSerializer(read_only=True)
 
     class Meta:
         model = Claim
-        fields = ['claim_text', 'description', 'topic', 'source']
+        fields = ['claim_text', 'description', 'topic', 'source_of_claim']
 
 
 class EvidenceReviewSerializer(serializers.ModelSerializer):
@@ -39,8 +39,8 @@ class EvidenceReviewSerializer(serializers.ModelSerializer):
 
 class EvidenceSerializer(serializers.ModelSerializer):
     claim = ClaimSerializer(read_only=True)
-    source = SourceSerializer(read_only=True)
+    source_of_evidence = SourceSerializer(read_only=True)
 
     class Meta:
         model = Evidence
-        fields = ['claim', 'source', 'evidence_relationship', 'description', 'is_expert_verified']
+        fields = ['claim', 'source_of_evidence', 'evidence_relationship', 'description', 'is_expert_verified']

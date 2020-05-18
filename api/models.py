@@ -30,7 +30,7 @@ class Topic(models.Model):
 
 
 class Claim(models.Model):
-    source = models.ForeignKey(Source, related_name='related_claims', on_delete=models.CASCADE)
+    source_of_claim = models.ForeignKey(Source, related_name='related_claims', on_delete=models.CASCADE)
     claim_text = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     evidence = models.ManyToManyField(Source, through='Evidence', blank=True)
@@ -42,7 +42,7 @@ class Claim(models.Model):
         truncated_claim = self.claim_text[:30].rstrip(' ')
         if len(self.claim_text) > 30:
             truncated_claim += '...'
-        return 'Claim: "{}" ({})'.format(truncated_claim, self.source.url[:30])
+        return 'Claim: "{}" ({})'.format(truncated_claim, self.source_of_claim.url[:30])
 
 
 class EvidenceRelationship(models.TextChoices):
@@ -56,7 +56,7 @@ class EvidenceRelationship(models.TextChoices):
 
 class Evidence(models.Model):
     claim = models.ForeignKey(Claim, related_name='related_evidence', on_delete=models.CASCADE)
-    source = models.ForeignKey(Source, related_name='cited_in_evidence', on_delete=models.CASCADE)
+    source_of_evidence = models.ForeignKey(Source, related_name='cited_in_evidence', on_delete=models.CASCADE)
     evidence_relationship = models.CharField(choices=EvidenceRelationship.choices, max_length=25)
     description = models.TextField(blank=True)
     submitted_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, null=True, blank=True,
@@ -68,7 +68,7 @@ class Evidence(models.Model):
         return any([review.deduced_evidence_relationship == self.evidence_relationship for review in expert_reviews])
 
     def __str__(self):
-        return 'Evidence {} {} | {}'.format(self.evidence_relationship, str(self.claim), str(self.source))
+        return 'Evidence {} {} | {}'.format(self.evidence_relationship, str(self.claim), str(self.source_of_evidence))
 
 
 class EvidenceReview(models.Model):
