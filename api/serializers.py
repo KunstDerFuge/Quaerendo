@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from api.models import Entity, Source, Claim, Evidence, EvidenceReview
+from api.models import Entity, Source, Claim, Evidence, EvidenceReview, Topic
 
 
 class EntitySerializer(serializers.ModelSerializer):
@@ -16,12 +16,19 @@ class SourceSerializer(serializers.ModelSerializer):
         fields = ['url', 'description', 'authors', 'date_retrieved']
 
 
+class TopicSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Topic
+        fields = ['name']
+
+
 class ClaimSerializer(serializers.ModelSerializer):
     source = SourceSerializer(read_only=True)
+    topic = TopicSerializer(read_only=True)
 
     class Meta:
         model = Claim
-        fields = ['claim_text', 'description', 'source']
+        fields = ['claim_text', 'description', 'topic', 'source']
 
 
 class EvidenceReviewSerializer(serializers.ModelSerializer):
@@ -33,8 +40,7 @@ class EvidenceReviewSerializer(serializers.ModelSerializer):
 class EvidenceSerializer(serializers.ModelSerializer):
     claim = ClaimSerializer(read_only=True)
     source = SourceSerializer(read_only=True)
-    reviews = EvidenceReviewSerializer(read_only=True)
 
     class Meta:
         model = Evidence
-        fields = ['claim', 'source', 'evidence_relationship', 'description', 'reviews', 'is_expert_verified']
+        fields = ['claim', 'source', 'evidence_relationship', 'description', 'is_expert_verified']
