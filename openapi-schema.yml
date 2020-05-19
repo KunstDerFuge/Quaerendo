@@ -3,7 +3,7 @@ info:
   title: ''
   version: ''
 paths:
-  /entities/:
+  /api/entities/:
     get:
       operationId: listEntitys
       description: REST endpoints for viewing and submitting entities
@@ -58,7 +58,7 @@ paths:
                 required:
                 - name
           description: ''
-  /entities/{id}:
+  /api/entities/{id}:
     get:
       operationId: RetrieveEntity
       description: REST endpoints for viewing and modifying individual entities
@@ -161,7 +161,7 @@ paths:
                 required:
                 - name
           description: ''
-  /sources/:
+  /api/sources/:
     get:
       operationId: listSources
       description: REST endpoints for viewing and submitting sources
@@ -263,7 +263,7 @@ paths:
                     format: date-time
                     readOnly: true
           description: ''
-  /sources/{id}:
+  /api/sources/{id}:
     get:
       operationId: RetrieveSource
       description: REST endpoints for viewing and modifying individual sources
@@ -441,7 +441,7 @@ paths:
                     format: date-time
                     readOnly: true
           description: ''
-  /claims/:
+  /api/claims/:
     get:
       operationId: listClaims
       description: REST endpoints for viewing and submitting claims
@@ -459,7 +459,16 @@ paths:
                       maxLength: 200
                     description:
                       type: string
-                    source:
+                    topic:
+                      properties:
+                        name:
+                          type: string
+                          maxLength: 100
+                      required:
+                      - name
+                      type: object
+                      readOnly: true
+                    source_of_claim:
                       properties:
                         url:
                           type: string
@@ -526,7 +535,16 @@ paths:
                     maxLength: 200
                   description:
                     type: string
-                  source:
+                  topic:
+                    properties:
+                      name:
+                        type: string
+                        maxLength: 100
+                    required:
+                    - name
+                    type: object
+                    readOnly: true
+                  source_of_claim:
                     properties:
                       url:
                         type: string
@@ -562,7 +580,7 @@ paths:
                 required:
                 - claim_text
           description: ''
-  /claims/{id}:
+  /api/claims/{id}:
     get:
       operationId: RetrieveClaim
       description: REST endpoints for viewing and modifying individual claims
@@ -584,7 +602,16 @@ paths:
                     maxLength: 200
                   description:
                     type: string
-                  source:
+                  topic:
+                    properties:
+                      name:
+                        type: string
+                        maxLength: 100
+                    required:
+                    - name
+                    type: object
+                    readOnly: true
+                  source_of_claim:
                     properties:
                       url:
                         type: string
@@ -657,7 +684,16 @@ paths:
                     maxLength: 200
                   description:
                     type: string
-                  source:
+                  topic:
+                    properties:
+                      name:
+                        type: string
+                        maxLength: 100
+                    required:
+                    - name
+                    type: object
+                    readOnly: true
+                  source_of_claim:
                     properties:
                       url:
                         type: string
@@ -728,7 +764,16 @@ paths:
                     maxLength: 200
                   description:
                     type: string
-                  source:
+                  topic:
+                    properties:
+                      name:
+                        type: string
+                        maxLength: 100
+                    required:
+                    - name
+                    type: object
+                    readOnly: true
+                  source_of_claim:
                     properties:
                       url:
                         type: string
@@ -764,7 +809,7 @@ paths:
                 required:
                 - claim_text
           description: ''
-  /evidence/:
+  /api/evidence/:
     get:
       operationId: listEvidences
       description: REST endpoints for viewing and submitting claims
@@ -784,7 +829,16 @@ paths:
                           maxLength: 200
                         description:
                           type: string
-                        source:
+                        topic:
+                          properties:
+                            name:
+                              type: string
+                              maxLength: 100
+                          required:
+                          - name
+                          type: object
+                          readOnly: true
+                        source_of_claim:
                           properties:
                             url:
                               type: string
@@ -821,7 +875,7 @@ paths:
                       - claim_text
                       type: object
                       readOnly: true
-                    source:
+                    source_of_evidence:
                       properties:
                         url:
                           type: string
@@ -864,22 +918,8 @@ paths:
                       - DISPROVES
                     description:
                       type: string
-                    reviews:
-                      properties:
-                        deduced_evidence_relationship:
-                          enum:
-                          - PROVES
-                          - SUPPORTS
-                          - UNRELATED
-                          - INCONCLUSIVE
-                          - DISPUTES
-                          - DISPROVES
-                        additional_comments:
-                          type: string
-                          maxLength: 500
-                      required:
-                      - deduced_evidence_relationship
-                      type: object
+                    is_expert_verified:
+                      type: string
                       readOnly: true
                   required:
                   - evidence_relationship
@@ -922,7 +962,16 @@ paths:
                         maxLength: 200
                       description:
                         type: string
-                      source:
+                      topic:
+                        properties:
+                          name:
+                            type: string
+                            maxLength: 100
+                        required:
+                        - name
+                        type: object
+                        readOnly: true
+                      source_of_claim:
                         properties:
                           url:
                             type: string
@@ -959,7 +1008,7 @@ paths:
                     - claim_text
                     type: object
                     readOnly: true
-                  source:
+                  source_of_evidence:
                     properties:
                       url:
                         type: string
@@ -1002,27 +1051,13 @@ paths:
                     - DISPROVES
                   description:
                     type: string
-                  reviews:
-                    properties:
-                      deduced_evidence_relationship:
-                        enum:
-                        - PROVES
-                        - SUPPORTS
-                        - UNRELATED
-                        - INCONCLUSIVE
-                        - DISPUTES
-                        - DISPROVES
-                      additional_comments:
-                        type: string
-                        maxLength: 500
-                    required:
-                    - deduced_evidence_relationship
-                    type: object
+                  is_expert_verified:
+                    type: string
                     readOnly: true
                 required:
                 - evidence_relationship
           description: ''
-  /evidence/{id}:
+  /api/evidence/{id}:
     get:
       operationId: RetrieveEvidence
       description: REST endpoints for viewing and modifying individual pieces of evidence
@@ -1046,7 +1081,16 @@ paths:
                         maxLength: 200
                       description:
                         type: string
-                      source:
+                      topic:
+                        properties:
+                          name:
+                            type: string
+                            maxLength: 100
+                        required:
+                        - name
+                        type: object
+                        readOnly: true
+                      source_of_claim:
                         properties:
                           url:
                             type: string
@@ -1083,7 +1127,7 @@ paths:
                     - claim_text
                     type: object
                     readOnly: true
-                  source:
+                  source_of_evidence:
                     properties:
                       url:
                         type: string
@@ -1126,22 +1170,8 @@ paths:
                     - DISPROVES
                   description:
                     type: string
-                  reviews:
-                    properties:
-                      deduced_evidence_relationship:
-                        enum:
-                        - PROVES
-                        - SUPPORTS
-                        - UNRELATED
-                        - INCONCLUSIVE
-                        - DISPUTES
-                        - DISPROVES
-                      additional_comments:
-                        type: string
-                        maxLength: 500
-                    required:
-                    - deduced_evidence_relationship
-                    type: object
+                  is_expert_verified:
+                    type: string
                     readOnly: true
                 required:
                 - evidence_relationship
@@ -1190,7 +1220,16 @@ paths:
                         maxLength: 200
                       description:
                         type: string
-                      source:
+                      topic:
+                        properties:
+                          name:
+                            type: string
+                            maxLength: 100
+                        required:
+                        - name
+                        type: object
+                        readOnly: true
+                      source_of_claim:
                         properties:
                           url:
                             type: string
@@ -1227,7 +1266,7 @@ paths:
                     - claim_text
                     type: object
                     readOnly: true
-                  source:
+                  source_of_evidence:
                     properties:
                       url:
                         type: string
@@ -1270,22 +1309,8 @@ paths:
                     - DISPROVES
                   description:
                     type: string
-                  reviews:
-                    properties:
-                      deduced_evidence_relationship:
-                        enum:
-                        - PROVES
-                        - SUPPORTS
-                        - UNRELATED
-                        - INCONCLUSIVE
-                        - DISPUTES
-                        - DISPROVES
-                      additional_comments:
-                        type: string
-                        maxLength: 500
-                    required:
-                    - deduced_evidence_relationship
-                    type: object
+                  is_expert_verified:
+                    type: string
                     readOnly: true
                 required:
                 - evidence_relationship
