@@ -11,11 +11,19 @@ class Entity(models.Model):
         return 'Entity: {}'.format(self.name)
 
 
+class SourceDegree(models.TextChoices):
+    ORIGINAL_RESEARCH = 'ORIGINAL'
+    PRIMARY = 'PRIMARY'
+    SECONDARY = 'SECONDARY'
+    TERTIARY = 'TERTIARY'
+
+
 class Source(models.Model):
     url = models.URLField(max_length=200, blank=True)
     description = models.TextField(blank=True)
     authors = models.ManyToManyField(Entity)
     date_retrieved = models.DateTimeField(auto_now_add=True)
+    source_degree = models.CharField(choices=SourceDegree.choices, max_length=25)
 
     def __str__(self):
         return 'Source: {} ({})'.format(self.description[:30], self.url[:30])
