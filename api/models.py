@@ -90,10 +90,8 @@ class EvidenceReview(models.Model):
 
 class Comment(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='comments')
-    upvoters = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True,
-                                 related_name='upvoted_comments')
-    downvoters = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True,
-                                   related_name='downvoted_comments')
+    upvoters = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='upvoted_comments')
+    downvoters = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='downvoted_comments')
     text = models.CharField(max_length=500)
     parent_comment = models.ForeignKey('self', blank=True, null=True, on_delete=models.CASCADE, related_name='replies')
     parent_evidence = models.ForeignKey(Evidence, blank=True, null=True, on_delete=models.CASCADE,
