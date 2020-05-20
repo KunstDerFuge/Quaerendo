@@ -83,6 +83,8 @@ class EvidenceReview(models.Model):
     evidence = models.ForeignKey(Evidence, on_delete=models.CASCADE, related_name='reviews')
     reviewer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='evidence_reviews')
     deduced_evidence_relationship = models.CharField(choices=EvidenceRelationship.choices, max_length=25)
+    deduced_source_degree = models.CharField(choices=SourceDegree.choices, max_length=25)
+    is_reliable = models.BooleanField()
     additional_comments = models.CharField(max_length=500, blank=True)
 
 
