@@ -13,7 +13,7 @@ class SourceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Source
-        fields = ['url', 'description', 'authors', 'date_retrieved']
+        fields = ['url', 'description', 'source_degree', 'authors', 'date_retrieved']
 
 
 class TopicSerializer(serializers.ModelSerializer):
