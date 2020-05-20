@@ -23,7 +23,7 @@ class Source(models.Model):
     description = models.TextField(blank=True)
     authors = models.ManyToManyField(Entity)
     date_retrieved = models.DateTimeField(auto_now_add=True)
-    source_degree = models.CharField(choices=SourceDegree.choices, max_length=25)
+    source_degree = models.CharField(choices=SourceDegree.choices, max_length=25, blank=True, null=True)
 
     def __str__(self):
         return 'Source: {} ({})'.format(self.description[:30], self.url[:30])
