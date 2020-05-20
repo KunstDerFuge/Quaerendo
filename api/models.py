@@ -21,7 +21,7 @@ class SourceDegree(models.TextChoices):
 class Source(models.Model):
     url = models.URLField(max_length=200, blank=True)
     description = models.TextField(blank=True)
-    authors = models.ManyToManyField(Entity)
+    authors = models.ManyToManyField(Entity, related_name='sources_authored')
     date_retrieved = models.DateTimeField(auto_now_add=True)
     source_degree = models.CharField(choices=SourceDegree.choices, max_length=25, blank=True, null=True)
 
@@ -38,7 +38,7 @@ class Topic(models.Model):
 
 
 class Claim(models.Model):
-    source_of_claim = models.ForeignKey(Source, related_name='related_claims', on_delete=models.CASCADE)
+    source_of_claim = models.ForeignKey(Source, related_name='claims_cited_in', on_delete=models.CASCADE)
     claim_text = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     evidence = models.ManyToManyField(Source, through='Evidence', blank=True)
@@ -64,7 +64,7 @@ class EvidenceRelationship(models.TextChoices):
 
 class Evidence(models.Model):
     claim = models.ForeignKey(Claim, related_name='related_evidence', on_delete=models.CASCADE)
-    source_of_evidence = models.ForeignKey(Source, related_name='cited_in_evidence', on_delete=models.CASCADE)
+    source_of_evidence = models.ForeignKey(Source, related_name='evidence_cited_in', on_delete=models.CASCADE)
     evidence_relationship = models.CharField(choices=EvidenceRelationship.choices, max_length=25)
     description = models.TextField(blank=True)
     submitted_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, null=True, blank=True,
