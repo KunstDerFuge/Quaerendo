@@ -611,7 +611,7 @@ components:
         description:
           type: string
         is_expert_verified:
-          type: string
+          type: boolean
           readOnly: true
     PatchedClaim:
       type: object
