@@ -42,7 +42,7 @@ export interface PatchedEvidence {
   source_of_evidence?: Source;
   evidence_relationship?: EvidenceRelationshipEnum;
   description?: string;
-  is_expert_verified?: string;
+  is_expert_verified?: boolean;
 }
 
 export interface PatchedSource {
@@ -110,31 +110,22 @@ export type UseApiClaimsCreateProps = Omit<UseMutateProps<Claim, void, Claim>, "
 export const useApiClaimsCreate = (props: UseApiClaimsCreateProps) => useMutate<Claim, unknown, void, Claim>("POST", `/api/claims/`, props);
 
 
-export type ApiClaimsDetailProps = Omit<GetProps<Claim, unknown, void>, "path"> & {id: number};
+export type ApiClaimDetailProps = Omit<GetProps<Claim, unknown, void>, "path"> & {id: number};
 
-/**
- * REST endpoints for viewing and modifying individual claims
- */
-export const ApiClaimsDetail = ({id, ...props}: ApiClaimsDetailProps) => (
+export const ApiClaimDetail = ({id, ...props}: ApiClaimDetailProps) => (
   <Get<Claim, unknown, void>
     path={`/api/claims/${id}`}
     {...props}
   />
 );
 
-export type UseApiClaimsDetailProps = Omit<UseGetProps<Claim, void>, "path"> & {id: number};
+export type UseApiClaimDetailProps = Omit<UseGetProps<Claim, void>, "path"> & {id: number};
 
-/**
- * REST endpoints for viewing and modifying individual claims
- */
-export const useApiClaimsDetail = ({id, ...props}: UseApiClaimsDetailProps) => useGet<Claim, unknown, void>(`/api/claims/${id}`, props);
+export const useApiClaimDetail = ({id, ...props}: UseApiClaimDetailProps) => useGet<Claim, unknown, void>(`/api/claims/${id}`, props);
 
 
 export type ApiClaimsUpdateProps = Omit<MutateProps<Claim, unknown, void, Claim>, "path" | "verb"> & {id: number};
 
-/**
- * REST endpoints for viewing and modifying individual claims
- */
 export const ApiClaimsUpdate = ({id, ...props}: ApiClaimsUpdateProps) => (
   <Mutate<Claim, unknown, void, Claim>
     verb="PUT"
@@ -145,17 +136,11 @@ export const ApiClaimsUpdate = ({id, ...props}: ApiClaimsUpdateProps) => (
 
 export type UseApiClaimsUpdateProps = Omit<UseMutateProps<Claim, void, Claim>, "path" | "verb"> & {id: number};
 
-/**
- * REST endpoints for viewing and modifying individual claims
- */
 export const useApiClaimsUpdate = ({id, ...props}: UseApiClaimsUpdateProps) => useMutate<Claim, unknown, void, Claim>("PUT", `/api/claims/${id}`, props);
 
 
 export type ApiClaimsPartialUpdateProps = Omit<MutateProps<Claim, unknown, void, PatchedClaim>, "path" | "verb"> & {id: number};
 
-/**
- * REST endpoints for viewing and modifying individual claims
- */
 export const ApiClaimsPartialUpdate = ({id, ...props}: ApiClaimsPartialUpdateProps) => (
   <Mutate<Claim, unknown, void, PatchedClaim>
     verb="PATCH"
@@ -166,9 +151,6 @@ export const ApiClaimsPartialUpdate = ({id, ...props}: ApiClaimsPartialUpdatePro
 
 export type UseApiClaimsPartialUpdateProps = Omit<UseMutateProps<Claim, void, PatchedClaim>, "path" | "verb"> & {id: number};
 
-/**
- * REST endpoints for viewing and modifying individual claims
- */
 export const useApiClaimsPartialUpdate = ({id, ...props}: UseApiClaimsPartialUpdateProps) => useMutate<Claim, unknown, void, PatchedClaim>("PATCH", `/api/claims/${id}`, props);
 
 
@@ -213,31 +195,22 @@ export type UseApiEntitiesCreateProps = Omit<UseMutateProps<Entity, void, Entity
 export const useApiEntitiesCreate = (props: UseApiEntitiesCreateProps) => useMutate<Entity, unknown, void, Entity>("POST", `/api/entities/`, props);
 
 
-export type ApiEntitiesDetailProps = Omit<GetProps<Entity, unknown, void>, "path"> & {id: number};
+export type ApiEntityDetailProps = Omit<GetProps<Entity, unknown, void>, "path"> & {id: number};
 
-/**
- * REST endpoints for viewing and modifying individual entities
- */
-export const ApiEntitiesDetail = ({id, ...props}: ApiEntitiesDetailProps) => (
+export const ApiEntityDetail = ({id, ...props}: ApiEntityDetailProps) => (
   <Get<Entity, unknown, void>
     path={`/api/entities/${id}`}
     {...props}
   />
 );
 
-export type UseApiEntitiesDetailProps = Omit<UseGetProps<Entity, void>, "path"> & {id: number};
+export type UseApiEntityDetailProps = Omit<UseGetProps<Entity, void>, "path"> & {id: number};
 
-/**
- * REST endpoints for viewing and modifying individual entities
- */
-export const useApiEntitiesDetail = ({id, ...props}: UseApiEntitiesDetailProps) => useGet<Entity, unknown, void>(`/api/entities/${id}`, props);
+export const useApiEntityDetail = ({id, ...props}: UseApiEntityDetailProps) => useGet<Entity, unknown, void>(`/api/entities/${id}`, props);
 
 
 export type ApiEntitiesUpdateProps = Omit<MutateProps<Entity, unknown, void, Entity>, "path" | "verb"> & {id: number};
 
-/**
- * REST endpoints for viewing and modifying individual entities
- */
 export const ApiEntitiesUpdate = ({id, ...props}: ApiEntitiesUpdateProps) => (
   <Mutate<Entity, unknown, void, Entity>
     verb="PUT"
@@ -248,17 +221,11 @@ export const ApiEntitiesUpdate = ({id, ...props}: ApiEntitiesUpdateProps) => (
 
 export type UseApiEntitiesUpdateProps = Omit<UseMutateProps<Entity, void, Entity>, "path" | "verb"> & {id: number};
 
-/**
- * REST endpoints for viewing and modifying individual entities
- */
 export const useApiEntitiesUpdate = ({id, ...props}: UseApiEntitiesUpdateProps) => useMutate<Entity, unknown, void, Entity>("PUT", `/api/entities/${id}`, props);
 
 
 export type ApiEntitiesPartialUpdateProps = Omit<MutateProps<Entity, unknown, void, PatchedEntity>, "path" | "verb"> & {id: number};
 
-/**
- * REST endpoints for viewing and modifying individual entities
- */
 export const ApiEntitiesPartialUpdate = ({id, ...props}: ApiEntitiesPartialUpdateProps) => (
   <Mutate<Entity, unknown, void, PatchedEntity>
     verb="PATCH"
@@ -269,58 +236,54 @@ export const ApiEntitiesPartialUpdate = ({id, ...props}: ApiEntitiesPartialUpdat
 
 export type UseApiEntitiesPartialUpdateProps = Omit<UseMutateProps<Entity, void, PatchedEntity>, "path" | "verb"> & {id: number};
 
-/**
- * REST endpoints for viewing and modifying individual entities
- */
 export const useApiEntitiesPartialUpdate = ({id, ...props}: UseApiEntitiesPartialUpdateProps) => useMutate<Entity, unknown, void, PatchedEntity>("PATCH", `/api/entities/${id}`, props);
 
 
-export type ApiEvidenceRetrieveProps = Omit<GetProps<Evidence, unknown, void>, "path">;
+export interface ApiEvidenceRetrieveQueryParams {
+  /**
+   * Is this evidence expert verified?
+   */
+  is_expert_verified?: boolean;
+}
 
-/**
- * REST endpoints for viewing and submitting claims
- */
+export type ApiEvidenceRetrieveProps = Omit<GetProps<Evidence, unknown, ApiEvidenceRetrieveQueryParams>, "path">;
+
 export const ApiEvidenceRetrieve = (props: ApiEvidenceRetrieveProps) => (
-  <Get<Evidence, unknown, void>
+  <Get<Evidence, unknown, ApiEvidenceRetrieveQueryParams>
     path={`/api/evidence/`}
     {...props}
   />
 );
 
-export type UseApiEvidenceRetrieveProps = Omit<UseGetProps<Evidence, void>, "path">;
+export type UseApiEvidenceRetrieveProps = Omit<UseGetProps<Evidence, ApiEvidenceRetrieveQueryParams>, "path">;
 
-/**
- * REST endpoints for viewing and submitting claims
- */
-export const useApiEvidenceRetrieve = (props: UseApiEvidenceRetrieveProps) => useGet<Evidence, unknown, void>(`/api/evidence/`, props);
+export const useApiEvidenceRetrieve = (props: UseApiEvidenceRetrieveProps) => useGet<Evidence, unknown, ApiEvidenceRetrieveQueryParams>(`/api/evidence/`, props);
 
 
-export type ApiEvidenceCreateProps = Omit<MutateProps<Evidence, unknown, void, Evidence>, "path" | "verb">;
+export interface ApiEvidenceCreateQueryParams {
+  /**
+   * Is this evidence expert verified?
+   */
+  is_expert_verified?: boolean;
+}
 
-/**
- * REST endpoints for viewing and submitting claims
- */
+export type ApiEvidenceCreateProps = Omit<MutateProps<Evidence, unknown, ApiEvidenceCreateQueryParams, Evidence>, "path" | "verb">;
+
 export const ApiEvidenceCreate = (props: ApiEvidenceCreateProps) => (
-  <Mutate<Evidence, unknown, void, Evidence>
+  <Mutate<Evidence, unknown, ApiEvidenceCreateQueryParams, Evidence>
     verb="POST"
     path={`/api/evidence/`}
     {...props}
   />
 );
 
-export type UseApiEvidenceCreateProps = Omit<UseMutateProps<Evidence, void, Evidence>, "path" | "verb">;
+export type UseApiEvidenceCreateProps = Omit<UseMutateProps<Evidence, ApiEvidenceCreateQueryParams, Evidence>, "path" | "verb">;
 
-/**
- * REST endpoints for viewing and submitting claims
- */
-export const useApiEvidenceCreate = (props: UseApiEvidenceCreateProps) => useMutate<Evidence, unknown, void, Evidence>("POST", `/api/evidence/`, props);
+export const useApiEvidenceCreate = (props: UseApiEvidenceCreateProps) => useMutate<Evidence, unknown, ApiEvidenceCreateQueryParams, Evidence>("POST", `/api/evidence/`, props);
 
 
 export type ApiEvidenceDetailProps = Omit<GetProps<Evidence, unknown, void>, "path"> & {id: number};
 
-/**
- * REST endpoints for viewing and modifying individual pieces of evidence
- */
 export const ApiEvidenceDetail = ({id, ...props}: ApiEvidenceDetailProps) => (
   <Get<Evidence, unknown, void>
     path={`/api/evidence/${id}`}
@@ -330,17 +293,11 @@ export const ApiEvidenceDetail = ({id, ...props}: ApiEvidenceDetailProps) => (
 
 export type UseApiEvidenceDetailProps = Omit<UseGetProps<Evidence, void>, "path"> & {id: number};
 
-/**
- * REST endpoints for viewing and modifying individual pieces of evidence
- */
 export const useApiEvidenceDetail = ({id, ...props}: UseApiEvidenceDetailProps) => useGet<Evidence, unknown, void>(`/api/evidence/${id}`, props);
 
 
 export type ApiEvidenceUpdateProps = Omit<MutateProps<Evidence, unknown, void, Evidence>, "path" | "verb"> & {id: number};
 
-/**
- * REST endpoints for viewing and modifying individual pieces of evidence
- */
 export const ApiEvidenceUpdate = ({id, ...props}: ApiEvidenceUpdateProps) => (
   <Mutate<Evidence, unknown, void, Evidence>
     verb="PUT"
@@ -351,17 +308,11 @@ export const ApiEvidenceUpdate = ({id, ...props}: ApiEvidenceUpdateProps) => (
 
 export type UseApiEvidenceUpdateProps = Omit<UseMutateProps<Evidence, void, Evidence>, "path" | "verb"> & {id: number};
 
-/**
- * REST endpoints for viewing and modifying individual pieces of evidence
- */
 export const useApiEvidenceUpdate = ({id, ...props}: UseApiEvidenceUpdateProps) => useMutate<Evidence, unknown, void, Evidence>("PUT", `/api/evidence/${id}`, props);
 
 
 export type ApiEvidencePartialUpdateProps = Omit<MutateProps<Evidence, unknown, void, PatchedEvidence>, "path" | "verb"> & {id: number};
 
-/**
- * REST endpoints for viewing and modifying individual pieces of evidence
- */
 export const ApiEvidencePartialUpdate = ({id, ...props}: ApiEvidencePartialUpdateProps) => (
   <Mutate<Evidence, unknown, void, PatchedEvidence>
     verb="PATCH"
@@ -372,9 +323,6 @@ export const ApiEvidencePartialUpdate = ({id, ...props}: ApiEvidencePartialUpdat
 
 export type UseApiEvidencePartialUpdateProps = Omit<UseMutateProps<Evidence, void, PatchedEvidence>, "path" | "verb"> & {id: number};
 
-/**
- * REST endpoints for viewing and modifying individual pieces of evidence
- */
 export const useApiEvidencePartialUpdate = ({id, ...props}: UseApiEvidencePartialUpdateProps) => useMutate<Evidence, unknown, void, PatchedEvidence>("PATCH", `/api/evidence/${id}`, props);
 
 
@@ -419,31 +367,22 @@ export type UseApiSourcesCreateProps = Omit<UseMutateProps<Source, void, Source>
 export const useApiSourcesCreate = (props: UseApiSourcesCreateProps) => useMutate<Source, unknown, void, Source>("POST", `/api/sources/`, props);
 
 
-export type ApiSourcesDetailProps = Omit<GetProps<Source, unknown, void>, "path"> & {id: number};
+export type ApiSourceDetailProps = Omit<GetProps<Source, unknown, void>, "path"> & {id: number};
 
-/**
- * REST endpoints for viewing and modifying individual sources
- */
-export const ApiSourcesDetail = ({id, ...props}: ApiSourcesDetailProps) => (
+export const ApiSourceDetail = ({id, ...props}: ApiSourceDetailProps) => (
   <Get<Source, unknown, void>
     path={`/api/sources/${id}`}
     {...props}
   />
 );
 
-export type UseApiSourcesDetailProps = Omit<UseGetProps<Source, void>, "path"> & {id: number};
+export type UseApiSourceDetailProps = Omit<UseGetProps<Source, void>, "path"> & {id: number};
 
-/**
- * REST endpoints for viewing and modifying individual sources
- */
-export const useApiSourcesDetail = ({id, ...props}: UseApiSourcesDetailProps) => useGet<Source, unknown, void>(`/api/sources/${id}`, props);
+export const useApiSourceDetail = ({id, ...props}: UseApiSourceDetailProps) => useGet<Source, unknown, void>(`/api/sources/${id}`, props);
 
 
 export type ApiSourcesUpdateProps = Omit<MutateProps<Source, unknown, void, Source>, "path" | "verb"> & {id: number};
 
-/**
- * REST endpoints for viewing and modifying individual sources
- */
 export const ApiSourcesUpdate = ({id, ...props}: ApiSourcesUpdateProps) => (
   <Mutate<Source, unknown, void, Source>
     verb="PUT"
@@ -454,17 +393,11 @@ export const ApiSourcesUpdate = ({id, ...props}: ApiSourcesUpdateProps) => (
 
 export type UseApiSourcesUpdateProps = Omit<UseMutateProps<Source, void, Source>, "path" | "verb"> & {id: number};
 
-/**
- * REST endpoints for viewing and modifying individual sources
- */
 export const useApiSourcesUpdate = ({id, ...props}: UseApiSourcesUpdateProps) => useMutate<Source, unknown, void, Source>("PUT", `/api/sources/${id}`, props);
 
 
 export type ApiSourcesPartialUpdateProps = Omit<MutateProps<Source, unknown, void, PatchedSource>, "path" | "verb"> & {id: number};
 
-/**
- * REST endpoints for viewing and modifying individual sources
- */
 export const ApiSourcesPartialUpdate = ({id, ...props}: ApiSourcesPartialUpdateProps) => (
   <Mutate<Source, unknown, void, PatchedSource>
     verb="PATCH"
@@ -475,8 +408,5 @@ export const ApiSourcesPartialUpdate = ({id, ...props}: ApiSourcesPartialUpdateP
 
 export type UseApiSourcesPartialUpdateProps = Omit<UseMutateProps<Source, void, PatchedSource>, "path" | "verb"> & {id: number};
 
-/**
- * REST endpoints for viewing and modifying individual sources
- */
 export const useApiSourcesPartialUpdate = ({id, ...props}: UseApiSourcesPartialUpdateProps) => useMutate<Source, unknown, void, PatchedSource>("PATCH", `/api/sources/${id}`, props);
 
