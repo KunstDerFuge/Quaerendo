@@ -1,3 +1,5 @@
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import OpenApiParameter, extend_schema, extend_schema_field
 from rest_framework import generics
 from api.models import Entity, Source, Claim, Evidence
 from api.serializers import EntitySerializer, SourceSerializer, ClaimSerializer, EvidenceSerializer
@@ -11,6 +13,7 @@ class EntitiesList(generics.ListCreateAPIView):
     serializer_class = EntitySerializer
 
 
+@extend_schema(operation_id='api_entity_detail', methods=['GET'])
 class EntityDetail(generics.RetrieveUpdateAPIView):
     """
     REST endpoints for viewing and modifying individual entities
@@ -27,6 +30,7 @@ class SourcesList(generics.ListCreateAPIView):
     serializer_class = SourceSerializer
 
 
+@extend_schema(operation_id='api_source_detail', methods=['GET'])
 class SourceDetail(generics.RetrieveUpdateAPIView):
     """
     REST endpoints for viewing and modifying individual sources
@@ -43,6 +47,7 @@ class ClaimsList(generics.ListCreateAPIView):
     serializer_class = ClaimSerializer
 
 
+@extend_schema(operation_id='api_claim_detail', methods=['GET'])
 class ClaimDetail(generics.RetrieveUpdateAPIView):
     """
     REST endpoints for viewing and modifying individual claims
@@ -51,18 +56,28 @@ class ClaimDetail(generics.RetrieveUpdateAPIView):
     serializer_class = ClaimSerializer
 
 
+@extend_schema(
+    parameters=[
+        OpenApiParameter(
+            name='is_expert_verified',
+            description='Is this evidence expert verified?',
+            required=False,
+            type=OpenApiTypes.BOOL)
+    ]
+)
 class EvidenceList(generics.ListCreateAPIView):
     """
     REST endpoints for viewing and submitting claims
     """
+
     queryset = Evidence.objects.all()
     serializer_class = EvidenceSerializer
 
 
+@extend_schema(operation_id='api_evidence_detail', methods=['GET'])
 class EvidenceDetail(generics.RetrieveUpdateAPIView):
     """
     REST endpoints for viewing and modifying individual pieces of evidence
     """
     queryset = Evidence.objects.all()
     serializer_class = EvidenceSerializer
-
