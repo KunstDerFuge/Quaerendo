@@ -42,10 +42,15 @@ INSTALLED_APPS = [
     'corsheaders',
     'api',
     'users',
-    'frontend'
+    'frontend',
+    'drf_spectacular'
 ]
 
 AUTH_USER_MODEL = 'users.User'
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
