@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  version: 1.0.1
+  version: 1.0.0
 servers:
 - url: /
 paths:
@@ -615,7 +615,7 @@ components:
         description:
           type: string
         is_expert_verified:
-          type: string
+          type: boolean
           readOnly: true
     PatchedClaim:
       type: object
@@ -657,7 +657,7 @@ components:
         description:
           type: string
         is_expert_verified:
-          type: string
+          type: boolean
           readOnly: true
     PatchedSource:
       type: object
