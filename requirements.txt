@@ -1,10 +1,16 @@
 asgiref==3.2.7
+attrs==19.3.0
 Django==3.0.6
 django-cors-headers==3.3.0
 djangorestframework==3.11.0
+drf-spectacular==0.9.5
+inflection==0.4.0
+jsonschema==3.2.0
 psycopg2-binary==2.8.5
+pyrsistent==0.16.0
 python-decouple==3.3
 pytz==2020.1
 PyYAML==5.3.1
+six==1.15.0
 sqlparse==0.3.1
 uritemplate==3.0.1
