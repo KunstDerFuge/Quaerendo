@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
 function App() {
   const classes = useStyles()
   const {data} = useGet({
-    path: '/api/claims'
+    path: '/api/claims/'
   })
 
   return (
