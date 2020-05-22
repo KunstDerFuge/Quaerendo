@@ -1,0 +1,736 @@
+openapi: 3.0.3
+info:
+  version: 1.0.0
+servers:
+- url: /
+paths:
+  /api/claims/:
+    get:
+      tags:
+      - api
+      description: REST endpoints for viewing and submitting claims
+      operationId: api_claims_retrieve
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Claim'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+    post:
+      tags:
+      - api
+      description: REST endpoints for viewing and submitting claims
+      operationId: api_claims_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Claim'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Claim'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Claim'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Claim'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+  /api/claims/{id}:
+    get:
+      tags:
+      - api
+      description: REST endpoints for viewing and modifying individual claims
+      operationId: api_claims_detail
+      parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this claim.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Claim'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+    put:
+      tags:
+      - api
+      description: REST endpoints for viewing and modifying individual claims
+      operationId: api_claims_update
+      parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this claim.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Claim'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Claim'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Claim'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Claim'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+    patch:
+      tags:
+      - api
+      description: REST endpoints for viewing and modifying individual claims
+      operationId: api_claims_partial_update
+      parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this claim.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedClaim'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedClaim'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedClaim'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Claim'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+  /api/entities/:
+    get:
+      tags:
+      - api
+      description: REST endpoints for viewing and submitting entities
+      operationId: api_entities_retrieve
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Entity'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+    post:
+      tags:
+      - api
+      description: REST endpoints for viewing and submitting entities
+      operationId: api_entities_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Entity'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Entity'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Entity'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Entity'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+  /api/entities/{id}:
+    get:
+      tags:
+      - api
+      description: REST endpoints for viewing and modifying individual entities
+      operationId: api_entities_detail
+      parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this entity.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Entity'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+    put:
+      tags:
+      - api
+      description: REST endpoints for viewing and modifying individual entities
+      operationId: api_entities_update
+      parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this entity.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Entity'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Entity'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Entity'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Entity'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+    patch:
+      tags:
+      - api
+      description: REST endpoints for viewing and modifying individual entities
+      operationId: api_entities_partial_update
+      parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this entity.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedEntity'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedEntity'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedEntity'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Entity'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+  /api/evidence/:
+    get:
+      tags:
+      - api
+      description: REST endpoints for viewing and submitting claims
+      operationId: api_evidence_retrieve
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Evidence'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+    post:
+      tags:
+      - api
+      description: REST endpoints for viewing and submitting claims
+      operationId: api_evidence_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Evidence'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Evidence'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Evidence'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Evidence'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+  /api/evidence/{id}:
+    get:
+      tags:
+      - api
+      description: REST endpoints for viewing and modifying individual pieces of evidence
+      operationId: api_evidence_detail
+      parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this evidence.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Evidence'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+    put:
+      tags:
+      - api
+      description: REST endpoints for viewing and modifying individual pieces of evidence
+      operationId: api_evidence_update
+      parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this evidence.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Evidence'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Evidence'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Evidence'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Evidence'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+    patch:
+      tags:
+      - api
+      description: REST endpoints for viewing and modifying individual pieces of evidence
+      operationId: api_evidence_partial_update
+      parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this evidence.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedEvidence'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedEvidence'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedEvidence'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Evidence'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+  /api/sources/:
+    get:
+      tags:
+      - api
+      description: REST endpoints for viewing and submitting sources
+      operationId: api_sources_retrieve
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Source'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+    post:
+      tags:
+      - api
+      description: REST endpoints for viewing and submitting sources
+      operationId: api_sources_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Source'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Source'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Source'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Source'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+  /api/sources/{id}:
+    get:
+      tags:
+      - api
+      description: REST endpoints for viewing and modifying individual sources
+      operationId: api_sources_detail
+      parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this source.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Source'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+    put:
+      tags:
+      - api
+      description: REST endpoints for viewing and modifying individual sources
+      operationId: api_sources_update
+      parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this source.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Source'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Source'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Source'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Source'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+    patch:
+      tags:
+      - api
+      description: REST endpoints for viewing and modifying individual sources
+      operationId: api_sources_partial_update
+      parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this source.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedSource'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedSource'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedSource'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Source'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+components:
+  schemas:
+    Claim:
+      required:
+      - claim_text
+      - source_of_claim
+      - topic
+      type: object
+      properties:
+        claim_text:
+          maxLength: 200
+          type: string
+        description:
+          type: string
+        topic:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/Topic'
+        source_of_claim:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/Source'
+    Entity:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          maxLength: 100
+          type: string
+        description:
+          type: string
+    Evidence:
+      required:
+      - claim
+      - evidence_relationship
+      - is_expert_verified
+      - source_of_evidence
+      type: object
+      properties:
+        claim:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/Claim'
+        source_of_evidence:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/Source'
+        evidence_relationship:
+          $ref: '#/components/schemas/EvidenceRelationshipEnum'
+        description:
+          type: string
+        is_expert_verified:
+          type: string
+          readOnly: true
+    PatchedClaim:
+      type: object
+      properties:
+        claim_text:
+          maxLength: 200
+          type: string
+        description:
+          type: string
+        topic:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/Topic'
+        source_of_claim:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/Source'
+    PatchedEntity:
+      type: object
+      properties:
+        name:
+          maxLength: 100
+          type: string
+        description:
+          type: string
+    PatchedEvidence:
+      type: object
+      properties:
+        claim:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/Claim'
+        source_of_evidence:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/Source'
+        evidence_relationship:
+          $ref: '#/components/schemas/EvidenceRelationshipEnum'
+        description:
+          type: string
+        is_expert_verified:
+          type: string
+          readOnly: true
+    PatchedSource:
+      type: object
+      properties:
+        url:
+          maxLength: 200
+          type: string
+          format: uri
+        description:
+          type: string
+        source_degree:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/SourceDegreeEnum'
+        authors:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Entity'
+        date_retrieved:
+          type: string
+          format: date-time
+          readOnly: true
+    Source:
+      required:
+      - authors
+      - date_retrieved
+      type: object
+      properties:
+        url:
+          maxLength: 200
+          type: string
+          format: uri
+        description:
+          type: string
+        source_degree:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/SourceDegreeEnum'
+        authors:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Entity'
+        date_retrieved:
+          type: string
+          format: date-time
+          readOnly: true
+    Topic:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          maxLength: 100
+          type: string
+    EvidenceRelationshipEnum:
+      type: string
+      enum:
+      - PROVES
+      - SUPPORTS
+      - UNRELATED
+      - INCONCLUSIVE
+      - DISPUTES
+      - DISPROVES
+    SourceDegreeEnum:
+      type: string
+      enum:
+      - ORIGINAL
+      - PRIMARY
+      - SECONDARY
+      - TERTIARY
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      name: Session
+      in: cookie
