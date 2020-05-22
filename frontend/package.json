@@ -5,12 +5,19 @@
     "@babel/preset-react": "^7.9.4",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/styles": "^4.9.14",
+    "@types/react": "^16.9.35",
+    "@types/react-dom": "^16.9.8",
     "axios": "^0.19.2",
     "babel-loader": "^8.1.0",
+    "html-webpack-plugin": "^4.3.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "source-map-loader": "^0.2.4",
+    "ts-loader": "^7.0.4",
     "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11"
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-middleware": "^3.7.2",
+    "webpack-hot-middleware": "^2.25.0"
   },
   "name": "frontend",
   "version": "1.0.0",
@@ -18,12 +25,13 @@
   "dependencies": {
     "@material-ui/core": "^4.9.14",
     "restful-react": "^12.0.0",
-    "swagger-client": "^3.10.4"
+    "swagger-client": "^3.10.4",
+    "typescript": "^3.9.3"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack --mode development ./src/index.js --output ./static/frontend/main.js",
-    "build": "webpack --mode production ./src/index.js --output ./static/frontend/main.js",
+    "dev": "webpack --mode development src/index.tsx --output ./static/frontend/main.js",
+    "build": "webpack --mode production src/index.tsx --output ./static/frontend/main.js",
     "generate-fetcher": "restful-react import --file ../openapi/openapi.yaml --output ../frontend/src/openapi-types.tsx"
   },
   "keywords": [],

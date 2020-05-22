@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import CommentRoundedIcon from '@material-ui/icons/CommentRounded'
 import RateReviewRoundedIcon from '@material-ui/icons/RateReviewRounded'
@@ -6,6 +6,9 @@ import { Divider, Drawer, List, ListItem, ListItemIcon, ListItemText } from '@ma
 import { HeaderAppBar } from './HeaderAppBar'
 import ThemeProvider from '@material-ui/styles/ThemeProvider'
 import MainTheme from './MainTheme'
+import ClaimPreview from './ClaimPreview'
+import { useGet } from 'restful-react'
+import { Claim } from '../openapi-types'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -27,8 +30,11 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-function App () {
+function App() {
   const classes = useStyles()
+  const {data} = useGet({
+    path: '/api/claims'
+  })
 
   return (
     <ThemeProvider theme={MainTheme}>
@@ -59,7 +65,14 @@ function App () {
         </Drawer>
         <main className={classes.content}>
           <HeaderAppBar />
-          Testing test
+          {
+            data ?
+              data.map((claim: Claim, index: number) =>
+                <ClaimPreview key={index} claim={claim} />
+              )
+              :
+              ''
+          }
         </main>
       </div>
     </ThemeProvider>
