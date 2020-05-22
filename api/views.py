@@ -59,7 +59,7 @@ class EvidenceList(generics.ListCreateAPIView):
     serializer_class = EvidenceSerializer
 
 
-class EvidenceDetail(generics.ListCreateAPIView):
+class EvidenceDetail(generics.RetrieveUpdateAPIView):
     """
     REST endpoints for viewing and modifying individual pieces of evidence
     """
