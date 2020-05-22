@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  version: 1.0.0
+  version: 1.0.1
 servers:
 - url: /
 paths:
@@ -51,8 +51,7 @@ paths:
     get:
       tags:
       - api
-      description: REST endpoints for viewing and modifying individual claims
-      operationId: api_claims_detail
+      operationId: api_claim_detail
       parameters:
       - name: id
         in: path
@@ -75,7 +74,6 @@ paths:
     put:
       tags:
       - api
-      description: REST endpoints for viewing and modifying individual claims
       operationId: api_claims_update
       parameters:
       - name: id
@@ -111,7 +109,6 @@ paths:
     patch:
       tags:
       - api
-      description: REST endpoints for viewing and modifying individual claims
       operationId: api_claims_partial_update
       parameters:
       - name: id
@@ -190,8 +187,7 @@ paths:
     get:
       tags:
       - api
-      description: REST endpoints for viewing and modifying individual entities
-      operationId: api_entities_detail
+      operationId: api_entity_detail
       parameters:
       - name: id
         in: path
@@ -214,7 +210,6 @@ paths:
     put:
       tags:
       - api
-      description: REST endpoints for viewing and modifying individual entities
       operationId: api_entities_update
       parameters:
       - name: id
@@ -250,7 +245,6 @@ paths:
     patch:
       tags:
       - api
-      description: REST endpoints for viewing and modifying individual entities
       operationId: api_entities_partial_update
       parameters:
       - name: id
@@ -286,8 +280,16 @@ paths:
     get:
       tags:
       - api
-      description: REST endpoints for viewing and submitting claims
       operationId: api_evidence_retrieve
+      parameters:
+      - name: is_expert_verified
+        in: query
+        description: Is this evidence expert verified?
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -301,8 +303,16 @@ paths:
     post:
       tags:
       - api
-      description: REST endpoints for viewing and submitting claims
       operationId: api_evidence_create
+      parameters:
+      - name: is_expert_verified
+        in: query
+        description: Is this evidence expert verified?
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
       requestBody:
         content:
           application/json:
@@ -329,7 +339,6 @@ paths:
     get:
       tags:
       - api
-      description: REST endpoints for viewing and modifying individual pieces of evidence
       operationId: api_evidence_detail
       parameters:
       - name: id
@@ -353,7 +362,6 @@ paths:
     put:
       tags:
       - api
-      description: REST endpoints for viewing and modifying individual pieces of evidence
       operationId: api_evidence_update
       parameters:
       - name: id
@@ -389,7 +397,6 @@ paths:
     patch:
       tags:
       - api
-      description: REST endpoints for viewing and modifying individual pieces of evidence
       operationId: api_evidence_partial_update
       parameters:
       - name: id
@@ -467,8 +474,7 @@ paths:
     get:
       tags:
       - api
-      description: REST endpoints for viewing and modifying individual sources
-      operationId: api_sources_detail
+      operationId: api_source_detail
       parameters:
       - name: id
         in: path
@@ -491,7 +497,6 @@ paths:
     put:
       tags:
       - api
-      description: REST endpoints for viewing and modifying individual sources
       operationId: api_sources_update
       parameters:
       - name: id
@@ -526,7 +531,6 @@ paths:
     patch:
       tags:
       - api
-      description: REST endpoints for viewing and modifying individual sources
       operationId: api_sources_partial_update
       parameters:
       - name: id
@@ -611,7 +615,7 @@ components:
         description:
           type: string
         is_expert_verified:
-          type: boolean
+          type: string
           readOnly: true
     PatchedClaim:
       type: object
