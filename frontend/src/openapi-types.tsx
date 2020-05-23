@@ -6,6 +6,7 @@ import { Get, GetProps, useGet, UseGetProps, Mutate, MutateProps, useMutate, Use
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
 export interface Claim {
+  id: number;
   claim_text: string;
   description?: string;
   topic: Topic;
@@ -26,6 +27,7 @@ export interface Evidence {
 }
 
 export interface PatchedClaim {
+  id?: number;
   claim_text?: string;
   description?: string;
   topic?: Topic;
