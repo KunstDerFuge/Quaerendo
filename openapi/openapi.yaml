@@ -567,10 +567,14 @@ components:
     Claim:
       required:
       - claim_text
+      - id
       - source_of_claim
       - topic
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         claim_text:
           maxLength: 200
           type: string
@@ -620,6 +624,9 @@ components:
     PatchedClaim:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         claim_text:
           maxLength: 200
           type: string
