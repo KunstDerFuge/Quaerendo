@@ -9,6 +9,7 @@ import MainTheme from './MainTheme'
 import ClaimPreview from './ClaimPreview'
 import { useGet } from 'restful-react'
 import { Claim } from '../openapi-types'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -38,43 +39,45 @@ function App() {
 
   return (
     <ThemeProvider theme={MainTheme}>
-      <div className={classes.root}>
-        <Drawer
-          className={classes.drawer}
-          variant='permanent'
-          classes={{
-            paper: classes.drawerPaper
-          }}
-          anchor="left"
-        >
-          <Divider />
-          <List>
-            <ListItem button>
-              <ListItemIcon>
-                <CommentRoundedIcon />
-              </ListItemIcon>
-              <ListItemText primary='Popular Claims' />
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <RateReviewRoundedIcon />
-              </ListItemIcon>
-              <ListItemText primary='Review' />
-            </ListItem>
-          </List>
-        </Drawer>
-        <main className={classes.content}>
-          <HeaderAppBar />
-          {
-            data ?
-              data.map((claim: Claim, index: number) =>
-                <ClaimPreview key={index} claim={claim} />
-              )
-              :
-              ''
-          }
-        </main>
-      </div>
+      <Router>
+        <div className={classes.root}>
+          <Drawer
+            className={classes.drawer}
+            variant='permanent'
+            classes={{
+              paper: classes.drawerPaper
+            }}
+            anchor="left"
+          >
+            <Divider />
+            <List>
+              <ListItem button>
+                <ListItemIcon>
+                  <CommentRoundedIcon />
+                </ListItemIcon>
+                <ListItemText primary='Popular Claims' />
+              </ListItem>
+              <ListItem button>
+                <ListItemIcon>
+                  <RateReviewRoundedIcon />
+                </ListItemIcon>
+                <ListItemText primary='Review' />
+              </ListItem>
+            </List>
+          </Drawer>
+          <main className={classes.content}>
+            <HeaderAppBar />
+            {
+              data ?
+                data.map((claim: Claim, index: number) =>
+                  <ClaimPreview key={index} claim={claim} />
+                )
+                :
+                ''
+            }
+          </main>
+        </div>
+      </Router>
     </ThemeProvider>
   )
 }
