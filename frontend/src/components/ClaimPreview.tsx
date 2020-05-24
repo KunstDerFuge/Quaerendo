@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Card, CardActionArea, CardContent, Theme, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import { Claim } from '../openapi-types'
-import { Redirect } from 'react-router'
+import { useHistory } from 'react-router-dom'
 import AuthorsLinksList from './AuthorsLinksList'
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -17,18 +17,12 @@ interface ClaimPreviewProps {
 
 const ClaimPreview: React.FC<ClaimPreviewProps> = (props: ClaimPreviewProps) => {
   const classes = useStyles()
+  const history = useHistory()
   const claim = props.claim
-  const [clicked, setClicked] = React.useState(false)
   return (
     <div>
-      {
-        clicked ?
-          <Redirect to={'/claim/' + claim.id} />
-          :
-          ''
-      }
       <Card elevation={4} className={classes.card}>
-        <CardActionArea onClick={() => setClicked(true)}>
+        <CardActionArea onClick={() => history.push('/claim/' + claim.id)}>
           <CardContent>
             <Typography color='textSecondary'>
               <AuthorsLinksList authors={claim.source_of_claim.authors} />
