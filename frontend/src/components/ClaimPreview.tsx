@@ -24,7 +24,7 @@ const ClaimPreview: React.FC<ClaimPreviewProps> = (props: ClaimPreviewProps) => 
         clicked ?
           <Redirect to={'/claims/' + claim.id} />
           :
-        ''
+          ''
       }
       <Card elevation={4} className={classes.card}>
         <CardActionArea onClick={() => setClicked(true)}>

@@ -6,10 +6,9 @@ import { Divider, Drawer, List, ListItem, ListItemIcon, ListItemText } from '@ma
 import { HeaderAppBar } from './HeaderAppBar'
 import ThemeProvider from '@material-ui/styles/ThemeProvider'
 import MainTheme from './MainTheme'
-import ClaimPreview from './ClaimPreview'
-import { useGet } from 'restful-react'
-import { Claim } from '../openapi-types'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import ClaimList from './ClaimsList'
+import ClaimDetails from './ClaimDetails'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -33,9 +32,6 @@ const useStyles = makeStyles(theme => ({
 
 function App() {
   const classes = useStyles()
-  const {data} = useGet({
-    path: '/api/claims/'
-  })
 
   return (
     <ThemeProvider theme={MainTheme}>
@@ -67,14 +63,13 @@ function App() {
           </Drawer>
           <main className={classes.content}>
             <HeaderAppBar />
-            {
-              data ?
-                data.map((claim: Claim, index: number) =>
-                  <ClaimPreview key={index} claim={claim} />
-                )
-                :
-                ''
-            }
+            <Switch>
+              <Route path='/claims/:id'
+                     component={(routerProps: any) => <ClaimDetails id={routerProps.match.params.id} />} />
+              <Route path='/'>
+                <ClaimList />
+              </Route>
+            </Switch>
           </main>
         </div>
       </Router>
