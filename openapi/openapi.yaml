@@ -1,30 +1,30 @@
 openapi: 3.0.3
 info:
-  title: ''
   version: 1.0.0
+servers:
+- url: /
 paths:
   /api/claims/:
     get:
-      operationId: api_claims_retrieve
-      description: REST endpoints for viewing and submitting claims
       tags:
-        - api
-      security:
-        - cookieAuth: []
-        - basicAuth: []
-        - {}
+      - api
+      description: REST endpoints for viewing and submitting claims
+      operationId: api_claims_retrieve
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Claim'
-          description: ''
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
     post:
-      operationId: api_claims_create
-      description: REST endpoints for viewing and submitting claims
       tags:
-        - api
+      - api
+      description: REST endpoints for viewing and submitting claims
+      operationId: api_claims_create
       requestBody:
         content:
           application/json:
@@ -37,53 +37,53 @@ paths:
             schema:
               $ref: '#/components/schemas/Claim'
         required: true
-      security:
-        - cookieAuth: []
-        - basicAuth: []
-        - {}
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Claim'
-          description: ''
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
   /api/claims/{id}:
     get:
-      operationId: api_claim_detail
-      description: ''
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: A unique integer value identifying this claim.
-          schema:
-            type: integer
       tags:
-        - api
-      security:
-        - cookieAuth: []
-        - basicAuth: []
-        - {}
+      - api
+      operationId: api_claim_detail
+      parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this claim.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Claim'
-          description: ''
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
     put:
-      operationId: api_claims_update
-      description: ''
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: A unique integer value identifying this claim.
-          schema:
-            type: integer
       tags:
-        - api
+      - api
+      operationId: api_claims_update
+      parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this claim.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
       requestBody:
         content:
           application/json:
@@ -96,29 +96,29 @@ paths:
             schema:
               $ref: '#/components/schemas/Claim'
         required: true
-      security:
-        - cookieAuth: []
-        - basicAuth: []
-        - {}
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Claim'
-          description: ''
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
     patch:
-      operationId: api_claims_partial_update
-      description: ''
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: A unique integer value identifying this claim.
-          schema:
-            type: integer
       tags:
-        - api
+      - api
+      operationId: api_claims_partial_update
+      parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this claim.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
       requestBody:
         content:
           application/json:
@@ -130,39 +130,37 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/PatchedClaim'
-      security:
-        - cookieAuth: []
-        - basicAuth: []
-        - {}
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Claim'
-          description: ''
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
   /api/entities/:
     get:
-      operationId: api_entities_retrieve
-      description: REST endpoints for viewing and submitting entities
       tags:
-        - api
-      security:
-        - cookieAuth: []
-        - basicAuth: []
-        - {}
+      - api
+      description: REST endpoints for viewing and submitting entities
+      operationId: api_entities_retrieve
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Entity'
-          description: ''
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
     post:
-      operationId: api_entities_create
-      description: REST endpoints for viewing and submitting entities
       tags:
-        - api
+      - api
+      description: REST endpoints for viewing and submitting entities
+      operationId: api_entities_create
       requestBody:
         content:
           application/json:
@@ -175,53 +173,53 @@ paths:
             schema:
               $ref: '#/components/schemas/Entity'
         required: true
-      security:
-        - cookieAuth: []
-        - basicAuth: []
-        - {}
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Entity'
-          description: ''
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
   /api/entities/{id}:
     get:
-      operationId: api_entity_detail
-      description: ''
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: A unique integer value identifying this entity.
-          schema:
-            type: integer
       tags:
-        - api
-      security:
-        - cookieAuth: []
-        - basicAuth: []
-        - {}
+      - api
+      operationId: api_entity_detail
+      parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this entity.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Entity'
-          description: ''
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
     put:
-      operationId: api_entities_update
-      description: ''
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: A unique integer value identifying this entity.
-          schema:
-            type: integer
       tags:
-        - api
+      - api
+      operationId: api_entities_update
+      parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this entity.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
       requestBody:
         content:
           application/json:
@@ -234,29 +232,29 @@ paths:
             schema:
               $ref: '#/components/schemas/Entity'
         required: true
-      security:
-        - cookieAuth: []
-        - basicAuth: []
-        - {}
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Entity'
-          description: ''
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
     patch:
-      operationId: api_entities_partial_update
-      description: ''
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: A unique integer value identifying this entity.
-          schema:
-            type: integer
       tags:
-        - api
+      - api
+      operationId: api_entities_partial_update
+      parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this entity.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
       requestBody:
         content:
           application/json:
@@ -268,51 +266,53 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/PatchedEntity'
-      security:
-        - cookieAuth: []
-        - basicAuth: []
-        - {}
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Entity'
-          description: ''
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
   /api/evidence/:
     get:
-      operationId: api_evidence_retrieve
-      description: ''
-      parameters:
-        - in: query
-          name: is_expert_verified
-          schema:
-            type: boolean
-          description: Is this evidence expert verified?
       tags:
-        - api
-      security:
-        - cookieAuth: []
-        - basicAuth: []
-        - {}
+      - api
+      operationId: api_evidence_retrieve
+      parameters:
+      - name: is_expert_verified
+        in: query
+        description: Is this evidence expert verified?
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Evidence'
-          description: ''
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
     post:
-      operationId: api_evidence_create
-      description: ''
-      parameters:
-        - in: query
-          name: is_expert_verified
-          schema:
-            type: boolean
-          description: Is this evidence expert verified?
       tags:
-        - api
+      - api
+      operationId: api_evidence_create
+      parameters:
+      - name: is_expert_verified
+        in: query
+        description: Is this evidence expert verified?
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
       requestBody:
         content:
           application/json:
@@ -325,53 +325,53 @@ paths:
             schema:
               $ref: '#/components/schemas/Evidence'
         required: true
-      security:
-        - cookieAuth: []
-        - basicAuth: []
-        - {}
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Evidence'
-          description: ''
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
   /api/evidence/{id}:
     get:
-      operationId: api_evidence_detail
-      description: ''
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: A unique integer value identifying this evidence.
-          schema:
-            type: integer
       tags:
-        - api
-      security:
-        - cookieAuth: []
-        - basicAuth: []
-        - {}
+      - api
+      operationId: api_evidence_detail
+      parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this evidence.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Evidence'
-          description: ''
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
     put:
-      operationId: api_evidence_update
-      description: ''
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: A unique integer value identifying this evidence.
-          schema:
-            type: integer
       tags:
-        - api
+      - api
+      operationId: api_evidence_update
+      parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this evidence.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
       requestBody:
         content:
           application/json:
@@ -384,29 +384,29 @@ paths:
             schema:
               $ref: '#/components/schemas/Evidence'
         required: true
-      security:
-        - cookieAuth: []
-        - basicAuth: []
-        - {}
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Evidence'
-          description: ''
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
     patch:
-      operationId: api_evidence_partial_update
-      description: ''
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: A unique integer value identifying this evidence.
-          schema:
-            type: integer
       tags:
-        - api
+      - api
+      operationId: api_evidence_partial_update
+      parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this evidence.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
       requestBody:
         content:
           application/json:
@@ -418,39 +418,37 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/PatchedEvidence'
-      security:
-        - cookieAuth: []
-        - basicAuth: []
-        - {}
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Evidence'
-          description: ''
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
   /api/sources/:
     get:
-      operationId: api_sources_retrieve
-      description: REST endpoints for viewing and submitting sources
       tags:
-        - api
-      security:
-        - cookieAuth: []
-        - basicAuth: []
-        - {}
+      - api
+      description: REST endpoints for viewing and submitting sources
+      operationId: api_sources_retrieve
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Source'
-          description: ''
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
     post:
-      operationId: api_sources_create
-      description: REST endpoints for viewing and submitting sources
       tags:
-        - api
+      - api
+      description: REST endpoints for viewing and submitting sources
+      operationId: api_sources_create
       requestBody:
         content:
           application/json:
@@ -462,53 +460,53 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/Source'
-      security:
-        - cookieAuth: []
-        - basicAuth: []
-        - {}
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Source'
-          description: ''
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
   /api/sources/{id}:
     get:
+      tags:
+      - api
       operationId: api_source_detail
-      description: ''
       parameters:
-        - name: id
-          in: path
-          required: true
-          description: A unique integer value identifying this source.
-          schema:
-            type: integer
-      tags:
-        - api
-      security:
-        - cookieAuth: []
-        - basicAuth: []
-        - {}
+      - name: id
+        in: path
+        description: A unique integer value identifying this source.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Source'
-          description: ''
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
     put:
+      tags:
+      - api
       operationId: api_sources_update
-      description: ''
       parameters:
-        - name: id
-          in: path
-          required: true
-          description: A unique integer value identifying this source.
-          schema:
-            type: integer
-      tags:
-        - api
+      - name: id
+        in: path
+        description: A unique integer value identifying this source.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
       requestBody:
         content:
           application/json:
@@ -520,29 +518,29 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/Source'
-      security:
-        - cookieAuth: []
-        - basicAuth: []
-        - {}
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Source'
-          description: ''
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
     patch:
-      operationId: api_sources_partial_update
-      description: ''
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: A unique integer value identifying this source.
-          schema:
-            type: integer
       tags:
-        - api
+      - api
+      operationId: api_sources_partial_update
+      parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this source.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
       requestBody:
         content:
           application/json:
@@ -554,62 +552,68 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/PatchedSource'
-      security:
-        - cookieAuth: []
-        - basicAuth: []
-        - {}
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Source'
-          description: ''
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
 components:
   schemas:
     Claim:
+      required:
+      - claim_text
+      - id
+      - source_of_claim
+      - topic
       type: object
       properties:
         id:
           type: integer
           readOnly: true
         claim_text:
-          type: string
           maxLength: 200
+          type: string
         description:
           type: string
         topic:
-          allOf:
-            - $ref: '#/components/schemas/Topic'
           readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/Topic'
         source_of_claim:
-          type: integer
-      required:
-        - claim_text
-        - id
-        - source_of_claim
-        - topic
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/SourceLink'
     Entity:
+      required:
+      - name
       type: object
       properties:
         name:
-          type: string
           maxLength: 100
+          type: string
         description:
           type: string
-      required:
-        - name
     Evidence:
+      required:
+      - claim
+      - evidence_relationship
+      - is_expert_verified
+      - source_of_evidence
       type: object
       properties:
         claim:
-          allOf:
-            - $ref: '#/components/schemas/Claim'
           readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/Claim'
         source_of_evidence:
-          allOf:
-            - $ref: '#/components/schemas/Source'
           readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/Source'
         evidence_relationship:
           $ref: '#/components/schemas/EvidenceRelationshipEnum'
         description:
@@ -617,11 +621,6 @@ components:
         is_expert_verified:
           type: boolean
           readOnly: true
-      required:
-        - claim
-        - evidence_relationship
-        - is_expert_verified
-        - source_of_evidence
     PatchedClaim:
       type: object
       properties:
@@ -629,35 +628,37 @@ components:
           type: integer
           readOnly: true
         claim_text:
-          type: string
           maxLength: 200
+          type: string
         description:
           type: string
         topic:
-          allOf:
-            - $ref: '#/components/schemas/Topic'
           readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/Topic'
         source_of_claim:
-          type: integer
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/SourceLink'
     PatchedEntity:
       type: object
       properties:
         name:
-          type: string
           maxLength: 100
+          type: string
         description:
           type: string
     PatchedEvidence:
       type: object
       properties:
         claim:
-          allOf:
-            - $ref: '#/components/schemas/Claim'
           readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/Claim'
         source_of_evidence:
-          allOf:
-            - $ref: '#/components/schemas/Source'
           readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/Source'
         evidence_relationship:
           $ref: '#/components/schemas/EvidenceRelationshipEnum'
         description:
@@ -669,78 +670,92 @@ components:
       type: object
       properties:
         url:
+          maxLength: 200
           type: string
           format: uri
-          maxLength: 200
         description:
           type: string
         source_degree:
-          allOf:
-            - $ref: '#/components/schemas/SourceDegreeEnum'
           nullable: true
+          allOf:
+          - $ref: '#/components/schemas/SourceDegreeEnum'
         authors:
           type: array
+          readOnly: true
           items:
             $ref: '#/components/schemas/Entity'
-          readOnly: true
         date_retrieved:
           type: string
           format: date-time
           readOnly: true
     Source:
+      required:
+      - authors
+      - date_retrieved
       type: object
       properties:
         url:
+          maxLength: 200
           type: string
           format: uri
-          maxLength: 200
         description:
           type: string
         source_degree:
-          allOf:
-            - $ref: '#/components/schemas/SourceDegreeEnum'
           nullable: true
+          allOf:
+          - $ref: '#/components/schemas/SourceDegreeEnum'
         authors:
           type: array
+          readOnly: true
           items:
             $ref: '#/components/schemas/Entity'
-          readOnly: true
         date_retrieved:
           type: string
           format: date-time
           readOnly: true
+    SourceLink:
       required:
-        - authors
-        - date_retrieved
+      - authors
+      - id
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        authors:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Entity'
     Topic:
+      required:
+      - name
       type: object
       properties:
         name:
-          type: string
           maxLength: 100
-      required:
-        - name
+          type: string
     EvidenceRelationshipEnum:
-      enum:
-        - PROVES
-        - SUPPORTS
-        - UNRELATED
-        - INCONCLUSIVE
-        - DISPUTES
-        - DISPROVES
       type: string
+      enum:
+      - PROVES
+      - SUPPORTS
+      - UNRELATED
+      - INCONCLUSIVE
+      - DISPUTES
+      - DISPROVES
     SourceDegreeEnum:
-      enum:
-        - ORIGINAL
-        - PRIMARY
-        - SECONDARY
-        - TERTIARY
       type: string
+      enum:
+      - ORIGINAL
+      - PRIMARY
+      - SECONDARY
+      - TERTIARY
   securitySchemes:
     basicAuth:
       type: http
       scheme: basic
     cookieAuth:
       type: apiKey
-      in: cookie
       name: Session
+      in: cookie
