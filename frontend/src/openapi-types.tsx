@@ -10,7 +10,7 @@ export interface Claim {
   claim_text: string;
   description?: string;
   topic: Topic;
-  source_of_claim: Source;
+  source_of_claim: number;
 }
 
 export interface Entity {
@@ -31,7 +31,7 @@ export interface PatchedClaim {
   claim_text?: string;
   description?: string;
   topic?: Topic;
-  source_of_claim?: Source;
+  source_of_claim?: number;
 }
 
 export interface PatchedEntity {
