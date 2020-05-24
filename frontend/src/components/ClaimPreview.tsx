@@ -30,13 +30,13 @@ const ClaimPreview: React.FC<ClaimPreviewProps> = (props: ClaimPreviewProps) => 
       <Card elevation={4} className={classes.card}>
         <CardActionArea onClick={() => setClicked(true)}>
           <CardContent>
-            <Typography color='secondary'>
-              {claim.source_of_claim.authors[0].name}
+            <Typography color='textSecondary'>
+              <AuthorsLinksList authors={claim.source_of_claim.authors} />
             </Typography>
-            <Typography variant='h5'>
+            <Typography variant='h5' gutterBottom>
               {claim.claim_text}
             </Typography>
-            <Typography color='secondary'>
+            <Typography variant='subtitle2' color='textSecondary'>
               {claim.description}
             </Typography>
           </CardContent>
