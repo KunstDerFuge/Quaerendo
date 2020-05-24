@@ -66,7 +66,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Claim'
+                $ref: '#/components/schemas/ClaimWithEvidence'
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -88,20 +88,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Claim'
+              $ref: '#/components/schemas/ClaimWithEvidence'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Claim'
+              $ref: '#/components/schemas/ClaimWithEvidence'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Claim'
+              $ref: '#/components/schemas/ClaimWithEvidence'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Claim'
+                $ref: '#/components/schemas/ClaimWithEvidence'
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -123,19 +123,19 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedClaim'
+              $ref: '#/components/schemas/PatchedClaimWithEvidence'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedClaim'
+              $ref: '#/components/schemas/PatchedClaimWithEvidence'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedClaim'
+              $ref: '#/components/schemas/PatchedClaimWithEvidence'
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Claim'
+                $ref: '#/components/schemas/ClaimWithEvidence'
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -588,6 +588,36 @@ components:
           readOnly: true
           allOf:
           - $ref: '#/components/schemas/SourceLink'
+    ClaimWithEvidence:
+      required:
+      - claim_text
+      - evidence
+      - id
+      - source_of_claim
+      - topic
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        claim_text:
+          maxLength: 200
+          type: string
+        description:
+          type: string
+        topic:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/Topic'
+        source_of_claim:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/SourceLink'
+        evidence:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Evidence'
     Entity:
       required:
       - name
@@ -621,7 +651,7 @@ components:
         is_expert_verified:
           type: boolean
           readOnly: true
-    PatchedClaim:
+    PatchedClaimWithEvidence:
       type: object
       properties:
         id:
@@ -640,6 +670,11 @@ components:
           readOnly: true
           allOf:
           - $ref: '#/components/schemas/SourceLink'
+        evidence:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Evidence'
     PatchedEntity:
       type: object
       properties:
