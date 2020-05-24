@@ -13,6 +13,15 @@ export interface Claim {
   source_of_claim: SourceLink;
 }
 
+export interface ClaimWithEvidence {
+  id: number;
+  claim_text: string;
+  description?: string;
+  topic: Topic;
+  source_of_claim: SourceLink;
+  evidence: Evidence[];
+}
+
 export interface Entity {
   name: string;
   description?: string;
@@ -26,12 +35,13 @@ export interface Evidence {
   is_expert_verified: boolean;
 }
 
-export interface PatchedClaim {
+export interface PatchedClaimWithEvidence {
   id?: number;
   claim_text?: string;
   description?: string;
   topic?: Topic;
   source_of_claim?: SourceLink;
+  evidence?: Evidence[];
 }
 
 export interface PatchedEntity {
@@ -117,48 +127,48 @@ export type UseApiClaimsCreateProps = Omit<UseMutateProps<Claim, void, Claim>, "
 export const useApiClaimsCreate = (props: UseApiClaimsCreateProps) => useMutate<Claim, unknown, void, Claim>("POST", `/api/claims/`, props);
 
 
-export type ApiClaimDetailProps = Omit<GetProps<Claim, unknown, void>, "path"> & {id: number};
+export type ApiClaimDetailProps = Omit<GetProps<ClaimWithEvidence, unknown, void>, "path"> & {id: number};
 
 export const ApiClaimDetail = ({id, ...props}: ApiClaimDetailProps) => (
-  <Get<Claim, unknown, void>
+  <Get<ClaimWithEvidence, unknown, void>
     path={`/api/claims/${id}`}
     {...props}
   />
 );
 
-export type UseApiClaimDetailProps = Omit<UseGetProps<Claim, void>, "path"> & {id: number};
+export type UseApiClaimDetailProps = Omit<UseGetProps<ClaimWithEvidence, void>, "path"> & {id: number};
 
-export const useApiClaimDetail = ({id, ...props}: UseApiClaimDetailProps) => useGet<Claim, unknown, void>(`/api/claims/${id}`, props);
+export const useApiClaimDetail = ({id, ...props}: UseApiClaimDetailProps) => useGet<ClaimWithEvidence, unknown, void>(`/api/claims/${id}`, props);
 
 
-export type ApiClaimsUpdateProps = Omit<MutateProps<Claim, unknown, void, Claim>, "path" | "verb"> & {id: number};
+export type ApiClaimsUpdateProps = Omit<MutateProps<ClaimWithEvidence, unknown, void, ClaimWithEvidence>, "path" | "verb"> & {id: number};
 
 export const ApiClaimsUpdate = ({id, ...props}: ApiClaimsUpdateProps) => (
-  <Mutate<Claim, unknown, void, Claim>
+  <Mutate<ClaimWithEvidence, unknown, void, ClaimWithEvidence>
     verb="PUT"
     path={`/api/claims/${id}`}
     {...props}
   />
 );
 
-export type UseApiClaimsUpdateProps = Omit<UseMutateProps<Claim, void, Claim>, "path" | "verb"> & {id: number};
+export type UseApiClaimsUpdateProps = Omit<UseMutateProps<ClaimWithEvidence, void, ClaimWithEvidence>, "path" | "verb"> & {id: number};
 
-export const useApiClaimsUpdate = ({id, ...props}: UseApiClaimsUpdateProps) => useMutate<Claim, unknown, void, Claim>("PUT", `/api/claims/${id}`, props);
+export const useApiClaimsUpdate = ({id, ...props}: UseApiClaimsUpdateProps) => useMutate<ClaimWithEvidence, unknown, void, ClaimWithEvidence>("PUT", `/api/claims/${id}`, props);
 
 
-export type ApiClaimsPartialUpdateProps = Omit<MutateProps<Claim, unknown, void, PatchedClaim>, "path" | "verb"> & {id: number};
+export type ApiClaimsPartialUpdateProps = Omit<MutateProps<ClaimWithEvidence, unknown, void, PatchedClaimWithEvidence>, "path" | "verb"> & {id: number};
 
 export const ApiClaimsPartialUpdate = ({id, ...props}: ApiClaimsPartialUpdateProps) => (
-  <Mutate<Claim, unknown, void, PatchedClaim>
+  <Mutate<ClaimWithEvidence, unknown, void, PatchedClaimWithEvidence>
     verb="PATCH"
     path={`/api/claims/${id}`}
     {...props}
   />
 );
 
-export type UseApiClaimsPartialUpdateProps = Omit<UseMutateProps<Claim, void, PatchedClaim>, "path" | "verb"> & {id: number};
+export type UseApiClaimsPartialUpdateProps = Omit<UseMutateProps<ClaimWithEvidence, void, PatchedClaimWithEvidence>, "path" | "verb"> & {id: number};
 
-export const useApiClaimsPartialUpdate = ({id, ...props}: UseApiClaimsPartialUpdateProps) => useMutate<Claim, unknown, void, PatchedClaim>("PATCH", `/api/claims/${id}`, props);
+export const useApiClaimsPartialUpdate = ({id, ...props}: UseApiClaimsPartialUpdateProps) => useMutate<ClaimWithEvidence, unknown, void, PatchedClaimWithEvidence>("PATCH", `/api/claims/${id}`, props);
 
 
 export type ApiEntitiesRetrieveProps = Omit<GetProps<Entity, unknown, void>, "path">;
