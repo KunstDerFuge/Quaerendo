@@ -3,6 +3,7 @@ import { Card, CardActionArea, CardContent, Theme, Typography } from '@material-
 import { makeStyles } from '@material-ui/styles'
 import { Claim } from '../openapi-types'
 import { Redirect } from 'react-router'
+import AuthorsLinksList from './AuthorsLinksList'
 
 const useStyles = makeStyles((theme: Theme) => ({
   card: {
@@ -22,7 +23,7 @@ const ClaimPreview: React.FC<ClaimPreviewProps> = (props: ClaimPreviewProps) => 
     <div>
       {
         clicked ?
-          <Redirect to={'/claims/' + claim.id} />
+          <Redirect to={'/claim/' + claim.id} />
           :
           ''
       }

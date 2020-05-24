@@ -64,7 +64,7 @@ function App() {
           <main className={classes.content}>
             <HeaderAppBar />
             <Switch>
-              <Route path='/claims/:id'
+              <Route path='/claim/:id'
                      component={(routerProps: any) => <ClaimDetails id={routerProps.match.params.id} />} />
               <Route path='/'>
                 <ClaimList />
