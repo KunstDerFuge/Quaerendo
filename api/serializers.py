@@ -16,6 +16,14 @@ class SourceSerializer(serializers.ModelSerializer):
         fields = ['url', 'description', 'source_degree', 'authors', 'date_retrieved']
 
 
+class SourceLinkSerializer(serializers.ModelSerializer):
+    authors = EntitySerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Source
+        fields = ['id', 'authors']
+
+
 class TopicSerializer(serializers.ModelSerializer):
     class Meta:
         model = Topic
@@ -24,6 +32,7 @@ class TopicSerializer(serializers.ModelSerializer):
 
 class ClaimSerializer(serializers.ModelSerializer):
     topic = TopicSerializer(read_only=True)
+    source_of_claim = SourceLinkSerializer(read_only=True)
 
     class Meta:
         model = Claim
