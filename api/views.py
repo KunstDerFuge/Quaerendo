@@ -1,8 +1,10 @@
 from drf_spectacular.types import OpenApiTypes
-from drf_spectacular.utils import OpenApiParameter, extend_schema, extend_schema_field
+from drf_spectacular.utils import OpenApiParameter, extend_schema
 from rest_framework import generics
+
 from api.models import Entity, Source, Claim, Evidence
-from api.serializers import EntitySerializer, SourceSerializer, ClaimSerializer, EvidenceSerializer
+from api.serializers import EntitySerializer, SourceSerializer, ClaimSerializer, EvidenceSerializer, \
+    ClaimWithEvidenceSerializer
 
 
 class EntitiesList(generics.ListCreateAPIView):
@@ -53,7 +55,7 @@ class ClaimDetail(generics.RetrieveUpdateAPIView):
     REST endpoints for viewing and modifying individual claims
     """
     queryset = Claim.objects.all()
-    serializer_class = ClaimSerializer
+    serializer_class = ClaimWithEvidenceSerializer
 
 
 @extend_schema(
