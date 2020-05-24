@@ -591,8 +591,8 @@ components:
     ClaimWithEvidence:
       required:
       - claim_text
-      - evidence
       - id
+      - related_evidence
       - source_of_claim
       - topic
       type: object
@@ -613,7 +613,7 @@ components:
           readOnly: true
           allOf:
           - $ref: '#/components/schemas/SourceLink'
-        evidence:
+        related_evidence:
           type: array
           readOnly: true
           items:
@@ -630,16 +630,11 @@ components:
           type: string
     Evidence:
       required:
-      - claim
       - evidence_relationship
       - is_expert_verified
       - source_of_evidence
       type: object
       properties:
-        claim:
-          readOnly: true
-          allOf:
-          - $ref: '#/components/schemas/Claim'
         source_of_evidence:
           readOnly: true
           allOf:
@@ -670,7 +665,7 @@ components:
           readOnly: true
           allOf:
           - $ref: '#/components/schemas/SourceLink'
-        evidence:
+        related_evidence:
           type: array
           readOnly: true
           items:
@@ -686,10 +681,6 @@ components:
     PatchedEvidence:
       type: object
       properties:
-        claim:
-          readOnly: true
-          allOf:
-          - $ref: '#/components/schemas/Claim'
         source_of_evidence:
           readOnly: true
           allOf:
