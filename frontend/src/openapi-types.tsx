@@ -10,7 +10,7 @@ export interface Claim {
   claim_text: string;
   description?: string;
   topic: Topic;
-  source_of_claim: number;
+  source_of_claim: SourceLink;
 }
 
 export interface Entity {
@@ -31,7 +31,7 @@ export interface PatchedClaim {
   claim_text?: string;
   description?: string;
   topic?: Topic;
-  source_of_claim?: number;
+  source_of_claim?: SourceLink;
 }
 
 export interface PatchedEntity {
@@ -61,6 +61,11 @@ export interface Source {
   source_degree?: SourceDegreeEnum | null;
   authors: Entity[];
   date_retrieved: string;
+}
+
+export interface SourceLink {
+  id: number;
+  authors: Entity[];
 }
 
 export interface Topic {
