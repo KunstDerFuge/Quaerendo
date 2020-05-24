@@ -587,7 +587,7 @@ components:
         source_of_claim:
           readOnly: true
           allOf:
-          - $ref: '#/components/schemas/Source'
+          - $ref: '#/components/schemas/SourceLink'
     Entity:
       required:
       - name
@@ -639,7 +639,7 @@ components:
         source_of_claim:
           readOnly: true
           allOf:
-          - $ref: '#/components/schemas/Source'
+          - $ref: '#/components/schemas/SourceLink'
     PatchedEntity:
       type: object
       properties:
@@ -713,6 +713,20 @@ components:
           type: string
           format: date-time
           readOnly: true
+    SourceLink:
+      required:
+      - authors
+      - id
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        authors:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Entity'
     Topic:
       required:
       - name
