@@ -11,7 +11,14 @@ interface SourceLinkProps {
 
 const useStyles = makeStyles((theme: Theme) => ({
   source: {
-    margin: theme.spacing(1)
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(2),
+    color: theme.palette.primary.main,
+    textDecoration: 'none',
+    '&:hover': {
+      color: theme.palette.primary.light,
+      textDecoration: 'underline'
+    }
   }
 }))
 
@@ -23,18 +30,18 @@ const SourceLink: React.FC<SourceLinkProps> = (props) => {
     source = data
   }
   return (
-    <div className={classes.source}>
+    <>
       {
         source ?
           <Link to={'/source/' + props.id}>
-            <Typography variant='body1'>
+            <Typography variant='body1' className={classes.source}>
               Source
             </Typography>
           </Link>
           :
           ''
       }
-    </div>
+    </>
   )
 }
 

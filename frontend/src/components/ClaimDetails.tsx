@@ -12,10 +12,10 @@ interface ClaimDetailsProps {
 
 const useStyles = makeStyles((theme: Theme) => ({
   card: {
-    margin: theme.spacing(2)
+    margin: theme.spacing(2),
+    padding: theme.spacing(0.5)
   },
   claimText: {
-    marginBottom: theme.spacing(1)
   }
 }))
 
@@ -34,7 +34,7 @@ const ClaimDetails: React.FC<ClaimDetailsProps> = (props) => {
         {
           claim ?
             <>
-              <Typography variant='h5' className={classes.claimText}>
+              <Typography variant='h5' className={classes.claimText} gutterBottom>
                 {'“' + claim.claim_text + '”'}
               </Typography>
               <Typography variant='caption'>
