@@ -47,19 +47,18 @@ class EvidenceReviewSerializer(serializers.ModelSerializer):
 
 
 class EvidenceSerializer(serializers.ModelSerializer):
-    claim = ClaimSerializer(read_only=True)
     source_of_evidence = SourceSerializer(read_only=True)
 
     class Meta:
         model = Evidence
-        fields = ['claim', 'source_of_evidence', 'evidence_relationship', 'description', 'is_expert_verified']
+        fields = ['source_of_evidence', 'evidence_relationship', 'description', 'is_expert_verified']
 
 
 class ClaimWithEvidenceSerializer(serializers.ModelSerializer):
     topic = TopicSerializer(read_only=True)
     source_of_claim = SourceLinkSerializer(read_only=True)
-    evidence = EvidenceSerializer(many=True, read_only=True)
+    related_evidence = EvidenceSerializer(many=True, read_only=True)
 
     class Meta:
         model = Claim
-        fields = ['id', 'claim_text', 'description', 'topic', 'source_of_claim', 'evidence']
+        fields = ['id', 'claim_text', 'description', 'topic', 'source_of_claim', 'related_evidence']
