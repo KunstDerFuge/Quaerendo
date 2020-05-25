@@ -4,6 +4,7 @@ import { Card, Theme, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import VerifiedUserRoundedIcon from '@material-ui/icons/VerifiedUserRounded'
 import DoneRoundedIcon from '@material-ui/icons/DoneRounded'
+import EvidenceRelationshipChip from './EvidenceRelationshipChip'
 
 interface EvidenceProps {
   evidence: Evidence
@@ -38,6 +39,7 @@ const EvidenceInfo: React.FC<EvidenceProps> = (props) => {
           ''
       }
       <DoneRoundedIcon fontSize='small' className={classes.icon} />
+      <EvidenceRelationshipChip relationship={props.evidence.evidence_relationship} />
       <Typography variant='body2' component='p'>
         {
           props.evidence.description !== '' ?
