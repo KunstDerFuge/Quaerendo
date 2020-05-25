@@ -61,6 +61,7 @@ class EvidenceRelationship(models.TextChoices):
     INCONCLUSIVE = 'INCONCLUSIVE'
     DISPUTES = 'DISPUTES'
     DISPROVES = 'DISPROVES'
+    SPLIT = 'SPLIT'
 
 
 class Evidence(models.Model):
