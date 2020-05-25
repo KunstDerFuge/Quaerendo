@@ -32,6 +32,7 @@ const EvidenceInfo: React.FC<EvidenceProps> = (props) => {
             'Untitled'
         }
       </Typography>
+      <EvidenceRelationshipChip relationship={props.evidence.evidence_relationship} />
       {
         props.evidence.is_expert_verified ?
           <VerifiedUserRoundedIcon fontSize='small' className={classes.icon} />
@@ -39,7 +40,6 @@ const EvidenceInfo: React.FC<EvidenceProps> = (props) => {
           ''
       }
       <DoneRoundedIcon fontSize='small' className={classes.icon} />
-      <EvidenceRelationshipChip relationship={props.evidence.evidence_relationship} />
       <Typography variant='body2' component='p'>
         {
           props.evidence.description !== '' ?
