@@ -10,6 +10,7 @@ import {
   ExpansionPanelDetails,
   ExpansionPanelSummary,
   Fab,
+  Grid,
   Theme,
   Typography
 } from '@material-ui/core'
@@ -18,6 +19,7 @@ import AuthorsLinksList from './AuthorsLinksList'
 import SourceLink from './SourceLink'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import NoteAddRoundedIcon from '@material-ui/icons/NoteAddRounded'
+import EvidenceInfo from './EvidenceInfo'
 
 interface ClaimDetailsProps {
   id: number
@@ -41,34 +43,81 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   extendedIcon: {
     marginRight: theme.spacing(1)
+  },
+  evidenceActions: {
+    justifyContent: 'flex-start'
+  },
+  fullWidth: {
+    width: '100%'
+  },
+  noEvidence: {
+    marginTop: theme.spacing(2)
   }
 }))
 
 const EvidencePanel: React.FC<EvidencePanelProps> = (props) => {
   const classes = useStyles()
   const [showEvidence, setShowEvidence] = React.useState(false)
+  const evidenceSummary = 'This claim remains unverified.'
+  const supportingEvidence = props.evidence.filter(
+    (evidence) => evidence.evidence_relationship === 'SUPPORTS' || evidence.evidence_relationship === 'PROVES')
+
+  const disputingEvidence = props.evidence.filter(
+    (evidence) => evidence.evidence_relationship === 'DISPROVES' || evidence.evidence_relationship === 'DISPUTES')
+
+  console.log(supportingEvidence)
+  console.log(disputingEvidence)
   return (
     <div className={classes.evidencePanel}>
       <ExpansionPanel expanded={showEvidence} onChange={() => setShowEvidence(!showEvidence)}>
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
         >
-          <Typography>Evidence</Typography>
+          <Typography variant='h5'>Evidence</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <Typography>
-            {
-              props.evidence.length !== 0 ?
-                props.evidence.map((evidence, index) => {
-                  return evidence.evidence_relationship
-                })
-                :
-                'No evidence is available for this claim.'
-            }
-          </Typography>
+          <Grid container className={classes.fullWidth} direction='row' spacing={2}>
+            <Typography variant='body1' className={classes.fullWidth} paragraph>
+              {evidenceSummary}
+            </Typography>
+            <Grid item container direction='column' xs={6}>
+              <Typography>
+                <b>Supporting:</b>
+              </Typography>
+              <Grid item>
+                {
+                  supportingEvidence.length !== 0 ?
+                    supportingEvidence.map((evidence, index) => {
+                      return <EvidenceInfo evidence={evidence} key={index} />
+                    })
+                    :
+                    <Typography variant='body1' className={classes.noEvidence}>
+                      No supporting evidence is available for this claim.
+                    </Typography>
+                }
+              </Grid>
+            </Grid>
+            <Grid item container direction='column' xs={6}>
+              <Typography>
+                <b>Disputing:</b>
+              </Typography>
+              <Grid item>
+                {
+                  disputingEvidence.length !== 0 ?
+                    disputingEvidence.map((evidence, index) => {
+                      return <EvidenceInfo evidence={evidence} key={index} />
+                    })
+                    :
+                    <Typography variant='body1' className={classes.noEvidence}>
+                      No disputing evidence is available for this claim.
+                    </Typography>
+                }
+              </Grid>
+            </Grid>
+          </Grid>
         </ExpansionPanelDetails>
         <Divider />
-        <ExpansionPanelActions>
+        <ExpansionPanelActions className={classes.evidenceActions}>
           <Fab size='medium' variant="extended" color="primary" aria-label="add" className={classes.margin}>
             <NoteAddRoundedIcon className={classes.extendedIcon} />
             Submit Evidence
