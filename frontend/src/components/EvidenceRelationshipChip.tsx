@@ -8,7 +8,6 @@ interface EvidenceRelationshipChipProps {
 }
 
 function getColorFromRelationship(relationship: EvidenceRelationshipEnum) {
-  console.log(relationship)
   switch(relationship) {
     case 'PROVES':
       return '#00f'
@@ -37,7 +36,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const EvidenceRelationshipChip: React.FC<EvidenceRelationshipChipProps> = (props) => {
   const classes = useStyles(props)
-  console.log(props.relationship)
   return (
     <Chip
       className={classes.chip}

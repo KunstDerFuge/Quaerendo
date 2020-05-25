@@ -65,8 +65,6 @@ const EvidencePanel: React.FC<EvidencePanelProps> = (props) => {
   const disputingEvidence = props.evidence.filter(
     (evidence) => evidence.evidence_relationship === 'DISPROVES' || evidence.evidence_relationship === 'DISPUTES')
 
-  console.log(supportingEvidence)
-  console.log(disputingEvidence)
   return (
     <div className={classes.evidencePanel}>
       <ExpansionPanel expanded={showEvidence} onChange={() => setShowEvidence(!showEvidence)}>

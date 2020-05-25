@@ -28,8 +28,6 @@ const AuthorsLinksList: React.FC<AuthorsLinksListProps> = (props) => {
   const separators = authors.map((author, index) => {
     return index === authors.length - 1 ? '' : ', '
   })
-  console.log(authors)
-  console.log(separators)
   return (
     <>
       {
