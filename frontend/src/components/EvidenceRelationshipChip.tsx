@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { EvidenceRelationshipEnum } from '../openapi-types'
-import { Chip, Theme } from '@material-ui/core'
+import { Chip, Theme, Tooltip } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 
 interface EvidenceRelationshipChipProps {
@@ -8,7 +8,7 @@ interface EvidenceRelationshipChipProps {
 }
 
 function getColorFromRelationship(relationship: EvidenceRelationshipEnum) {
-  switch(relationship) {
+  switch (relationship) {
     case 'PROVES':
       return '#00f'
     case 'SUPPORTS':
@@ -36,12 +36,28 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const EvidenceRelationshipChip: React.FC<EvidenceRelationshipChipProps> = (props) => {
   const classes = useStyles(props)
+  const relationship = props.relationship.toLowerCase()
+  let summary = 'This piece of evidence '
+  switch (props.relationship) {
+    case 'UNRELATED':
+      summary += 'is unrelated.'
+      break
+    case 'INCONCLUSIVE':
+      summary += 'is inconclusive with respect to the claim.'
+      break
+    default:
+      summary += relationship + ' the claim.'
+
+  }
   return (
-    <Chip
-      className={classes.chip}
-      label={props.relationship.toLowerCase()}
-      size='small'
-    />
+    <Tooltip title={summary}>
+      <Chip
+        className={classes.chip}
+        label={relationship}
+        aria-label={summary}
+        size='small'
+      />
+    </Tooltip>
   )
 }
 

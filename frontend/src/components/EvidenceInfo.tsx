@@ -3,8 +3,8 @@ import { Evidence } from '../openapi-types'
 import { Card, Theme, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import VerifiedUserRoundedIcon from '@material-ui/icons/VerifiedUserRounded'
-import DoneRoundedIcon from '@material-ui/icons/DoneRounded'
 import EvidenceRelationshipChip from './EvidenceRelationshipChip'
+import CommunityVerifiedCheck from './CommunityVerifiedCheck'
 
 interface EvidenceProps {
   evidence: Evidence
@@ -39,7 +39,7 @@ const EvidenceInfo: React.FC<EvidenceProps> = (props) => {
           :
           ''
       }
-      <DoneRoundedIcon fontSize='small' className={classes.icon} />
+      <CommunityVerifiedCheck />
       <Typography variant='body2' component='p'>
         {
           props.evidence.description !== '' ?
