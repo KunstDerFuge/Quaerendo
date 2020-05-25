@@ -1,5 +1,4 @@
-from drf_spectacular.types import OpenApiTypes
-from drf_spectacular.utils import OpenApiParameter, extend_schema
+from drf_spectacular.utils import extend_schema
 from rest_framework import generics
 
 from api.models import Entity, Source, Claim, Evidence
@@ -58,15 +57,6 @@ class ClaimDetail(generics.RetrieveUpdateAPIView):
     serializer_class = ClaimWithEvidenceSerializer
 
 
-@extend_schema(
-    parameters=[
-        OpenApiParameter(
-            name='is_expert_verified',
-            description='Is this evidence expert verified?',
-            required=False,
-            type=OpenApiTypes.BOOL)
-    ]
-)
 class EvidenceList(generics.ListCreateAPIView):
     """
     REST endpoints for viewing and submitting claims

@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+
 from users.models import User
 
 
@@ -71,11 +72,6 @@ class Evidence(models.Model):
     description = models.TextField(blank=True)
     submitted_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, null=True, blank=True,
                                      related_name='evidence_submitted')
-
-    def is_expert_verified(self) -> bool:
-        topic_experts = self.claim.topic.experts.all()
-        expert_reviews = [review for review in self.reviews.all() if review.reviewer in topic_experts]
-        return any([review.deduced_evidence_relationship == self.evidence_relationship for review in expert_reviews])
 
     def __str__(self):
         return 'Evidence {} {} | {}'.format(self.evidence_relationship, str(self.claim), str(self.source_of_evidence))
