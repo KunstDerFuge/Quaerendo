@@ -19,7 +19,7 @@ export interface ClaimWithEvidence {
   description?: string;
   topic: Topic;
   source_of_claim: SourceLink;
-  evidence: Evidence[];
+  related_evidence: Evidence[];
 }
 
 export interface Entity {
@@ -28,7 +28,6 @@ export interface Entity {
 }
 
 export interface Evidence {
-  claim: Claim;
   source_of_evidence: Source;
   evidence_relationship: EvidenceRelationshipEnum;
   description?: string;
@@ -41,7 +40,7 @@ export interface PatchedClaimWithEvidence {
   description?: string;
   topic?: Topic;
   source_of_claim?: SourceLink;
-  evidence?: Evidence[];
+  related_evidence?: Evidence[];
 }
 
 export interface PatchedEntity {
@@ -50,7 +49,6 @@ export interface PatchedEntity {
 }
 
 export interface PatchedEvidence {
-  claim?: Claim;
   source_of_evidence?: Source;
   evidence_relationship?: EvidenceRelationshipEnum;
   description?: string;
