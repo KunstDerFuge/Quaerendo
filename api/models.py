@@ -20,6 +20,7 @@ class SourceDegree(models.TextChoices):
 
 class Source(models.Model):
     url = models.URLField(max_length=200, blank=True)
+    title = models.CharField(max_length=250, blank=True)
     description = models.TextField(blank=True)
     authors = models.ManyToManyField(Entity, related_name='sources_authored')
     date_retrieved = models.DateTimeField(auto_now_add=True)
