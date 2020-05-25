@@ -56,6 +56,7 @@ export interface PatchedEvidence {
 }
 
 export interface PatchedSource {
+  title?: string;
   url?: string;
   description?: string;
   source_degree?: SourceDegreeEnum | null;
@@ -64,6 +65,7 @@ export interface PatchedSource {
 }
 
 export interface Source {
+  title?: string;
   url?: string;
   description?: string;
   source_degree?: SourceDegreeEnum | null;
