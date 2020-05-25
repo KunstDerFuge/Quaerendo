@@ -49,13 +49,13 @@ function App() {
             <List>
               <ListItem button>
                 <ListItemIcon>
-                  <CommentRoundedIcon />
+                  <CommentRoundedIcon color='primary' />
                 </ListItemIcon>
                 <ListItemText primary='Popular Claims' />
               </ListItem>
               <ListItem button>
                 <ListItemIcon>
-                  <RateReviewRoundedIcon />
+                  <RateReviewRoundedIcon color='primary' />
                 </ListItemIcon>
                 <ListItemText primary='Review' />
               </ListItem>
