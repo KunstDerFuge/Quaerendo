@@ -295,7 +295,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Evidence'
+                $ref: '#/components/schemas/EvidenceInfo'
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -317,20 +317,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Evidence'
+              $ref: '#/components/schemas/EvidenceInfo'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Evidence'
+              $ref: '#/components/schemas/EvidenceInfo'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Evidence'
+              $ref: '#/components/schemas/EvidenceInfo'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Evidence'
+                $ref: '#/components/schemas/EvidenceInfo'
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -354,7 +354,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Evidence'
+                $ref: '#/components/schemas/EvidenceInfo'
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -376,20 +376,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Evidence'
+              $ref: '#/components/schemas/EvidenceInfo'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Evidence'
+              $ref: '#/components/schemas/EvidenceInfo'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Evidence'
+              $ref: '#/components/schemas/EvidenceInfo'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Evidence'
+                $ref: '#/components/schemas/EvidenceInfo'
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -423,7 +423,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Evidence'
+                $ref: '#/components/schemas/EvidenceInfo'
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -617,7 +617,7 @@ components:
           type: array
           readOnly: true
           items:
-            $ref: '#/components/schemas/Evidence'
+            $ref: '#/components/schemas/EvidenceInfo'
     Entity:
       required:
       - name
@@ -669,7 +669,7 @@ components:
           type: array
           readOnly: true
           items:
-            $ref: '#/components/schemas/Evidence'
+            $ref: '#/components/schemas/EvidenceInfo'
     PatchedEntity:
       type: object
       properties:

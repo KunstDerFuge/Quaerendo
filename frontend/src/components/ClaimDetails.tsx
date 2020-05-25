@@ -61,9 +61,10 @@ const EvidencePanel: React.FC<EvidencePanelProps> = (props) => {
   const evidenceSummary = 'This claim remains unverified.'
   const supportingEvidence = props.evidence.filter(
     (evidence) => evidence.evidence_relationship === 'SUPPORTS' || evidence.evidence_relationship === 'PROVES')
-
   const disputingEvidence = props.evidence.filter(
     (evidence) => evidence.evidence_relationship === 'DISPROVES' || evidence.evidence_relationship === 'DISPUTES')
+  const otherEvidence = props.evidence.filter(
+    (evidence) => evidence.evidence_relationship === 'INCONCLUSIVE' || evidence.evidence_relationship === 'UNRELATED')
 
   return (
     <div className={classes.evidencePanel}>
@@ -114,6 +115,30 @@ const EvidencePanel: React.FC<EvidencePanelProps> = (props) => {
             </Grid>
           </Grid>
         </ExpansionPanelDetails>
+        {
+          otherEvidence.length !== 0 ?
+            <ExpansionPanel>
+              <ExpansionPanelSummary
+                expandIcon={<ExpandMoreIcon />}
+              >
+                <Typography variant='h6'>Other Evidence</Typography>
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                {
+                  otherEvidence.length !== 0 ?
+                    otherEvidence.map((evidence, index) => {
+                      return <EvidenceInfo evidence={evidence} key={index} />
+                    })
+                    :
+                    <Typography variant='body1' className={classes.noEvidence}>
+                      No other evidence is available for this claim.
+                    </Typography>
+                }
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
+            :
+            ''
+        }
         <Divider />
         <ExpansionPanelActions className={classes.evidenceActions}>
           <Fab size='medium' variant="extended" color="primary" aria-label="add" className={classes.margin}>
