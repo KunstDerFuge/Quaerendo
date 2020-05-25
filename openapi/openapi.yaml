@@ -695,6 +695,9 @@ components:
     PatchedSource:
       type: object
       properties:
+        title:
+          maxLength: 250
+          type: string
         url:
           maxLength: 200
           type: string
@@ -720,6 +723,9 @@ components:
       - date_retrieved
       type: object
       properties:
+        title:
+          maxLength: 250
+          type: string
         url:
           maxLength: 200
           type: string
