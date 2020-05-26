@@ -24,7 +24,7 @@ function getColorFromRelationship(relationship: EvidenceRelationshipEnum | 'UNDE
     case 'INCONCLUSIVE':
       return '#000'
     case 'UNRELATED':
-      return '#444'
+      return '#555'
     case 'SPLIT':
     case 'UNDER REVIEW':
       return '#333'
