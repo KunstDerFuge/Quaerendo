@@ -52,20 +52,28 @@ class EvidenceReviewSerializer(serializers.ModelSerializer):
 class EvidenceSerializer(serializers.ModelSerializer):
     source_of_evidence = SourceSerializer(read_only=True)
     expert_consensus_relationship = serializers.SerializerMethodField()
+    community_consensus_relationship = serializers.SerializerMethodField()
+    num_expert_reviews = serializers.SerializerMethodField()
+    num_community_reviews = serializers.SerializerMethodField()
 
     class Meta:
         model = Evidence
-        fields = ['source_of_evidence', 'evidence_relationship', 'description', 'expert_consensus_relationship']
+        fields = ['source_of_evidence', 'description', 'expert_consensus_relationship', 'num_expert_reviews',
+                  'community_consensus_relationship', 'num_community_reviews']
 
-    def get_expert_consensus_relationship(self, obj: Evidence) -> EvidenceRelationship:
+    @staticmethod
+    def get_consensus(obj: Evidence, expert: bool) -> EvidenceRelationship:
         topic_experts = obj.claim.topic.experts.all()
-        expert_reviews = obj.reviews.filter(reviewer__in=topic_experts)
+        if expert:
+            reviews = obj.reviews.filter(reviewer__in=topic_experts)
+        else:
+            reviews = obj.reviews.exclude(reviewer__in=topic_experts)
 
-        # If 80% of expert reviewers agree on an evidence relationship, return that. Otherwise, return 'SPLIT'.
+        # If 80% of reviewers agree on an evidence relationship, return that. Otherwise, return 'SPLIT'.
         deduced_relationships_by_count = dict()
-        num_expert_reviews = len(expert_reviews)
+        num_expert_reviews = len(reviews)
         num_required_for_80_pct_consensus = math.ceil(num_expert_reviews * 0.8)
-        for review in expert_reviews:
+        for review in reviews:
             if review.deduced_evidence_relationship not in deduced_relationships_by_count:
                 deduced_relationships_by_count[review.deduced_evidence_relationship] = 1
             else:
@@ -74,6 +82,27 @@ class EvidenceSerializer(serializers.ModelSerializer):
             if count >= num_required_for_80_pct_consensus:
                 return relationship
         return EvidenceRelationship.SPLIT
+
+    def get_expert_consensus_relationship(self, obj: Evidence) -> EvidenceRelationship:
+        return self.get_consensus(obj, expert=True)
+
+    def get_community_consensus_relationship(self, obj: Evidence) -> EvidenceRelationship:
+        return self.get_consensus(obj, expert=False)
+
+    @staticmethod
+    def get_num_reviews(obj: Evidence, expert: bool) -> int:
+        topic_experts = obj.claim.topic.experts.all()
+        if expert:
+            reviews = obj.reviews.filter(reviewer__in=topic_experts)
+        else:
+            reviews = obj.reviews.exclude(reviewer__in=topic_experts)
+        return reviews.count()
+
+    def get_num_expert_reviews(self, obj: Evidence) -> int:
+        return self.get_num_reviews(obj, expert=True)
+
+    def get_num_community_reviews(self, obj: Evidence) -> int:
+        return self.get_num_reviews(obj, expert=False)
 
 
 class ClaimWithEvidenceSerializer(serializers.ModelSerializer):
