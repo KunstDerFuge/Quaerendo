@@ -2,9 +2,7 @@ import * as React from 'react'
 import { Evidence } from '../openapi-types'
 import { Card, Theme, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
-import VerifiedUserRoundedIcon from '@material-ui/icons/VerifiedUserRounded'
-import EvidenceRelationshipChip from './EvidenceRelationshipChip'
-import CommunityVerifiedCheck from './CommunityVerifiedCheck'
+import EvidenceChips from './EvidenceChips'
 
 interface EvidenceProps {
   evidence: Evidence
@@ -32,14 +30,7 @@ const EvidenceInfo: React.FC<EvidenceProps> = (props) => {
             'Untitled'
         }
       </Typography>
-      <EvidenceRelationshipChip relationship={props.evidence.evidence_relationship} />
-      {
-        props.evidence.is_expert_verified ?
-          <VerifiedUserRoundedIcon fontSize='small' className={classes.icon} />
-          :
-          ''
-      }
-      <CommunityVerifiedCheck />
+      <EvidenceChips evidence={props.evidence} />
       <Typography variant='body2' component='p'>
         {
           props.evidence.description !== '' ?

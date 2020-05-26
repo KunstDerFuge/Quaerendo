@@ -59,12 +59,26 @@ const EvidencePanel: React.FC<EvidencePanelProps> = (props) => {
   const classes = useStyles()
   const [showEvidence, setShowEvidence] = React.useState(false)
   const evidenceSummary = 'This claim remains unverified.'
+  const positiveRels = ['SUPPORTS', 'PROVES']
+  const negativeRels = ['DISPUTES', 'DISPROVES']
+  const otherRels = ['UNRELATED', 'INCONCLUSIVE', 'SPLIT']
   const supportingEvidence = props.evidence.filter(
-    (evidence) => evidence.evidence_relationship === 'SUPPORTS' || evidence.evidence_relationship === 'PROVES')
+    (evidence) => evidence.num_expert_reviews >= 1 && (
+      positiveRels.includes(evidence.expert_consensus_relationship)) ||
+      evidence.num_community_reviews >= 3 && (
+        positiveRels.includes(evidence.community_consensus_relationship)))
   const disputingEvidence = props.evidence.filter(
-    (evidence) => evidence.evidence_relationship === 'DISPROVES' || evidence.evidence_relationship === 'DISPUTES')
+    (evidence) => evidence.num_expert_reviews >= 1 && (
+      negativeRels.includes(evidence.expert_consensus_relationship)) ||
+      evidence.num_community_reviews >= 3 && (
+        negativeRels.includes(evidence.community_consensus_relationship)))
   const otherEvidence = props.evidence.filter(
-    (evidence) => evidence.evidence_relationship === 'INCONCLUSIVE' || evidence.evidence_relationship === 'UNRELATED')
+    (evidence) => evidence.num_expert_reviews >= 1 && (
+      otherRels.includes(evidence.expert_consensus_relationship)) ||
+      evidence.num_community_reviews >= 3 && (
+        otherRels.includes(evidence.community_consensus_relationship)) ||
+      evidence.num_expert_reviews == 0 && evidence.num_community_reviews == 0)
+
 
   return (
     <div className={classes.evidencePanel}>
