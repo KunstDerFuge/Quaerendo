@@ -9,6 +9,7 @@ import MainTheme from './MainTheme'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import ClaimList from './ClaimsList'
 import ClaimDetails from './ClaimDetails'
+import EvidenceDetails from './EvidenceDetails'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -66,6 +67,8 @@ function App() {
             <Switch>
               <Route path='/claim/:id'
                      component={(routerProps: any) => <ClaimDetails id={routerProps.match.params.id} />} />
+              <Route path='/evidence/:id'
+                     component={(routerProps: any) => <EvidenceDetails id={routerProps.match.params.id} />} />
               <Route path='/'>
                 <ClaimList />
               </Route>

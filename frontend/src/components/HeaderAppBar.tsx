@@ -32,6 +32,12 @@ export function HeaderAppBar() {
               Claim
             </Typography>
           </Route>
+          <Route path='/evidence/'>
+            <BackButton />
+            <Typography variant='h6'>
+              Evidence
+            </Typography>
+          </Route>
           <Route path='/'>
             <Typography variant='h6'>
               Claims
