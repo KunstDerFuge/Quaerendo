@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }))
 
-const EvidenceInfo: React.FC<EvidenceProps> = (props) => {
+const EvidencePreviewCard: React.FC<EvidenceProps> = (props) => {
   const classes = useStyles()
   const history = useHistory()
   return (
@@ -48,4 +48,4 @@ const EvidenceInfo: React.FC<EvidenceProps> = (props) => {
   )
 }
 
-export default EvidenceInfo
+export default EvidencePreviewCard
