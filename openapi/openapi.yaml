@@ -614,11 +614,15 @@ components:
       required:
       - community_consensus_relationship
       - expert_consensus_relationship
+      - id
       - num_community_reviews
       - num_expert_reviews
       - source_of_evidence
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         source_of_evidence:
           readOnly: true
           allOf:
@@ -670,6 +674,9 @@ components:
     PatchedEvidence:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         source_of_evidence:
           readOnly: true
           allOf:
