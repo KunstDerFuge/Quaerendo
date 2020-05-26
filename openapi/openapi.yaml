@@ -280,22 +280,14 @@ paths:
     get:
       tags:
       - api
+      description: REST endpoints for viewing and submitting claims
       operationId: api_evidence_retrieve
-      parameters:
-      - name: is_expert_verified
-        in: query
-        description: Is this evidence expert verified?
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EvidenceInfo'
+                $ref: '#/components/schemas/Evidence'
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -303,34 +295,26 @@ paths:
     post:
       tags:
       - api
+      description: REST endpoints for viewing and submitting claims
       operationId: api_evidence_create
-      parameters:
-      - name: is_expert_verified
-        in: query
-        description: Is this evidence expert verified?
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/EvidenceInfo'
+              $ref: '#/components/schemas/Evidence'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/EvidenceInfo'
+              $ref: '#/components/schemas/Evidence'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/EvidenceInfo'
+              $ref: '#/components/schemas/Evidence'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EvidenceInfo'
+                $ref: '#/components/schemas/Evidence'
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -354,7 +338,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EvidenceInfo'
+                $ref: '#/components/schemas/Evidence'
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -376,20 +360,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/EvidenceInfo'
+              $ref: '#/components/schemas/Evidence'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/EvidenceInfo'
+              $ref: '#/components/schemas/Evidence'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/EvidenceInfo'
+              $ref: '#/components/schemas/Evidence'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EvidenceInfo'
+                $ref: '#/components/schemas/Evidence'
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -423,7 +407,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EvidenceInfo'
+                $ref: '#/components/schemas/Evidence'
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -617,7 +601,7 @@ components:
           type: array
           readOnly: true
           items:
-            $ref: '#/components/schemas/EvidenceInfo'
+            $ref: '#/components/schemas/Evidence'
     Entity:
       required:
       - name
@@ -631,7 +615,7 @@ components:
     Evidence:
       required:
       - evidence_relationship
-      - is_expert_verified
+      - expert_consensus_relationship
       - source_of_evidence
       type: object
       properties:
@@ -643,9 +627,8 @@ components:
           $ref: '#/components/schemas/EvidenceRelationshipEnum'
         description:
           type: string
-        is_expert_verified:
-          type: boolean
-          readOnly: true
+        expert_consensus_relationship:
+          $ref: '#/components/schemas/EvidenceRelationshipEnum'
     PatchedClaimWithEvidence:
       type: object
       properties:
@@ -669,7 +652,7 @@ components:
           type: array
           readOnly: true
           items:
-            $ref: '#/components/schemas/EvidenceInfo'
+            $ref: '#/components/schemas/Evidence'
     PatchedEntity:
       type: object
       properties:
@@ -689,9 +672,8 @@ components:
           $ref: '#/components/schemas/EvidenceRelationshipEnum'
         description:
           type: string
-        is_expert_verified:
-          type: boolean
-          readOnly: true
+        expert_consensus_relationship:
+          $ref: '#/components/schemas/EvidenceRelationshipEnum'
     PatchedSource:
       type: object
       properties:
@@ -776,6 +758,7 @@ components:
       - INCONCLUSIVE
       - DISPUTES
       - DISPROVES
+      - SPLIT
     SourceDegreeEnum:
       type: string
       enum:
