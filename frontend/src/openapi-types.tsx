@@ -31,7 +31,7 @@ export interface Evidence {
   source_of_evidence: Source;
   evidence_relationship: EvidenceRelationshipEnum;
   description?: string;
-  is_expert_verified: boolean;
+  expert_consensus_relationship: EvidenceRelationshipEnum;
 }
 
 export interface PatchedClaimWithEvidence {
@@ -52,7 +52,7 @@ export interface PatchedEvidence {
   source_of_evidence?: Source;
   evidence_relationship?: EvidenceRelationshipEnum;
   description?: string;
-  is_expert_verified?: boolean;
+  expert_consensus_relationship?: EvidenceRelationshipEnum;
 }
 
 export interface PatchedSource {
@@ -82,7 +82,7 @@ export interface Topic {
   name: string;
 }
 
-export type EvidenceRelationshipEnum = "PROVES" | "SUPPORTS" | "UNRELATED" | "INCONCLUSIVE" | "DISPUTES" | "DISPROVES";
+export type EvidenceRelationshipEnum = "PROVES" | "SUPPORTS" | "UNRELATED" | "INCONCLUSIVE" | "DISPUTES" | "DISPROVES" | "SPLIT";
 
 export type SourceDegreeEnum = "ORIGINAL" | "PRIMARY" | "SECONDARY" | "TERTIARY";
 
@@ -256,47 +256,45 @@ export type UseApiEntitiesPartialUpdateProps = Omit<UseMutateProps<Entity, void,
 export const useApiEntitiesPartialUpdate = ({id, ...props}: UseApiEntitiesPartialUpdateProps) => useMutate<Entity, unknown, void, PatchedEntity>("PATCH", `/api/entities/${id}`, props);
 
 
-export interface ApiEvidenceRetrieveQueryParams {
-  /**
-   * Is this evidence expert verified?
-   */
-  is_expert_verified?: boolean;
-}
+export type ApiEvidenceRetrieveProps = Omit<GetProps<Evidence, unknown, void>, "path">;
 
-export type ApiEvidenceRetrieveProps = Omit<GetProps<Evidence, unknown, ApiEvidenceRetrieveQueryParams>, "path">;
-
+/**
+ * REST endpoints for viewing and submitting claims
+ */
 export const ApiEvidenceRetrieve = (props: ApiEvidenceRetrieveProps) => (
-  <Get<Evidence, unknown, ApiEvidenceRetrieveQueryParams>
+  <Get<Evidence, unknown, void>
     path={`/api/evidence/`}
     {...props}
   />
 );
 
-export type UseApiEvidenceRetrieveProps = Omit<UseGetProps<Evidence, ApiEvidenceRetrieveQueryParams>, "path">;
+export type UseApiEvidenceRetrieveProps = Omit<UseGetProps<Evidence, void>, "path">;
 
-export const useApiEvidenceRetrieve = (props: UseApiEvidenceRetrieveProps) => useGet<Evidence, unknown, ApiEvidenceRetrieveQueryParams>(`/api/evidence/`, props);
+/**
+ * REST endpoints for viewing and submitting claims
+ */
+export const useApiEvidenceRetrieve = (props: UseApiEvidenceRetrieveProps) => useGet<Evidence, unknown, void>(`/api/evidence/`, props);
 
 
-export interface ApiEvidenceCreateQueryParams {
-  /**
-   * Is this evidence expert verified?
-   */
-  is_expert_verified?: boolean;
-}
+export type ApiEvidenceCreateProps = Omit<MutateProps<Evidence, unknown, void, Evidence>, "path" | "verb">;
 
-export type ApiEvidenceCreateProps = Omit<MutateProps<Evidence, unknown, ApiEvidenceCreateQueryParams, Evidence>, "path" | "verb">;
-
+/**
+ * REST endpoints for viewing and submitting claims
+ */
 export const ApiEvidenceCreate = (props: ApiEvidenceCreateProps) => (
-  <Mutate<Evidence, unknown, ApiEvidenceCreateQueryParams, Evidence>
+  <Mutate<Evidence, unknown, void, Evidence>
     verb="POST"
     path={`/api/evidence/`}
     {...props}
   />
 );
 
-export type UseApiEvidenceCreateProps = Omit<UseMutateProps<Evidence, ApiEvidenceCreateQueryParams, Evidence>, "path" | "verb">;
+export type UseApiEvidenceCreateProps = Omit<UseMutateProps<Evidence, void, Evidence>, "path" | "verb">;
 
-export const useApiEvidenceCreate = (props: UseApiEvidenceCreateProps) => useMutate<Evidence, unknown, ApiEvidenceCreateQueryParams, Evidence>("POST", `/api/evidence/`, props);
+/**
+ * REST endpoints for viewing and submitting claims
+ */
+export const useApiEvidenceCreate = (props: UseApiEvidenceCreateProps) => useMutate<Evidence, unknown, void, Evidence>("POST", `/api/evidence/`, props);
 
 
 export type ApiEvidenceDetailProps = Omit<GetProps<Evidence, unknown, void>, "path"> & {id: number};
