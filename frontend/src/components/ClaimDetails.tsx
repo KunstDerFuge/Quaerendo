@@ -64,17 +64,17 @@ const EvidencePanel: React.FC<EvidencePanelProps> = (props) => {
   const otherRels = ['UNRELATED', 'INCONCLUSIVE', 'SPLIT']
   const supportingEvidence = props.evidence.filter(
     (evidence) => evidence.num_expert_reviews >= 1 && (
-      positiveRels.includes(evidence.expert_consensus_relationship)) ||
+        positiveRels.includes(evidence.expert_consensus_relationship)) ||
       evidence.num_community_reviews >= 3 && (
         positiveRels.includes(evidence.community_consensus_relationship)))
   const disputingEvidence = props.evidence.filter(
     (evidence) => evidence.num_expert_reviews >= 1 && (
-      negativeRels.includes(evidence.expert_consensus_relationship)) ||
+        negativeRels.includes(evidence.expert_consensus_relationship)) ||
       evidence.num_community_reviews >= 3 && (
         negativeRels.includes(evidence.community_consensus_relationship)))
   const otherEvidence = props.evidence.filter(
     (evidence) => evidence.num_expert_reviews >= 1 && (
-      otherRels.includes(evidence.expert_consensus_relationship)) ||
+        otherRels.includes(evidence.expert_consensus_relationship)) ||
       evidence.num_community_reviews >= 3 && (
         otherRels.includes(evidence.community_consensus_relationship)) ||
       evidence.num_expert_reviews == 0 && evidence.num_community_reviews == 0)
