@@ -138,16 +138,22 @@ const EvidencePanel: React.FC<EvidencePanelProps> = (props) => {
                 <Typography variant='h6'>Other Evidence</Typography>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
-                {
-                  otherEvidence.length !== 0 ?
-                    otherEvidence.map((evidence, index) => {
-                      return <EvidenceInfo evidence={evidence} key={index} />
-                    })
-                    :
-                    <Typography variant='body1' className={classes.noEvidence}>
-                      No other evidence is available for this claim.
-                    </Typography>
-                }
+                <Grid container spacing={1}>
+                  {
+                    otherEvidence.length !== 0 ?
+                      otherEvidence.map((evidence, index) => {
+                        return (
+                          <Grid item xs={6}>
+                            <EvidenceInfo evidence={evidence} key={index} />
+                          </Grid>
+                        )
+                      })
+                      :
+                      <Typography variant='body1' className={classes.noEvidence}>
+                        No other evidence is available for this claim.
+                      </Typography>
+                  }
+                </Grid>
               </ExpansionPanelDetails>
             </ExpansionPanel>
             :
