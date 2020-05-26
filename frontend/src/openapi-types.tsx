@@ -92,6 +92,8 @@ export type ExpertConsensusRelationshipEnum = "PROVES" | "SUPPORTS" | "UNRELATED
 
 export type CommunityConsensusRelationshipEnum = "PROVES" | "SUPPORTS" | "UNRELATED" | "INCONCLUSIVE" | "DISPUTES" | "DISPROVES" | "SPLIT";
 
+export type EvidenceRelationshipEnum = "PROVES" | "SUPPORTS" | "UNRELATED" | "INCONCLUSIVE" | "DISPUTES" | "DISPROVES" | "SPLIT";
+
 export type SourceDegreeEnum = "ORIGINAL" | "PRIMARY" | "SECONDARY" | "TERTIARY";
 
 export type ApiClaimsRetrieveProps = Omit<GetProps<Claim, unknown, void>, "path">;
