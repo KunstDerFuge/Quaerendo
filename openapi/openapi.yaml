@@ -308,7 +308,6 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/Evidence'
-        required: true
       responses:
         "200":
           content:
@@ -367,7 +366,6 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/Evidence'
-        required: true
       responses:
         "200":
           content:
@@ -614,8 +612,10 @@ components:
           type: string
     Evidence:
       required:
-      - evidence_relationship
+      - community_consensus_relationship
       - expert_consensus_relationship
+      - num_community_reviews
+      - num_expert_reviews
       - source_of_evidence
       type: object
       properties:
@@ -623,12 +623,18 @@ components:
           readOnly: true
           allOf:
           - $ref: '#/components/schemas/Source'
-        evidence_relationship:
-          $ref: '#/components/schemas/EvidenceRelationshipEnum'
         description:
           type: string
         expert_consensus_relationship:
           $ref: '#/components/schemas/EvidenceRelationshipEnum'
+        num_expert_reviews:
+          type: integer
+          readOnly: true
+        community_consensus_relationship:
+          $ref: '#/components/schemas/EvidenceRelationshipEnum'
+        num_community_reviews:
+          type: integer
+          readOnly: true
     PatchedClaimWithEvidence:
       type: object
       properties:
@@ -668,12 +674,18 @@ components:
           readOnly: true
           allOf:
           - $ref: '#/components/schemas/Source'
-        evidence_relationship:
-          $ref: '#/components/schemas/EvidenceRelationshipEnum'
         description:
           type: string
         expert_consensus_relationship:
           $ref: '#/components/schemas/EvidenceRelationshipEnum'
+        num_expert_reviews:
+          type: integer
+          readOnly: true
+        community_consensus_relationship:
+          $ref: '#/components/schemas/EvidenceRelationshipEnum'
+        num_community_reviews:
+          type: integer
+          readOnly: true
     PatchedSource:
       type: object
       properties:
