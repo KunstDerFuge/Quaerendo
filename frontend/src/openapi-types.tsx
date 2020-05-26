@@ -28,6 +28,7 @@ export interface Entity {
 }
 
 export interface Evidence {
+  id: number;
   source_of_evidence: Source;
   description?: string;
   expert_consensus_relationship: EvidenceRelationshipEnum;
@@ -51,6 +52,7 @@ export interface PatchedEntity {
 }
 
 export interface PatchedEvidence {
+  id?: number;
   source_of_evidence?: Source;
   description?: string;
   expert_consensus_relationship?: EvidenceRelationshipEnum;
