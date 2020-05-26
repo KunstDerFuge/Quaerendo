@@ -19,7 +19,7 @@ import AuthorsLinksList from './AuthorsLinksList'
 import SourceLink from './SourceLink'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import NoteAddRoundedIcon from '@material-ui/icons/NoteAddRounded'
-import EvidenceInfo from './EvidenceInfo'
+import EvidencePreviewCard from './EvidencePreviewCard'
 
 interface ClaimDetailsProps {
   id: number
@@ -101,7 +101,7 @@ const EvidencePanel: React.FC<EvidencePanelProps> = (props) => {
                 {
                   supportingEvidence.length !== 0 ?
                     supportingEvidence.map((evidence, index) => {
-                      return <EvidenceInfo evidence={evidence} key={index} />
+                      return <EvidencePreviewCard evidence={evidence} key={index} />
                     })
                     :
                     <Typography variant='body1' className={classes.noEvidence}>
@@ -118,7 +118,7 @@ const EvidencePanel: React.FC<EvidencePanelProps> = (props) => {
                 {
                   disputingEvidence.length !== 0 ?
                     disputingEvidence.map((evidence, index) => {
-                      return <EvidenceInfo evidence={evidence} key={index} />
+                      return <EvidencePreviewCard evidence={evidence} key={index} />
                     })
                     :
                     <Typography variant='body1' className={classes.noEvidence}>
@@ -144,7 +144,7 @@ const EvidencePanel: React.FC<EvidencePanelProps> = (props) => {
                       otherEvidence.map((evidence, index) => {
                         return (
                           <Grid item xs={6}>
-                            <EvidenceInfo evidence={evidence} key={index} />
+                            <EvidencePreviewCard evidence={evidence} key={index} />
                           </Grid>
                         )
                       })
