@@ -59,7 +59,7 @@ class EvidenceSerializer(serializers.ModelSerializer):
 
     def get_expert_consensus_relationship(self, obj: Evidence) -> EvidenceRelationship:
         topic_experts = obj.claim.topic.experts.all()
-        expert_reviews = [review for review in obj.reviews.all() if review.reviewer in topic_experts]
+        expert_reviews = obj.reviews.filter(reviewer__in=topic_experts)
 
         # If 80% of expert reviewers agree on an evidence relationship, return that. Otherwise, return 'SPLIT'.
         deduced_relationships_by_count = dict()
