@@ -58,7 +58,7 @@ class EvidenceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Evidence
-        fields = ['source_of_evidence', 'description', 'expert_consensus_relationship', 'num_expert_reviews',
+        fields = ['id', 'source_of_evidence', 'description', 'expert_consensus_relationship', 'num_expert_reviews',
                   'community_consensus_relationship', 'num_community_reviews']
 
     @staticmethod
