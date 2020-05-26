@@ -29,9 +29,11 @@ export interface Entity {
 
 export interface Evidence {
   source_of_evidence: Source;
-  evidence_relationship: EvidenceRelationshipEnum;
   description?: string;
   expert_consensus_relationship: EvidenceRelationshipEnum;
+  num_expert_reviews: number;
+  community_consensus_relationship: EvidenceRelationshipEnum;
+  num_community_reviews: number;
 }
 
 export interface PatchedClaimWithEvidence {
@@ -50,9 +52,11 @@ export interface PatchedEntity {
 
 export interface PatchedEvidence {
   source_of_evidence?: Source;
-  evidence_relationship?: EvidenceRelationshipEnum;
   description?: string;
   expert_consensus_relationship?: EvidenceRelationshipEnum;
+  num_expert_reviews?: number;
+  community_consensus_relationship?: EvidenceRelationshipEnum;
+  num_community_reviews?: number;
 }
 
 export interface PatchedSource {
