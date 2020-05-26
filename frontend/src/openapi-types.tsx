@@ -31,9 +31,9 @@ export interface Evidence {
   id: number;
   source_of_evidence: Source;
   description?: string;
-  expert_consensus_relationship: EvidenceRelationshipEnum;
+  expert_consensus_relationship: ExpertConsensusRelationshipEnum;
   num_expert_reviews: number;
-  community_consensus_relationship: EvidenceRelationshipEnum;
+  community_consensus_relationship: CommunityConsensusRelationshipEnum;
   num_community_reviews: number;
 }
 
@@ -55,9 +55,9 @@ export interface PatchedEvidence {
   id?: number;
   source_of_evidence?: Source;
   description?: string;
-  expert_consensus_relationship?: EvidenceRelationshipEnum;
+  expert_consensus_relationship?: ExpertConsensusRelationshipEnum;
   num_expert_reviews?: number;
-  community_consensus_relationship?: EvidenceRelationshipEnum;
+  community_consensus_relationship?: CommunityConsensusRelationshipEnum;
   num_community_reviews?: number;
 }
 
@@ -88,7 +88,9 @@ export interface Topic {
   name: string;
 }
 
-export type EvidenceRelationshipEnum = "PROVES" | "SUPPORTS" | "UNRELATED" | "INCONCLUSIVE" | "DISPUTES" | "DISPROVES" | "SPLIT";
+export type ExpertConsensusRelationshipEnum = "PROVES" | "SUPPORTS" | "UNRELATED" | "INCONCLUSIVE" | "DISPUTES" | "DISPROVES" | "SPLIT";
+
+export type CommunityConsensusRelationshipEnum = "PROVES" | "SUPPORTS" | "UNRELATED" | "INCONCLUSIVE" | "DISPUTES" | "DISPROVES" | "SPLIT";
 
 export type SourceDegreeEnum = "ORIGINAL" | "PRIMARY" | "SECONDARY" | "TERTIARY";
 

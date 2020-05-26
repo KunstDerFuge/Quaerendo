@@ -83,9 +83,11 @@ class EvidenceSerializer(serializers.ModelSerializer):
                 return relationship
         return EvidenceRelationship.SPLIT
 
+    @extend_schema_field(serializers.ChoiceField(choices=EvidenceRelationship.choices))
     def get_expert_consensus_relationship(self, obj: Evidence) -> EvidenceRelationship:
         return self.get_consensus(obj, expert=True)
 
+    @extend_schema_field(serializers.ChoiceField(choices=EvidenceRelationship.choices))
     def get_community_consensus_relationship(self, obj: Evidence) -> EvidenceRelationship:
         return self.get_consensus(obj, expert=False)
 
