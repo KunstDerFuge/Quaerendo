@@ -630,12 +630,16 @@ components:
         description:
           type: string
         expert_consensus_relationship:
-          $ref: '#/components/schemas/EvidenceRelationshipEnum'
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/ExpertConsensusRelationshipEnum'
         num_expert_reviews:
           type: integer
           readOnly: true
         community_consensus_relationship:
-          $ref: '#/components/schemas/EvidenceRelationshipEnum'
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/CommunityConsensusRelationshipEnum'
         num_community_reviews:
           type: integer
           readOnly: true
@@ -684,12 +688,16 @@ components:
         description:
           type: string
         expert_consensus_relationship:
-          $ref: '#/components/schemas/EvidenceRelationshipEnum'
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/ExpertConsensusRelationshipEnum'
         num_expert_reviews:
           type: integer
           readOnly: true
         community_consensus_relationship:
-          $ref: '#/components/schemas/EvidenceRelationshipEnum'
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/CommunityConsensusRelationshipEnum'
         num_community_reviews:
           type: integer
           readOnly: true
@@ -768,7 +776,17 @@ components:
         name:
           maxLength: 100
           type: string
-    EvidenceRelationshipEnum:
+    ExpertConsensusRelationshipEnum:
+      type: string
+      enum:
+      - PROVES
+      - SUPPORTS
+      - UNRELATED
+      - INCONCLUSIVE
+      - DISPUTES
+      - DISPROVES
+      - SPLIT
+    CommunityConsensusRelationshipEnum:
       type: string
       enum:
       - PROVES
