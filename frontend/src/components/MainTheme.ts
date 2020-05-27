@@ -9,10 +9,12 @@ const MainTheme = createMuiTheme({
   typography: {
     h4: {
       fontFamily: 'garamond-premier-pro',
+      letterSpacing: '-0.5px'
     },
     h5: {
       fontFamily: 'garamond-premier-pro',
-      fontSize: '1.75rem'
+      fontSize: '1.75rem',
+      letterSpacing: '-0.5px'
     },
     h6: {
       fontFamily: 'garamond-premier-pro',
