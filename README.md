@@ -1,3 +1,5 @@
+![Demo](demo.gif)
+
 ## What is this?
 This is an attempt at creating a democratized, open-source website that does fact checking.
 
