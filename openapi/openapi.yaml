@@ -569,7 +569,7 @@ components:
         source_of_claim:
           readOnly: true
           allOf:
-          - $ref: '#/components/schemas/SourceLink'
+          - $ref: '#/components/schemas/Source'
     ClaimWithEvidence:
       required:
       - claim_text
