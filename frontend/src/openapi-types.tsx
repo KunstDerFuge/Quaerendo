@@ -10,7 +10,7 @@ export interface Claim {
   claim_text: string;
   description?: string;
   topic: Topic;
-  source_of_claim: SourceLink;
+  source_of_claim: Source;
 }
 
 export interface ClaimWithEvidence {
