@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const EvidencePanel: React.FC<EvidencePanelProps> = (props) => {
   const classes = useStyles()
-  const [showEvidence, setShowEvidence] = React.useState(false)
+  const [showEvidence, setShowEvidence] = React.useState(true)
   const evidenceSummary = 'This claim remains unverified.'
   const positiveRels = ['SUPPORTS', 'PROVES']
   const negativeRels = ['DISPUTES', 'DISPROVES']
@@ -190,7 +190,7 @@ const ClaimDetails: React.FC<ClaimDetailsProps> = (props) => {
                 <Typography variant='h5' gutterBottom>
                   {'“' + claim.claim_text + '”'}
                 </Typography>
-                <Typography variant='caption'>
+                <Typography variant='caption' gutterBottom>
                   <span>― <AuthorsLinksList authors={claim.source_of_claim.authors} /></span>
                 </Typography>
                 <SourceLink id={claim.source_of_claim.id} />

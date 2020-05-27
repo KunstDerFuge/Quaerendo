@@ -25,7 +25,7 @@ const EvidencePreviewCard: React.FC<EvidenceProps> = (props) => {
     <Card variant='outlined' className={classes.evidenceCard}>
       <CardActionArea onClick={() => history.push('/evidence/' + props.evidence.id)}>
         <CardContent>
-          <Typography variant='h6' display='inline'>
+          <Typography variant='h6' display='inline' gutterBottom>
             {
               props.evidence.source_of_evidence.title !== '' ?
                 props.evidence.source_of_evidence.title
