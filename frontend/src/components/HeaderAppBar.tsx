@@ -5,6 +5,10 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import { makeStyles } from '@material-ui/styles'
 
 const useStyles = makeStyles((theme: Theme) => ({
+  roboto: {
+    fontFamily: 'Roboto, sans-serif',
+    fontSize: '1.25rem'
+  },
   contrastButton: {
     color: theme.palette.primary.contrastText,
     marginLeft: theme.spacing(-2)
@@ -22,24 +26,25 @@ const BackButton: React.FC<{}> = () => {
 }
 
 export function HeaderAppBar() {
+  const classes = useStyles()
   return (
     <AppBar position='static'>
       <Toolbar variant='dense'>
         <Switch>
           <Route path='/claim/'>
             <BackButton />
-            <Typography variant='h6'>
+            <Typography variant='h6' className={classes.roboto}>
               Claim
             </Typography>
           </Route>
           <Route path='/evidence/'>
             <BackButton />
-            <Typography variant='h6'>
+            <Typography variant='h6' className={classes.roboto}>
               Evidence
             </Typography>
           </Route>
           <Route path='/'>
-            <Typography variant='h6'>
+            <Typography variant='h6' className={classes.roboto}>
               Claims
             </Typography>
           </Route>
