@@ -89,42 +89,46 @@ const EvidencePanel: React.FC<EvidencePanelProps> = (props) => {
           <Typography variant='h5'>Evidence</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <Grid container className={classes.fullWidth} direction='row' spacing={2}>
-            <Typography variant='body1' className={classes.fullWidth} paragraph>
-              {evidenceSummary}
-            </Typography>
-            <Grid item container direction='column' xs={6}>
-              <Typography>
-                <b>Supporting:</b>
+          <Grid container>
+            <Grid item container>
+              <Typography variant='body1' paragraph>
+                {evidenceSummary}
               </Typography>
-              <Grid item>
-                {
-                  supportingEvidence.length !== 0 ?
-                    supportingEvidence.map((evidence, index) => {
-                      return <EvidencePreviewCard evidence={evidence} key={index} />
-                    })
-                    :
-                    <Typography variant='body1' className={classes.noEvidence}>
-                      No supporting evidence is available for this claim.
-                    </Typography>
-                }
-              </Grid>
             </Grid>
-            <Grid item container direction='column' xs={6}>
-              <Typography>
-                <b>Disputing:</b>
-              </Typography>
-              <Grid item>
-                {
-                  disputingEvidence.length !== 0 ?
-                    disputingEvidence.map((evidence, index) => {
-                      return <EvidencePreviewCard evidence={evidence} key={index} />
-                    })
-                    :
-                    <Typography variant='body1' className={classes.noEvidence}>
-                      No disputing evidence is available for this claim.
-                    </Typography>
-                }
+            <Grid container spacing={2} xs={12}>
+              <Grid item container direction='column' xs={6}>
+                <Typography>
+                  <b>Supporting:</b>
+                </Typography>
+                <Grid item>
+                  {
+                    supportingEvidence.length !== 0 ?
+                      supportingEvidence.map((evidence, index) => {
+                        return <EvidencePreviewCard evidence={evidence} key={index} />
+                      })
+                      :
+                      <Typography variant='body1' className={classes.noEvidence}>
+                        No supporting evidence is available for this claim.
+                      </Typography>
+                  }
+                </Grid>
+              </Grid>
+              <Grid item container direction='column' xs={6}>
+                <Typography>
+                  <b>Disputing:</b>
+                </Typography>
+                <Grid item>
+                  {
+                    disputingEvidence.length !== 0 ?
+                      disputingEvidence.map((evidence, index) => {
+                        return <EvidencePreviewCard evidence={evidence} key={index} />
+                      })
+                      :
+                      <Typography variant='body1' className={classes.noEvidence}>
+                        No disputing evidence is available for this claim.
+                      </Typography>
+                  }
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
