@@ -24,11 +24,11 @@ const ClaimPreview: React.FC<ClaimPreviewProps> = (props: ClaimPreviewProps) => 
       <Card elevation={4} className={classes.card}>
         <CardActionArea onClick={() => history.push('/claim/' + claim.id)}>
           <CardContent>
-            <Typography color='textSecondary'>
-              <AuthorsLinksList authors={claim.source_of_claim.authors} />
-            </Typography>
-            <Typography variant='h5' gutterBottom>
+            <Typography variant='h5'>
               {claim.claim_text}
+            </Typography>
+            <Typography gutterBottom>
+              <AuthorsLinksList authors={claim.source_of_claim.authors} />
             </Typography>
             <Typography variant='subtitle2' color='textSecondary'>
               {claim.description}

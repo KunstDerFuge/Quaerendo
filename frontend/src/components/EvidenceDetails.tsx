@@ -62,7 +62,7 @@ const EvidenceDetails: React.FC<EvidenceDetailProps> = (props) => {
           {
             evidence ?
               <>
-                <Typography variant='h5' gutterBottom>
+                <Typography variant='h4' gutterBottom>
                   {
                     evidence.source_of_evidence.title !== '' ?
                       evidence.source_of_evidence.title

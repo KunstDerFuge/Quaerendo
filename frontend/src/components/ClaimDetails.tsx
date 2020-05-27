@@ -187,7 +187,7 @@ const ClaimDetails: React.FC<ClaimDetailsProps> = (props) => {
           {
             claim ?
               <>
-                <Typography variant='h5' gutterBottom>
+                <Typography variant='h4' gutterBottom>
                   {'“' + claim.claim_text + '”'}
                 </Typography>
                 <Typography variant='caption' gutterBottom>
