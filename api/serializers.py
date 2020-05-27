@@ -36,7 +36,7 @@ class TopicSerializer(serializers.ModelSerializer):
 
 class ClaimSerializer(serializers.ModelSerializer):
     topic = TopicSerializer(read_only=True)
-    source_of_claim = SourceLinkSerializer(read_only=True)
+    source_of_claim = SourceSerializer(read_only=True)
 
     class Meta:
         model = Claim
