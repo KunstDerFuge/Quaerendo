@@ -21,17 +21,18 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import NoteAddRoundedIcon from '@material-ui/icons/NoteAddRounded'
 import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded'
 import EvidencePreviewCard from './EvidencePreviewCard'
+import { Skeleton } from '@material-ui/lab'
 
 interface ClaimDetailsProps {
   id: number
 }
 
 interface SourcePanelProps {
-  source: Source
+  source: Source | undefined
 }
 
 interface EvidencePanelProps {
-  evidence: Evidence[]
+  evidence: Evidence[] | undefined
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -68,49 +69,59 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const ClaimDetails: React.FC<ClaimDetailsProps> = (props) => {
   const classes = useStyles()
+  let loading = true
   const {data} = useGet({
     path: '/api/claims/' + props.id
   })
   let claim: ClaimWithEvidence = undefined
   if (data) {
     claim = data
+    loading = false
   }
   return (
     <>
       <Card className={classes.card}>
         <CardContent>
-          {
-            claim ?
-              <Grid container direction='column' spacing={2}>
-                <Grid item>
-                  <Typography variant='h4'>
-                    {'“' + claim.claim_text + '”'}
-                  </Typography>
-                  <Typography variant='caption'>
-                    <span>― <AuthorsLinksList authors={claim.source_of_claim.authors} /></span>
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography variant='body1'>
-                    {
-                      claim.description !== '' ?
-                        claim.description
-                        :
-                        'No description has been provided for this claim.'
-                    }
-                  </Typography>
-                </Grid>
-              </Grid>
-              :
-              ''
-          }
+          <Grid container direction='column' spacing={2}>
+            <Grid item>
+              <Typography variant='h4'>
+                {
+                  loading ?
+                    <Skeleton />
+                    :
+                    '“' + claim!.claim_text + '”'
+                }
+              </Typography>
+              <Typography variant='caption'>
+                {
+                  loading ?
+                    <Skeleton />
+                    :
+                    <span>― <AuthorsLinksList authors={claim!.source_of_claim.authors} /></span>
+                }
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography variant='body1'>
+                {
+                  loading ?
+                    <Skeleton />
+                    :
+                    claim!.description !== '' ?
+                      claim!.description
+                      :
+                      'No description has been provided for this claim.'
+                }
+              </Typography>
+            </Grid>
+          </Grid>
         </CardContent>
       </Card>
       {
-        claim ?
+        !loading ?
           <>
-            <SourcePanel source={claim.source_of_claim} />
-            <EvidencePanel evidence={claim.related_evidence} />
+            <SourcePanel source={loading ? undefined : claim!.source_of_claim} />
+            <EvidencePanel evidence={loading ? undefined : claim!.related_evidence} />
           </>
           :
           ''
