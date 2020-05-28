@@ -4,9 +4,11 @@ import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded'
 import AuthorsLinksList from './AuthorsLinksList'
 import { Source } from '../openapi-types'
 import { makeStyles } from '@material-ui/styles'
+import { Skeleton } from '@material-ui/lab'
 
 interface SourceDetailsProps {
   source: Source
+  loading?: boolean
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -19,41 +21,57 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const SourceInfo: React.FC<SourceDetailsProps> = (props) => {
   const classes = useStyles()
-  const title = props.source.title === '' ? 'Untitled' : props.source.title
-  const description = props.source.description === '' ? 'No description was provided for this source' : props.source.description
-  const date = new Date(props.source.date_retrieved)
+  const title = props.loading ? '' : props.source.title === '' ? 'Untitled' : props.source.title
+  const description = props.loading ? '' : props.source.description === '' ? 'No description was provided for this source' : props.source.description
+  const date = props.loading? new Date() : new Date(props.source.date_retrieved)
   return (
     <Grid container direction='column' spacing={2}>
       <Grid item>
         <Typography variant='h5'>
           {
-            props.source.url !== '' ?
-              <>
-                <Link variant='h5' href={props.source.url} target='_blank'>
-                  {title}
-                </Link>
-                &nbsp;
-                <OpenInNewRoundedIcon fontSize='small' color='primary' />
-              </>
+            props.loading ?
+              <Skeleton />
               :
-              <Typography variant='h4'>
-                {title}
-              </Typography>
+              props.source.url !== '' ?
+                <>
+                  <Link href={props.source.url} target='_blank'>
+                    {title}
+                  </Link>
+                  &nbsp;
+                  <OpenInNewRoundedIcon fontSize='small' color='primary' />
+                </>
+                :
+                title
           }
         </Typography>
         <Typography variant='body2'>
-          <span>Authors: <AuthorsLinksList authors={props.source.authors} /></span>
+          {
+            props.loading ?
+              <Skeleton />
+              :
+              <span>Authors: <AuthorsLinksList authors={props.source.authors} /></span>
+          }
         </Typography>
       </Grid>
       <br />
       <Grid item>
         <Typography variant='body1'>
-          {description}
+          {
+            props.loading ?
+              <Skeleton />
+              :
+              description
+          }
         </Typography>
       </Grid>
       <Grid item>
         <Typography className={classes.italic}>
-          <i>Retrieved {date.toDateString()}, {date.toTimeString()}.</i>
+          {
+            props.loading ?
+              <Skeleton />
+              :
+              <i>Retrieved {date.toDateString()}, {date.toTimeString()}.</i>
+          }
         </Typography>
       </Grid>
     </Grid>

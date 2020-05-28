@@ -15,6 +15,7 @@ import { makeStyles } from '@material-ui/styles'
 import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import SourceInfo from './SourceInfo'
+import { Skeleton } from '@material-ui/lab'
 
 interface EvidenceDetailProps {
   id: number
@@ -50,40 +51,41 @@ const EvidenceDetails: React.FC<EvidenceDetailProps> = (props) => {
   const classes = useStyles()
   const [showSource, setShowSource] = React.useState(true)
   const [showReviews, setShowReviews] = React.useState(false)
+  let loading = true
   const {data} = useGet({
     path: '/api/evidence/' + props.id
   })
   let evidence: Evidence = undefined
   if (data) {
     evidence = data
+    loading = false
   }
   return (
     <>
       <Card className={classes.card}>
         <CardContent>
-          {
-            evidence ?
-              <>
-                <Typography variant='h4' gutterBottom>
-                  {
-                    evidence.source_of_evidence.title !== '' ?
-                      evidence.source_of_evidence.title
-                      :
-                      'Untitled Evidence'
-                  }
-                </Typography>
-                <Typography variant='body1' component='p' className={classes.description}>
-                  {
-                    evidence.description !== '' ?
-                      evidence.description
-                      :
-                      'No description has been provided for this piece of evidence.'
-                  }
-                </Typography>
-              </>
-              :
-              ''
-          }
+          <Typography variant='h4' gutterBottom>
+            {
+              loading ?
+                <Skeleton />
+                :
+                evidence!.source_of_evidence.title !== '' ?
+                  evidence!.source_of_evidence.title
+                  :
+                  'Untitled Evidence'
+            }
+          </Typography>
+          <Typography variant='body1' component='p' className={classes.description}>
+            {
+              loading ?
+                <Skeleton />
+                :
+                evidence.description !== '' ?
+                  evidence.description
+                  :
+                  'No description has been provided for this piece of evidence.'
+            }
+          </Typography>
         </CardContent>
       </Card>
       <div className={classes.expansionPanel}>
@@ -94,12 +96,7 @@ const EvidenceDetails: React.FC<EvidenceDetailProps> = (props) => {
             <Typography variant='h5'>Source</Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
-            {
-              evidence ?
-                <SourceInfo source={evidence.source_of_evidence} />
-                :
-                ''
-            }
+            <SourceInfo source={loading ? undefined : evidence.source_of_evidence} loading={!evidence} />
           </ExpansionPanelDetails>
         </ExpansionPanel>
       </div>
