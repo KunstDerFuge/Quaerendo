@@ -14,7 +14,6 @@ import AuthorsLinksList from './AuthorsLinksList'
 import { makeStyles } from '@material-ui/styles'
 import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import EvidencePreviewCard from './EvidencePreviewCard'
 
 interface EvidenceDetailProps {
   id: number
