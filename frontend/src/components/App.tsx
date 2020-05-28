@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import ClaimList from './ClaimsList'
 import ClaimDetails from './ClaimDetails'
 import EvidenceDetails from './EvidenceDetails'
+import SubmitEvidence from './SubmitEvidence'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -69,6 +70,8 @@ function App() {
                      component={(routerProps: any) => <ClaimDetails id={routerProps.match.params.id} />} />
               <Route path='/evidence/:id'
                      component={(routerProps: any) => <EvidenceDetails id={routerProps.match.params.id} />} />
+              <Route path='/submit/evidence/for/:id'
+                     component={(routerProps: any) => <SubmitEvidence id={routerProps.match.params.id} />} />
               <Route path='/'>
                 <ClaimList />
               </Route>

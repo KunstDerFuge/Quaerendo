@@ -23,6 +23,7 @@ import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded'
 import EvidencePreviewCard from './EvidencePreviewCard'
 import { Skeleton } from '@material-ui/lab'
 import SourceInfo from './SourceInfo'
+import { useHistory } from 'react-router'
 
 interface ClaimDetailsProps {
   id: number
@@ -34,6 +35,7 @@ interface SourcePanelProps {
 
 interface EvidencePanelProps {
   evidence: Evidence[] | undefined
+  claimId: number
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -134,7 +136,7 @@ const ClaimDetails: React.FC<ClaimDetailsProps> = (props) => {
                 </ExpansionPanelDetails>
               </ExpansionPanel>
             </div>
-            <EvidencePanel evidence={loading ? undefined : claim!.related_evidence} />
+            <EvidencePanel evidence={loading ? undefined : claim!.related_evidence} claimId={props.id} />
           </>
           :
           ''
@@ -146,6 +148,7 @@ const ClaimDetails: React.FC<ClaimDetailsProps> = (props) => {
 
 const EvidencePanel: React.FC<EvidencePanelProps> = (props) => {
   const classes = useStyles()
+  const history = useHistory()
   const [showEvidence, setShowEvidence] = React.useState(true)
   const evidenceSummary = 'This claim remains unverified.'
   const positiveRels = ['SUPPORTS', 'PROVES']
@@ -253,7 +256,8 @@ const EvidencePanel: React.FC<EvidencePanelProps> = (props) => {
         }
         <Divider />
         <ExpansionPanelActions className={classes.evidenceActions}>
-          <Fab size='medium' variant="extended" color="primary" aria-label="add" className={classes.margin}>
+          <Fab size='medium' variant="extended" color="primary" aria-label="add" className={classes.margin}
+               onClick={() => history.push('/submit/evidence/for/' + props.claimId)}>
             <NoteAddRoundedIcon className={classes.extendedIcon} />
             Submit Evidence
           </Fab>
