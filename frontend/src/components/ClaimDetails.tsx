@@ -235,8 +235,8 @@ const EvidencePanel: React.FC<EvidencePanelProps> = (props) => {
                     otherEvidence.length !== 0 ?
                       otherEvidence.map((evidence, index) => {
                         return (
-                          <Grid item xs={6}>
-                            <EvidencePreviewCard evidence={evidence} key={index} />
+                          <Grid item xs={6} key={index}>
+                            <EvidencePreviewCard evidence={evidence} />
                           </Grid>
                         )
                       })
