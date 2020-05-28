@@ -18,7 +18,7 @@ export interface ClaimWithEvidence {
   claim_text: string;
   description?: string;
   topic: Topic;
-  source_of_claim: SourceLink;
+  source_of_claim: Source;
   related_evidence: Evidence[];
 }
 
@@ -42,7 +42,7 @@ export interface PatchedClaimWithEvidence {
   claim_text?: string;
   description?: string;
   topic?: Topic;
-  source_of_claim?: SourceLink;
+  source_of_claim?: Source;
   related_evidence?: Evidence[];
 }
 
@@ -77,11 +77,6 @@ export interface Source {
   source_degree?: SourceDegreeEnum | null;
   authors: Entity[];
   date_retrieved: string;
-}
-
-export interface SourceLink {
-  id: number;
-  authors: Entity[];
 }
 
 export interface Topic {
