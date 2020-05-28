@@ -22,6 +22,7 @@ import NoteAddRoundedIcon from '@material-ui/icons/NoteAddRounded'
 import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded'
 import EvidencePreviewCard from './EvidencePreviewCard'
 import { Skeleton } from '@material-ui/lab'
+import SourceInfo from './SourceInfo'
 
 interface ClaimDetailsProps {
   id: number
@@ -59,16 +60,13 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   noEvidence: {
     marginTop: theme.spacing(2)
-  },
-  italic: {
-    fontFamily: 'garamond-premier-pro',
-    fontSize: '1.1rem'
   }
 }))
 
 
 const ClaimDetails: React.FC<ClaimDetailsProps> = (props) => {
   const classes = useStyles()
+  const [showSource, setShowSource] = React.useState(false)
   let loading = true
   const {data} = useGet({
     path: '/api/claims/' + props.id
@@ -120,7 +118,22 @@ const ClaimDetails: React.FC<ClaimDetailsProps> = (props) => {
       {
         !loading ?
           <>
-            <SourcePanel source={loading ? undefined : claim!.source_of_claim} />
+            <div className={classes.expansionPanel}>
+              <ExpansionPanel expanded={showSource} onChange={() => setShowSource(!showSource)}>
+                <ExpansionPanelSummary
+                  expandIcon={<ExpandMoreIcon />}>
+                  <Typography variant='h5'>Source</Typography>
+                </ExpansionPanelSummary>
+                <ExpansionPanelDetails>
+                  {
+                    loading ?
+                      ''
+                      :
+                      <SourceInfo source={claim!.source_of_claim} />
+                  }
+                </ExpansionPanelDetails>
+              </ExpansionPanel>
+            </div>
             <EvidencePanel evidence={loading ? undefined : claim!.related_evidence} />
           </>
           :
@@ -130,63 +143,6 @@ const ClaimDetails: React.FC<ClaimDetailsProps> = (props) => {
   )
 }
 
-const SourcePanel: React.FC<SourcePanelProps> = (props) => {
-  const classes = useStyles()
-  const [showSource, setShowSource] = React.useState(false)
-  const date = new Date(props.source.date_retrieved)
-  let sourceTitle = 'Untitled'
-  if (props.source.title !== '') sourceTitle = props.source.title
-  let description = 'No description was provided for this source.'
-  if (props.source.description !== '') description = props.source.description
-  const hasURL = props.source.url !== ''
-  return (
-    <div className={classes.expansionPanel}>
-      <ExpansionPanel expanded={showSource} onChange={() => setShowSource(!showSource)}>
-        <ExpansionPanelSummary
-          expandIcon={<ExpandMoreIcon />}>
-          <Typography variant='h5'>Source</Typography>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
-          <Grid container direction='column' spacing={2}>
-            <Grid item>
-              <Typography variant='h5'>
-                {
-                  props.source ?
-                    hasURL ?
-                      <>
-                        <Link variant='h5' href={props.source.url} target='_blank'>
-                          {sourceTitle}
-                        </Link>
-                        &nbsp;
-                        <OpenInNewRoundedIcon fontSize='small' color='primary' />
-                      </>
-                      :
-                      <Typography variant='h4'>
-                        {sourceTitle}
-                      </Typography>
-                    :
-                    ''
-                }
-              </Typography>
-              <Typography variant='body2'>
-                <span>Authors: <AuthorsLinksList authors={props.source.authors} /></span>
-              </Typography>
-              <Typography className={classes.italic}>
-                <i>Retrieved {date.toDateString()}, {date.toTimeString()}.</i>
-              </Typography>
-            </Grid>
-            <br />
-            <Grid item>
-              <Typography variant='body1'>
-                {description}
-              </Typography>
-            </Grid>
-          </Grid>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
-    </div>
-  )
-}
 
 const EvidencePanel: React.FC<EvidencePanelProps> = (props) => {
   const classes = useStyles()
