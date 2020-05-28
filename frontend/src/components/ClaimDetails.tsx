@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { useGet } from 'restful-react'
-import { ClaimWithEvidence, Evidence } from '../openapi-types'
+import { ClaimWithEvidence, Evidence, Source } from '../openapi-types'
 import {
   Card,
   CardContent,
@@ -10,7 +10,7 @@ import {
   ExpansionPanelDetails,
   ExpansionPanelSummary,
   Fab,
-  Grid,
+  Grid, Link,
   Theme,
   Typography
 } from '@material-ui/core'
@@ -19,10 +19,15 @@ import AuthorsLinksList from './AuthorsLinksList'
 import SourceLink from './SourceLink'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import NoteAddRoundedIcon from '@material-ui/icons/NoteAddRounded'
+import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded'
 import EvidencePreviewCard from './EvidencePreviewCard'
 
 interface ClaimDetailsProps {
   id: number
+}
+
+interface SourcePanelProps {
+  source: Source
 }
 
 interface EvidencePanelProps {
@@ -34,9 +39,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     margin: theme.spacing(2),
     padding: theme.spacing(0.5)
   },
-  evidencePanel: {
+  expansionPanel: {
     marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
+    marginBottom: theme.spacing(2)
   },
   margin: {
     margin: theme.spacing(0.5)
@@ -52,8 +58,124 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   noEvidence: {
     marginTop: theme.spacing(2)
+  },
+  italic: {
+    fontFamily: 'garamond-premier-pro',
+    fontSize: '1.1rem'
   }
 }))
+
+
+const ClaimDetails: React.FC<ClaimDetailsProps> = (props) => {
+  const classes = useStyles()
+  const {data} = useGet({
+    path: '/api/claims/' + props.id
+  })
+  let claim: ClaimWithEvidence = undefined
+  if (data) {
+    claim = data
+  }
+  return (
+    <>
+      <Card className={classes.card}>
+        <CardContent>
+          {
+            claim ?
+              <Grid container direction='column' spacing={2}>
+                <Grid item>
+                  <Typography variant='h4'>
+                    {'“' + claim.claim_text + '”'}
+                  </Typography>
+                  <Typography variant='caption'>
+                    <span>― <AuthorsLinksList authors={claim.source_of_claim.authors} /></span>
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography variant='body1'>
+                    {
+                      claim.description !== '' ?
+                        claim.description
+                        :
+                        'No description has been provided for this claim.'
+                    }
+                  </Typography>
+                </Grid>
+              </Grid>
+              :
+              ''
+          }
+        </CardContent>
+      </Card>
+      {
+        claim ?
+          <>
+            <SourcePanel source={claim.source_of_claim} />
+            <EvidencePanel evidence={claim.related_evidence} />
+          </>
+          :
+          ''
+      }
+    </>
+  )
+}
+
+const SourcePanel: React.FC<SourcePanelProps> = (props) => {
+  const classes = useStyles()
+  const [showSource, setShowSource] = React.useState(false)
+  const date = new Date(props.source.date_retrieved)
+  let sourceTitle = 'Untitled'
+  if (props.source.title !== '') sourceTitle = props.source.title
+  let description = 'No description was provided for this source.'
+  if (props.source.description !== '') description = props.source.description
+  const hasURL = props.source.url !== ''
+  return (
+    <div className={classes.expansionPanel}>
+      <ExpansionPanel expanded={showSource} onChange={() => setShowSource(!showSource)}>
+        <ExpansionPanelSummary
+          expandIcon={<ExpandMoreIcon />}>
+          <Typography variant='h5'>Source</Typography>
+        </ExpansionPanelSummary>
+        <ExpansionPanelDetails>
+          <Grid container direction='column' spacing={2}>
+            <Grid item>
+              <Typography variant='h5'>
+                {
+                  props.source ?
+                    hasURL ?
+                      <>
+                        <Link variant='h5' href={props.source.url} target='_blank'>
+                          {sourceTitle}
+                        </Link>
+                        &nbsp;
+                        <OpenInNewRoundedIcon fontSize='small' color='primary' />
+                      </>
+                      :
+                      <Typography variant='h4'>
+                        {sourceTitle}
+                      </Typography>
+                    :
+                    ''
+                }
+              </Typography>
+              <Typography variant='body2'>
+                <span>Authors: <AuthorsLinksList authors={props.source.authors} /></span>
+              </Typography>
+              <Typography className={classes.italic}>
+                <i>Retrieved {date.toDateString()}, {date.toTimeString()}.</i>
+              </Typography>
+            </Grid>
+            <br />
+            <Grid item>
+              <Typography variant='body1'>
+                {description}
+              </Typography>
+            </Grid>
+          </Grid>
+        </ExpansionPanelDetails>
+      </ExpansionPanel>
+    </div>
+  )
+}
 
 const EvidencePanel: React.FC<EvidencePanelProps> = (props) => {
   const classes = useStyles()
@@ -81,21 +203,20 @@ const EvidencePanel: React.FC<EvidencePanelProps> = (props) => {
 
 
   return (
-    <div className={classes.evidencePanel}>
+    <div className={classes.expansionPanel}>
       <ExpansionPanel expanded={showEvidence} onChange={() => setShowEvidence(!showEvidence)}>
         <ExpansionPanelSummary
-          expandIcon={<ExpandMoreIcon />}
-        >
+          expandIcon={<ExpandMoreIcon />}>
           <Typography variant='h5'>Evidence</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <Grid container>
-            <Grid item container>
-              <Typography variant='body1' paragraph>
+          <Grid container spacing={2}>
+            <Grid item>
+              <Typography variant='body1'>
                 {evidenceSummary}
               </Typography>
             </Grid>
-            <Grid container spacing={2} xs={12}>
+            <Grid item container spacing={2} xs={12}>
               <Grid item container direction='column' xs={6}>
                 <Typography>
                   <b>Supporting:</b>
@@ -175,51 +296,5 @@ const EvidencePanel: React.FC<EvidencePanelProps> = (props) => {
   )
 }
 
-const ClaimDetails: React.FC<ClaimDetailsProps> = (props) => {
-  const classes = useStyles()
-  const {data} = useGet({
-    path: '/api/claims/' + props.id
-  })
-  let claim: ClaimWithEvidence = undefined
-  if (data) {
-    claim = data
-  }
-  return (
-    <>
-      <Card className={classes.card}>
-        <CardContent>
-          {
-            claim ?
-              <>
-                <Typography variant='h4' gutterBottom>
-                  {'“' + claim.claim_text + '”'}
-                </Typography>
-                <Typography variant='caption' gutterBottom>
-                  <span>― <AuthorsLinksList authors={claim.source_of_claim.authors} /></span>
-                </Typography>
-                <SourceLink id={claim.source_of_claim.id} />
-                <Typography variant='body1' component='p'>
-                  {
-                    claim.description !== '' ?
-                      claim.description
-                      :
-                      'No description has been provided for this claim.'
-                  }
-                </Typography>
-              </>
-              :
-              ''
-          }
-        </CardContent>
-      </Card>
-      {
-        claim ?
-          <EvidencePanel evidence={claim.related_evidence} />
-          :
-          ''
-      }
-    </>
-  )
-}
 
 export default ClaimDetails
