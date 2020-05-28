@@ -594,7 +594,7 @@ components:
         source_of_claim:
           readOnly: true
           allOf:
-          - $ref: '#/components/schemas/SourceLink'
+          - $ref: '#/components/schemas/Source'
         related_evidence:
           type: array
           readOnly: true
@@ -661,7 +661,7 @@ components:
         source_of_claim:
           readOnly: true
           allOf:
-          - $ref: '#/components/schemas/SourceLink'
+          - $ref: '#/components/schemas/Source'
         related_evidence:
           type: array
           readOnly: true
@@ -754,20 +754,6 @@ components:
           type: string
           format: date-time
           readOnly: true
-    SourceLink:
-      required:
-      - authors
-      - id
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        authors:
-          type: array
-          readOnly: true
-          items:
-            $ref: '#/components/schemas/Entity'
     Topic:
       required:
       - name
