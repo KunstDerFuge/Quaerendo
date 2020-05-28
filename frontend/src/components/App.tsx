@@ -15,7 +15,7 @@ import SubmitEvidence from './SubmitEvidence'
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
-    height: 1000
+    height: '100%'
   },
   fullWidth: {
     width: '100%'
