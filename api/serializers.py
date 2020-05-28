@@ -109,7 +109,7 @@ class EvidenceSerializer(serializers.ModelSerializer):
 
 class ClaimWithEvidenceSerializer(serializers.ModelSerializer):
     topic = TopicSerializer(read_only=True)
-    source_of_claim = SourceLinkSerializer(read_only=True)
+    source_of_claim = SourceSerializer(read_only=True)
     related_evidence = EvidenceSerializer(many=True, read_only=True)
 
     class Meta:
