@@ -25,6 +25,7 @@
   "main": "index.js",
   "dependencies": {
     "@material-ui/core": "^4.10.0",
+    "@material-ui/lab": "^4.0.0-alpha.54",
     "@types/react-router": "^5.1.7",
     "@types/react-router-dom": "^5.1.5",
     "react-router": "^5.2.0",
