@@ -28,7 +28,7 @@ const BackButton: React.FC<{}> = () => {
 export function HeaderAppBar() {
   const classes = useStyles()
   return (
-    <AppBar position='static'>
+    <AppBar position='sticky'>
       <Toolbar variant='dense'>
         <Switch>
           <Route path='/claim/'>

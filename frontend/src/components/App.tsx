@@ -2,7 +2,7 @@ import * as React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import CommentRoundedIcon from '@material-ui/icons/CommentRounded'
 import RateReviewRoundedIcon from '@material-ui/icons/RateReviewRounded'
-import { Divider, Drawer, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
+import { Divider, Drawer, Grid, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
 import { HeaderAppBar } from './HeaderAppBar'
 import ThemeProvider from '@material-ui/styles/ThemeProvider'
 import MainTheme from './MainTheme'
@@ -11,11 +11,12 @@ import ClaimList from './ClaimsList'
 import ClaimDetails from './ClaimDetails'
 import EvidenceDetails from './EvidenceDetails'
 import SubmitEvidence from './SubmitEvidence'
+import Footer from './Footer'
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
-    height: '100%'
+    minHeight: '100vh'
   },
   fullWidth: {
     width: '100%'
@@ -28,7 +29,10 @@ const useStyles = makeStyles(theme => ({
     width: 240
   },
   content: {
-    flexGrow: 1
+    flex: 1
+  },
+  mainWindow: {
+    flex: 1
   }
 }))
 
@@ -63,20 +67,23 @@ function App() {
               </ListItem>
             </List>
           </Drawer>
-          <main className={classes.content}>
+          <Grid container direction='column' alignContent='space-between' className={classes.mainWindow}>
             <HeaderAppBar />
-            <Switch>
-              <Route path='/claim/:id'
-                     component={(routerProps: any) => <ClaimDetails id={routerProps.match.params.id} />} />
-              <Route path='/evidence/:id'
-                     component={(routerProps: any) => <EvidenceDetails id={routerProps.match.params.id} />} />
-              <Route path='/submit/evidence/for/:id'
-                     component={(routerProps: any) => <SubmitEvidence id={routerProps.match.params.id} />} />
-              <Route path='/'>
-                <ClaimList />
-              </Route>
-            </Switch>
-          </main>
+            <Grid item className={classes.content}>
+              <Switch>
+                <Route path='/claim/:id'
+                       component={(routerProps: any) => <ClaimDetails id={routerProps.match.params.id} />} />
+                <Route path='/evidence/:id'
+                       component={(routerProps: any) => <EvidenceDetails id={routerProps.match.params.id} />} />
+                <Route path='/submit/evidence/for/:id'
+                       component={(routerProps: any) => <SubmitEvidence id={routerProps.match.params.id} />} />
+                <Route path='/'>
+                  <ClaimList />
+                </Route>
+              </Switch>
+            </Grid>
+            <Footer />
+          </Grid>
         </div>
       </Router>
     </ThemeProvider>
