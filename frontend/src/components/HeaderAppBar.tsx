@@ -43,6 +43,12 @@ export function HeaderAppBar() {
               Evidence
             </Typography>
           </Route>
+          <Route path='/submit/claim'>
+            <BackButton />
+            <Typography variant='h6' className={classes.roboto}>
+              Submit Claim
+            </Typography>
+          </Route>
           <Route path='/submit/evidence/'>
             <BackButton />
             <Typography variant='h6' className={classes.roboto}>
