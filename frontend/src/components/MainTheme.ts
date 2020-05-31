@@ -17,7 +17,7 @@ const MainTheme = createMuiTheme({
     h5: {
       fontFamily: 'garamond-premier-pro',
       fontSize: '1.75rem',
-      letterSpacing: '-0.5px'
+      letterSpacing: '-0.3px'
     },
     h6: {
       fontFamily: 'garamond-premier-pro',
