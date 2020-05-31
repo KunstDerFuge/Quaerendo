@@ -22,13 +22,14 @@ class SourceDegree(models.TextChoices):
 class Source(models.Model):
     url = models.URLField(max_length=200, blank=True)
     title = models.CharField(max_length=250, blank=True)
-    description = models.TextField(blank=True)
+    summary = models.TextField(blank=True)
     authors = models.ManyToManyField(Entity, related_name='sources_authored')
     date_retrieved = models.DateTimeField(auto_now_add=True)
+    date_published = models.DateField(null=True, blank=True)
     source_degree = models.CharField(choices=SourceDegree.choices, max_length=25, blank=True, null=True)
 
     def __str__(self):
-        return 'Source: {} ({})'.format(self.description[:30], self.url[:30])
+        return 'Source: {} ({})'.format(self.summary[:30], self.url[:30])
 
 
 class Topic(models.Model):
@@ -40,7 +41,8 @@ class Topic(models.Model):
 
 
 class Claim(models.Model):
-    source_of_claim = models.ForeignKey(Source, related_name='claims_cited_in', on_delete=models.CASCADE)
+    source_of_claim = models.ForeignKey(Source, related_name='claims_cited_in', null=True, blank=True,
+                                        on_delete=models.CASCADE)
     claim_text = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     evidence = models.ManyToManyField(Source, through='Evidence', blank=True)
