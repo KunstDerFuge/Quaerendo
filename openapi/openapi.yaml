@@ -1,5 +1,6 @@
 openapi: 3.0.3
 info:
+  title: Lens of Truth API
   version: 1.0.0
 servers:
 - url: /
@@ -9,13 +10,15 @@ paths:
       tags:
       - api
       description: REST endpoints for viewing and submitting claims
-      operationId: api_claims_retrieve
+      operationId: api_claims_list
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Claim'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Claim'
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -145,13 +148,15 @@ paths:
       tags:
       - api
       description: REST endpoints for viewing and submitting entities
-      operationId: api_entities_retrieve
+      operationId: api_entities_list
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Entity'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Entity'
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -281,13 +286,15 @@ paths:
       tags:
       - api
       description: REST endpoints for viewing and submitting claims
-      operationId: api_evidence_retrieve
+      operationId: api_evidence_list
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Evidence'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Evidence'
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -415,13 +422,15 @@ paths:
       tags:
       - api
       description: REST endpoints for viewing and submitting sources
-      operationId: api_sources_retrieve
+      operationId: api_sources_list
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Source'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Source'
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -632,17 +641,27 @@ components:
         expert_consensus_relationship:
           readOnly: true
           allOf:
-          - $ref: '#/components/schemas/ExpertConsensusRelationshipEnum'
+          - $ref: '#/components/schemas/EvidenceRelationship'
         num_expert_reviews:
           type: integer
           readOnly: true
         community_consensus_relationship:
           readOnly: true
           allOf:
-          - $ref: '#/components/schemas/CommunityConsensusRelationshipEnum'
+          - $ref: '#/components/schemas/EvidenceRelationship'
         num_community_reviews:
           type: integer
           readOnly: true
+    EvidenceRelationship:
+      type: string
+      enum:
+      - PROVES
+      - SUPPORTS
+      - UNRELATED
+      - INCONCLUSIVE
+      - DISPUTES
+      - DISPROVES
+      - SPLIT
     PatchedClaimWithEvidence:
       type: object
       properties:
@@ -690,14 +709,14 @@ components:
         expert_consensus_relationship:
           readOnly: true
           allOf:
-          - $ref: '#/components/schemas/ExpertConsensusRelationshipEnum'
+          - $ref: '#/components/schemas/EvidenceRelationship'
         num_expert_reviews:
           type: integer
           readOnly: true
         community_consensus_relationship:
           readOnly: true
           allOf:
-          - $ref: '#/components/schemas/CommunityConsensusRelationshipEnum'
+          - $ref: '#/components/schemas/EvidenceRelationship'
         num_community_reviews:
           type: integer
           readOnly: true
@@ -711,7 +730,7 @@ components:
           maxLength: 200
           type: string
           format: uri
-        description:
+        summary:
           type: string
         source_degree:
           nullable: true
@@ -722,6 +741,10 @@ components:
           readOnly: true
           items:
             $ref: '#/components/schemas/Entity'
+        date_published:
+          type: string
+          format: date
+          nullable: true
         date_retrieved:
           type: string
           format: date-time
@@ -739,7 +762,7 @@ components:
           maxLength: 200
           type: string
           format: uri
-        description:
+        summary:
           type: string
         source_degree:
           nullable: true
@@ -750,10 +773,21 @@ components:
           readOnly: true
           items:
             $ref: '#/components/schemas/Entity'
+        date_published:
+          type: string
+          format: date
+          nullable: true
         date_retrieved:
           type: string
           format: date-time
           readOnly: true
+    SourceDegreeEnum:
+      type: string
+      enum:
+      - ORIGINAL
+      - PRIMARY
+      - SECONDARY
+      - TERTIARY
     Topic:
       required:
       - name
@@ -762,33 +796,6 @@ components:
         name:
           maxLength: 100
           type: string
-    ExpertConsensusRelationshipEnum:
-      type: string
-      enum:
-      - PROVES
-      - SUPPORTS
-      - UNRELATED
-      - INCONCLUSIVE
-      - DISPUTES
-      - DISPROVES
-      - SPLIT
-    CommunityConsensusRelationshipEnum:
-      type: string
-      enum:
-      - PROVES
-      - SUPPORTS
-      - UNRELATED
-      - INCONCLUSIVE
-      - DISPUTES
-      - DISPROVES
-      - SPLIT
-    SourceDegreeEnum:
-      type: string
-      enum:
-      - ORIGINAL
-      - PRIMARY
-      - SECONDARY
-      - TERTIARY
   securitySchemes:
     basicAuth:
       type: http
