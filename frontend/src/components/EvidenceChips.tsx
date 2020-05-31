@@ -1,17 +1,17 @@
 import * as React from 'react'
-import { Evidence, EvidenceRelationshipEnum } from '../openapi-types'
+import { Evidence, EvidenceRelationship } from '../openapi-types'
 import { Chip, Theme, Tooltip } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import VerifiedUserRoundedIcon from '@material-ui/icons/VerifiedUserRounded'
 import DoneRoundedIcon from '@material-ui/icons/DoneRounded'
 
 interface EvidenceRelationshipChipProps {
-  relationship: EvidenceRelationshipEnum | 'UNDER REVIEW'
+  relationship: EvidenceRelationship | 'UNDER REVIEW'
   expert: boolean
   community: boolean
 }
 
-function getColorFromRelationship(relationship: EvidenceRelationshipEnum | 'UNDER REVIEW') {
+function getColorFromRelationship(relationship: EvidenceRelationship | 'UNDER REVIEW') {
   switch (relationship) {
     case 'PROVES':
       return '#00f'
@@ -87,7 +87,7 @@ const EvidenceChips: React.FC<EvidenceChipsProps> = (props) => {
   const hasTwoChips = (props.evidence.num_community_reviews >= 3 && props.evidence.num_expert_reviews > 1) &&
     props.evidence.community_consensus_relationship !== props.evidence.expert_consensus_relationship
 
-  let singleChipRelation: EvidenceRelationshipEnum | 'UNDER REVIEW' = 'UNDER REVIEW'
+  let singleChipRelation: EvidenceRelationship | 'UNDER REVIEW' = 'UNDER REVIEW'
   if (props.evidence.num_expert_reviews >= 1) {
     singleChipRelation = props.evidence.expert_consensus_relationship
   } else if (props.evidence.num_community_reviews >= 3) {

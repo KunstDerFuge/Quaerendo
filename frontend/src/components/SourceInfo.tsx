@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 const SourceInfo: React.FC<SourceDetailsProps> = (props) => {
   const classes = useStyles()
   const title = props.loading ? '' : props.source.title === '' ? 'Untitled' : props.source.title
-  const description = props.loading ? '' : props.source.description === '' ? 'No description was provided for this source' : props.source.description
+  const summary = props.loading ? '' : props.source.summary === '' ? 'No summary was provided for this source' : props.source.summary
   const date = props.loading? new Date() : new Date(props.source.date_retrieved)
   return (
     <Grid container direction='column' spacing={2}>
@@ -60,7 +60,7 @@ const SourceInfo: React.FC<SourceDetailsProps> = (props) => {
             props.loading ?
               <Skeleton />
               :
-              description
+              summary
           }
         </Typography>
       </Grid>
