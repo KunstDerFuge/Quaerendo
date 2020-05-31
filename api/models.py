@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
 
+from lensoftruth.evidence_relationship import EvidenceRelationship
 from users.models import User
 
 
@@ -57,14 +58,7 @@ class Claim(models.Model):
         return 'Claim: "{}" ({})'.format(truncated_claim, self.source_of_claim.url[:30])
 
 
-class EvidenceRelationship(models.TextChoices):
-    PROVES = 'PROVES'
-    SUPPORTS = 'SUPPORTS'
-    UNRELATED = 'UNRELATED'
-    INCONCLUSIVE = 'INCONCLUSIVE'
-    DISPUTES = 'DISPUTES'
-    DISPROVES = 'DISPROVES'
-    SPLIT = 'SPLIT'
+
 
 
 class Evidence(models.Model):

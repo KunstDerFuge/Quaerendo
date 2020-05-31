@@ -3,7 +3,7 @@ attrs==19.3.0
 Django==3.0.6
 django-cors-headers==3.3.0
 djangorestframework==3.11.0
-drf-spectacular==0.9.5
+drf-spectacular==0.9.6
 inflection==0.4.0
 jsonschema==3.2.0
 psycopg2-binary==2.8.5
