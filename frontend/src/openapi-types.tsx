@@ -31,11 +31,13 @@ export interface Evidence {
   id: number;
   source_of_evidence: Source;
   description?: string;
-  expert_consensus_relationship: ExpertConsensusRelationshipEnum;
+  expert_consensus_relationship: EvidenceRelationship;
   num_expert_reviews: number;
-  community_consensus_relationship: CommunityConsensusRelationshipEnum;
+  community_consensus_relationship: EvidenceRelationship;
   num_community_reviews: number;
 }
+
+export type EvidenceRelationship = "PROVES" | "SUPPORTS" | "UNRELATED" | "INCONCLUSIVE" | "DISPUTES" | "DISPROVES" | "SPLIT";
 
 export interface PatchedClaimWithEvidence {
   id?: number;
@@ -55,60 +57,56 @@ export interface PatchedEvidence {
   id?: number;
   source_of_evidence?: Source;
   description?: string;
-  expert_consensus_relationship?: ExpertConsensusRelationshipEnum;
+  expert_consensus_relationship?: EvidenceRelationship;
   num_expert_reviews?: number;
-  community_consensus_relationship?: CommunityConsensusRelationshipEnum;
+  community_consensus_relationship?: EvidenceRelationship;
   num_community_reviews?: number;
 }
 
 export interface PatchedSource {
   title?: string;
   url?: string;
-  description?: string;
+  summary?: string;
   source_degree?: SourceDegreeEnum | null;
   authors?: Entity[];
+  date_published?: string | null;
   date_retrieved?: string;
 }
 
 export interface Source {
   title?: string;
   url?: string;
-  description?: string;
+  summary?: string;
   source_degree?: SourceDegreeEnum | null;
   authors: Entity[];
+  date_published?: string | null;
   date_retrieved: string;
 }
+
+export type SourceDegreeEnum = "ORIGINAL" | "PRIMARY" | "SECONDARY" | "TERTIARY";
 
 export interface Topic {
   name: string;
 }
 
-export type ExpertConsensusRelationshipEnum = "PROVES" | "SUPPORTS" | "UNRELATED" | "INCONCLUSIVE" | "DISPUTES" | "DISPROVES" | "SPLIT";
-
-export type CommunityConsensusRelationshipEnum = "PROVES" | "SUPPORTS" | "UNRELATED" | "INCONCLUSIVE" | "DISPUTES" | "DISPROVES" | "SPLIT";
-
-export type EvidenceRelationshipEnum = "PROVES" | "SUPPORTS" | "UNRELATED" | "INCONCLUSIVE" | "DISPUTES" | "DISPROVES" | "SPLIT";
-
-export type SourceDegreeEnum = "ORIGINAL" | "PRIMARY" | "SECONDARY" | "TERTIARY";
-
-export type ApiClaimsRetrieveProps = Omit<GetProps<Claim, unknown, void>, "path">;
+export type ApiClaimsListProps = Omit<GetProps<Claim[], unknown, void>, "path">;
 
 /**
  * REST endpoints for viewing and submitting claims
  */
-export const ApiClaimsRetrieve = (props: ApiClaimsRetrieveProps) => (
-  <Get<Claim, unknown, void>
+export const ApiClaimsList = (props: ApiClaimsListProps) => (
+  <Get<Claim[], unknown, void>
     path={`/api/claims/`}
     {...props}
   />
 );
 
-export type UseApiClaimsRetrieveProps = Omit<UseGetProps<Claim, void>, "path">;
+export type UseApiClaimsListProps = Omit<UseGetProps<Claim[], void>, "path">;
 
 /**
  * REST endpoints for viewing and submitting claims
  */
-export const useApiClaimsRetrieve = (props: UseApiClaimsRetrieveProps) => useGet<Claim, unknown, void>(`/api/claims/`, props);
+export const useApiClaimsList = (props: UseApiClaimsListProps) => useGet<Claim[], unknown, void>(`/api/claims/`, props);
 
 
 export type ApiClaimsCreateProps = Omit<MutateProps<Claim, unknown, void, Claim>, "path" | "verb">;
@@ -176,24 +174,24 @@ export type UseApiClaimsPartialUpdateProps = Omit<UseMutateProps<ClaimWithEviden
 export const useApiClaimsPartialUpdate = ({id, ...props}: UseApiClaimsPartialUpdateProps) => useMutate<ClaimWithEvidence, unknown, void, PatchedClaimWithEvidence>("PATCH", `/api/claims/${id}`, props);
 
 
-export type ApiEntitiesRetrieveProps = Omit<GetProps<Entity, unknown, void>, "path">;
+export type ApiEntitiesListProps = Omit<GetProps<Entity[], unknown, void>, "path">;
 
 /**
  * REST endpoints for viewing and submitting entities
  */
-export const ApiEntitiesRetrieve = (props: ApiEntitiesRetrieveProps) => (
-  <Get<Entity, unknown, void>
+export const ApiEntitiesList = (props: ApiEntitiesListProps) => (
+  <Get<Entity[], unknown, void>
     path={`/api/entities/`}
     {...props}
   />
 );
 
-export type UseApiEntitiesRetrieveProps = Omit<UseGetProps<Entity, void>, "path">;
+export type UseApiEntitiesListProps = Omit<UseGetProps<Entity[], void>, "path">;
 
 /**
  * REST endpoints for viewing and submitting entities
  */
-export const useApiEntitiesRetrieve = (props: UseApiEntitiesRetrieveProps) => useGet<Entity, unknown, void>(`/api/entities/`, props);
+export const useApiEntitiesList = (props: UseApiEntitiesListProps) => useGet<Entity[], unknown, void>(`/api/entities/`, props);
 
 
 export type ApiEntitiesCreateProps = Omit<MutateProps<Entity, unknown, void, Entity>, "path" | "verb">;
@@ -261,24 +259,24 @@ export type UseApiEntitiesPartialUpdateProps = Omit<UseMutateProps<Entity, void,
 export const useApiEntitiesPartialUpdate = ({id, ...props}: UseApiEntitiesPartialUpdateProps) => useMutate<Entity, unknown, void, PatchedEntity>("PATCH", `/api/entities/${id}`, props);
 
 
-export type ApiEvidenceRetrieveProps = Omit<GetProps<Evidence, unknown, void>, "path">;
+export type ApiEvidenceListProps = Omit<GetProps<Evidence[], unknown, void>, "path">;
 
 /**
  * REST endpoints for viewing and submitting claims
  */
-export const ApiEvidenceRetrieve = (props: ApiEvidenceRetrieveProps) => (
-  <Get<Evidence, unknown, void>
+export const ApiEvidenceList = (props: ApiEvidenceListProps) => (
+  <Get<Evidence[], unknown, void>
     path={`/api/evidence/`}
     {...props}
   />
 );
 
-export type UseApiEvidenceRetrieveProps = Omit<UseGetProps<Evidence, void>, "path">;
+export type UseApiEvidenceListProps = Omit<UseGetProps<Evidence[], void>, "path">;
 
 /**
  * REST endpoints for viewing and submitting claims
  */
-export const useApiEvidenceRetrieve = (props: UseApiEvidenceRetrieveProps) => useGet<Evidence, unknown, void>(`/api/evidence/`, props);
+export const useApiEvidenceList = (props: UseApiEvidenceListProps) => useGet<Evidence[], unknown, void>(`/api/evidence/`, props);
 
 
 export type ApiEvidenceCreateProps = Omit<MutateProps<Evidence, unknown, void, Evidence>, "path" | "verb">;
@@ -346,24 +344,24 @@ export type UseApiEvidencePartialUpdateProps = Omit<UseMutateProps<Evidence, voi
 export const useApiEvidencePartialUpdate = ({id, ...props}: UseApiEvidencePartialUpdateProps) => useMutate<Evidence, unknown, void, PatchedEvidence>("PATCH", `/api/evidence/${id}`, props);
 
 
-export type ApiSourcesRetrieveProps = Omit<GetProps<Source, unknown, void>, "path">;
+export type ApiSourcesListProps = Omit<GetProps<Source[], unknown, void>, "path">;
 
 /**
  * REST endpoints for viewing and submitting sources
  */
-export const ApiSourcesRetrieve = (props: ApiSourcesRetrieveProps) => (
-  <Get<Source, unknown, void>
+export const ApiSourcesList = (props: ApiSourcesListProps) => (
+  <Get<Source[], unknown, void>
     path={`/api/sources/`}
     {...props}
   />
 );
 
-export type UseApiSourcesRetrieveProps = Omit<UseGetProps<Source, void>, "path">;
+export type UseApiSourcesListProps = Omit<UseGetProps<Source[], void>, "path">;
 
 /**
  * REST endpoints for viewing and submitting sources
  */
-export const useApiSourcesRetrieve = (props: UseApiSourcesRetrieveProps) => useGet<Source, unknown, void>(`/api/sources/`, props);
+export const useApiSourcesList = (props: UseApiSourcesListProps) => useGet<Source[], unknown, void>(`/api/sources/`, props);
 
 
 export type ApiSourcesCreateProps = Omit<MutateProps<Source, unknown, void, Source>, "path" | "verb">;
