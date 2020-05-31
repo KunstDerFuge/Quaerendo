@@ -57,7 +57,9 @@ REST_FRAMEWORK = {
 SPECTACULAR_SETTINGS = {
     'ENUM_NAME_OVERRIDES': {
         'EvidenceRelationship': EvidenceRelationship.choices
-    }
+    },
+    'TITLE': 'Lens of Truth API',
+    'VERSION': '1.0.0'
 }
 
 MIDDLEWARE = [
