@@ -5,6 +5,23 @@ info:
 servers:
 - url: /
 paths:
+  /api/article/:
+    get:
+      tags:
+      - api
+      operationId: api_article_info
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+                description: Unspecified response body
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
   /api/claims/:
     get:
       tags:
@@ -723,6 +740,9 @@ components:
     PatchedSource:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         title:
           maxLength: 250
           type: string
@@ -753,8 +773,12 @@ components:
       required:
       - authors
       - date_retrieved
+      - id
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         title:
           maxLength: 250
           type: string
