@@ -17,7 +17,7 @@ class SourceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Source
-        fields = ['title', 'url', 'summary', 'source_degree', 'authors', 'date_published', 'date_retrieved']
+        fields = ['id', 'title', 'url', 'summary', 'source_degree', 'authors', 'date_published', 'date_retrieved']
 
 
 class SourceLinkSerializer(serializers.ModelSerializer):
