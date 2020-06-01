@@ -64,6 +64,7 @@ export interface PatchedEvidence {
 }
 
 export interface PatchedSource {
+  id?: number;
   title?: string;
   url?: string;
   summary?: string;
@@ -74,6 +75,7 @@ export interface PatchedSource {
 }
 
 export interface Source {
+  id: number;
   title?: string;
   url?: string;
   summary?: string;
@@ -88,6 +90,22 @@ export type SourceDegreeEnum = "ORIGINAL" | "PRIMARY" | "SECONDARY" | "TERTIARY"
 export interface Topic {
   name: string;
 }
+
+export interface ApiArticleInfoResponse {[key: string]: any}
+
+export type ApiArticleInfoProps = Omit<GetProps<ApiArticleInfoResponse, unknown, void>, "path">;
+
+export const ApiArticleInfo = (props: ApiArticleInfoProps) => (
+  <Get<ApiArticleInfoResponse, unknown, void>
+    path={`/api/article/`}
+    {...props}
+  />
+);
+
+export type UseApiArticleInfoProps = Omit<UseGetProps<ApiArticleInfoResponse, void>, "path">;
+
+export const useApiArticleInfo = (props: UseApiArticleInfoProps) => useGet<ApiArticleInfoResponse, unknown, void>(`/api/article/`, props);
+
 
 export type ApiClaimsListProps = Omit<GetProps<Claim[], unknown, void>, "path">;
 
