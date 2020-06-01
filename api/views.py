@@ -1,9 +1,32 @@
 from drf_spectacular.utils import extend_schema
+from newspaper import Article
 from rest_framework import generics
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from api.models import Entity, Source, Claim, Evidence
 from api.serializers import EntitySerializer, SourceSerializer, ClaimSerializer, EvidenceSerializer, \
     ClaimWithEvidenceSerializer
+
+
+@extend_schema(operation_id='api_article_info', methods=['GET'])
+class ArticleInfo(APIView):
+    """
+    Takes a URL, checks if this is an article, and if so, returns parsed metadata
+    """
+
+    def get(self, request):
+        article_url = request.GET.get('url')
+        article = Article(article_url)
+        article.download()
+        article.parse()
+        article.nlp()
+        return Response({
+            'summary': article.summary,
+            'authors': article.authors,
+            'title': article.title,
+            'date_published': article.publish_date
+        })
 
 
 class EntitiesList(generics.ListCreateAPIView):

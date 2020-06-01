@@ -1,4 +1,5 @@
-from django.urls import path, include
+from django.urls import path, re_path
+
 from api import views
 
 urlpatterns = [
@@ -9,5 +10,6 @@ urlpatterns = [
     path('claims/', views.ClaimsList.as_view()),
     path('claims/<int:pk>', views.ClaimDetail.as_view()),
     path('evidence/', views.EvidenceList.as_view()),
-    path('evidence/<int:pk>', views.EvidenceDetail.as_view())
+    path('evidence/<int:pk>', views.EvidenceDetail.as_view()),
+    re_path(r'^article/$', views.ArticleInfo.as_view())
 ]
