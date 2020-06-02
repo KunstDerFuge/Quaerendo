@@ -23,7 +23,8 @@ const SourceInfo: React.FC<SourceDetailsProps> = (props) => {
   const classes = useStyles()
   const title = props.loading ? '' : props.source.title === '' ? 'Untitled' : props.source.title
   const summary = props.loading ? '' : props.source.summary === '' ? 'No summary was provided for this source' : props.source.summary
-  const date = props.loading? new Date() : new Date(props.source.date_retrieved)
+  const datePublished = props.loading ? new Date() : props.source.date_published ? new Date(props.source.date_published) : null
+  const dateRetrieved = props.loading ? new Date() : new Date(props.source.date_retrieved)
   return (
     <Grid container direction='column' spacing={2}>
       <Grid item>
@@ -70,7 +71,10 @@ const SourceInfo: React.FC<SourceDetailsProps> = (props) => {
             props.loading ?
               <Skeleton />
               :
-              <i>Retrieved {date.toDateString()}, {date.toTimeString()}.</i>
+              <i>
+                {datePublished ? 'Published ' + datePublished.toDateString() + '. ' : 'Publish date unknown. '}
+                Retrieved {dateRetrieved.toDateString()}, {dateRetrieved.toTimeString()}.
+              </i>
           }
         </Typography>
       </Grid>
