@@ -26,7 +26,7 @@ class Source(models.Model):
     summary = models.TextField(blank=True)
     authors = models.ManyToManyField(Entity, related_name='sources_authored')
     date_retrieved = models.DateTimeField(auto_now_add=True)
-    date_published = models.DateField(null=True, blank=True)
+    date_published = models.DateTimeField(null=True, blank=True)
     source_degree = models.CharField(choices=SourceDegree.choices, max_length=25, blank=True, null=True)
 
     def __str__(self):
