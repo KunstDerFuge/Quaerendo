@@ -1,3 +1,4 @@
+import json
 import math
 
 from drf_spectacular.utils import extend_schema_field
@@ -36,11 +37,20 @@ class TopicSerializer(serializers.ModelSerializer):
 
 class ClaimSerializer(serializers.ModelSerializer):
     topic = TopicSerializer(read_only=True)
-    source_of_claim = SourceSerializer(read_only=True)
+    source_of_claim = SourceSerializer(read_only=False)
 
     class Meta:
         model = Claim
         fields = ['id', 'claim_text', 'description', 'topic', 'source_of_claim']
+
+    def create(self, validated_data):
+        source = SourceSerializer(data=validated_data.pop('source_of_claim'))
+        claim_instance = Claim.objects.create(**validated_data)
+        if source.is_valid():
+            source_instance = source.create(source.validated_data)
+            claim_instance.source_of_claim = source_instance
+            claim_instance.save()
+        return claim_instance
 
 
 class EvidenceReviewSerializer(serializers.ModelSerializer):
