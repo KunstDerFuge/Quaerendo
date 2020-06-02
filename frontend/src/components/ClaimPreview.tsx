@@ -28,7 +28,12 @@ const ClaimPreview: React.FC<ClaimPreviewProps> = (props: ClaimPreviewProps) => 
               {claim.claim_text}
             </Typography>
             <Typography gutterBottom>
-              <AuthorsLinksList authors={claim.source_of_claim.authors} />
+              {
+                claim.source_of_claim ?
+                  <AuthorsLinksList authors={claim.source_of_claim.authors} />
+                  :
+                  'Claimant unknown'
+              }
             </Typography>
             <Typography variant='subtitle2' color='textSecondary'>
               {claim.description}

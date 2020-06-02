@@ -22,16 +22,16 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const AuthorsLinksList: React.FC<AuthorsLinksListProps> = (props) => {
   const classes = useStyles()
-  let authors = props.authors.map((author, index) => {
+  let authors = props.authors && props.authors.map((author, index) => {
     return <Link to='/' className={classes.link}>{author.name}</Link>
   })
-  const separators = authors.map((author, index) => {
+  const separators = authors && authors.map((author, index) => {
     return index === authors.length - 1 ? '' : ', '
   })
   return (
     <>
       {
-        authors.map((author, index) => {
+        authors && authors.map((author, index) => {
           return <span key={index}>{authors[index]}{separators[index]}</span>
         })
       }

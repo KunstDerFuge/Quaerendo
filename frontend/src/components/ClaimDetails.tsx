@@ -97,7 +97,12 @@ const ClaimDetails: React.FC<ClaimDetailsProps> = (props) => {
                   loading ?
                     <Skeleton />
                     :
-                    <span>― <AuthorsLinksList authors={claim!.source_of_claim.authors} /></span>
+                    claim!.source_of_claim ?
+                      <span>
+                      ― <AuthorsLinksList authors={claim!.source_of_claim && claim!.source_of_claim.authors} />
+                      </span>
+                      :
+                      'Claimant unknown'
                 }
               </Typography>
             </Grid>
@@ -128,7 +133,7 @@ const ClaimDetails: React.FC<ClaimDetailsProps> = (props) => {
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
                   {
-                    loading ?
+                    loading || !claim!.source_of_claim ?
                       ''
                       :
                       <SourceInfo source={claim!.source_of_claim} />
