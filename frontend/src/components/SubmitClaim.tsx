@@ -3,8 +3,8 @@ import {
   Button,
   Card,
   CardActions,
-  CardContent,
-  CircularProgress,
+  CardContent, Checkbox,
+  CircularProgress, FormControlLabel,
   Grid,
   Link,
   TextField,
@@ -43,6 +43,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   centerItems: {
     display: 'flex',
     alignItems: 'center'
+  },
+  alignItemsRight: {
+    display: 'flex',
+    justifyContent: 'end'
   }
 }))
 
@@ -54,6 +58,7 @@ const SubmitClaim: React.FC<{}> = () => {
   const [sourceAuthors, setSourceAuthors] = React.useState('')
   const [sourceSummary, setSourceSummary] = React.useState('')
   const [sourceDatePublished, setSourceDatePublished] = React.useState(new Date())
+  const [publishDateUnknown, setPublishDateUnknown] = React.useState(false)
   const [showOtherFields, setShowOtherFields] = React.useState(false)
 
   const [showClaimForm, setShowClaimForm] = React.useState(false)
@@ -68,7 +73,10 @@ const SubmitClaim: React.FC<{}> = () => {
       setSourceTitle(data.title)
       setSourceSummary(data.summary)
       setShowOtherFields(true)
-      setSourceDatePublished(new Date(data.date_published))
+      data.date_published ?
+        setSourceDatePublished(new Date(data.date_published))
+        :
+        setPublishDateUnknown(true)
     }
   })
 
@@ -160,7 +168,20 @@ const SubmitClaim: React.FC<{}> = () => {
                             <Grid item className={classes.maxSpace}>
                               <DatePicker value={sourceDatePublished} label='Date Published' fullWidth
                                           format='MMMM d, yyyy'
+                                          disabled={publishDateUnknown}
                                           onChange={date => setSourceDatePublished(new Date(date.toString()))} />
+                              <div className={classes.alignItemsRight}>
+                                <FormControlLabel
+                                  control={
+                                    <Checkbox
+                                      checked={publishDateUnknown}
+                                      onChange={() => setPublishDateUnknown(!publishDateUnknown)}
+                                    />
+                                  }
+                                  label="I don't know the publication date"
+                                  labelPlacement='start'
+                                />
+                              </div>
                             </Grid>
                             <Grid item className={classes.centerItems}>
                               <InfoTooltip
@@ -236,7 +257,7 @@ const SubmitClaim: React.FC<{}> = () => {
                           title: sourceTitle,
                           url: sourceUrl,
                           summary: sourceSummary,
-                          date_published: sourceDatePublished.toISOString()
+                          date_published: publishDateUnknown ? null : sourceDatePublished.toISOString()
                         }
                       }).then((claim) => {
                         console.log(claim)
