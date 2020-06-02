@@ -12,10 +12,10 @@ import {
   Typography
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
-import { useGet, useMutate } from 'restful-react'
+import { Mutate, useGet, useMutate } from 'restful-react'
 import { DatePicker } from '@material-ui/pickers'
 import * as assert from 'assert'
-import { Claim, useApiClaimsCreate, UseApiClaimsCreateProps } from '../openapi-types'
+import { useHistory } from 'react-router'
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const SubmitClaim: React.FC<{}> = () => {
   const classes = useStyles()
+  const history = useHistory()
   const [sourceUrl, setSourceUrl] = React.useState('')
   const [sourceTitle, setSourceTitle] = React.useState('')
   const [sourceAuthors, setSourceAuthors] = React.useState('')
@@ -53,22 +54,20 @@ const SubmitClaim: React.FC<{}> = () => {
 
   const {data, loading} = useGet({
     path: 'api/article/',
-    debounce: 1000,
+    debounce: 500,
     queryParams: {url: sourceUrl},
     resolve: data => {
       setSourceTitle(data.title)
       setSourceSummary(data.summary)
       setShowOtherFields(true)
       setSourceDatePublished(new Date(data.date_published))
-      console.log(data.date_published)
     }
   })
-  console.log(sourceDatePublished)
 
   function isValidUrl(url: string) {
     try {
       new URL(url)
-    } catch(_) {
+    } catch (_) {
       return false
     }
     return true
@@ -78,17 +77,10 @@ const SubmitClaim: React.FC<{}> = () => {
     try {
       assert(!sourceUrl || isValidUrl(sourceUrl))
       assert(claimText)
-    } catch(_) {
+    } catch (_) {
       return false
     }
     return true
-  }
-
-  function handleSubmitForm() {
-    useMutate({
-      verb: 'POST',
-      path: '/api/claims/'
-    })
   }
 
   return (
@@ -177,9 +169,28 @@ const SubmitClaim: React.FC<{}> = () => {
                 <Button id='back' className={classes.leftMarginButton} onClick={() => setShowClaimForm(false)}>
                   Back
                 </Button>
-                <Button type='submit' onClick={handleSubmitForm}>
-                  Submit
-                </Button>
+                <Mutate verb='POST' path='/api/claims/'>
+                  {
+                    mutate => (
+                      <Button type='submit' onClick={() => mutate({
+                        claim_text: claimText,
+                        description: claimDescription,
+                        source_of_claim: {
+                          title: sourceTitle,
+                          url: sourceUrl,
+                          summary: sourceSummary,
+                          date_published: sourceDatePublished.toISOString()
+                        }
+                      }).then((claim) => {
+                        console.log(claim)
+                        history.push('/claim/' + claim.id)
+                      })
+                      }>
+                        Submit
+                      </Button>
+                    )
+                  }
+                </Mutate>
               </CardActions>
             </Card>
         }
