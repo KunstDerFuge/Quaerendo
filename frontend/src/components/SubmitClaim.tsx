@@ -122,7 +122,7 @@ const SubmitClaim: React.FC<{}> = () => {
                           </Grid>
                           <Grid item>
                             <TextField fullWidth multiline label='Summary' variant='outlined' value={sourceSummary}
-                                       onChange={e => setSourceSummary(e.target.value)} />
+                                       rows={4} rowsMax={12} onChange={e => setSourceSummary(e.target.value)} />
                           </Grid>
                           <Grid item>
                             <DatePicker value={sourceDatePublished} label='Date Published' fullWidth
@@ -161,7 +161,7 @@ const SubmitClaim: React.FC<{}> = () => {
                   </Grid>
                   <Grid item>
                     <TextField fullWidth label="Claim Description" variant="outlined" value={claimDescription} multiline
-                               onChange={e => setClaimDescription(e.target.value)} />
+                               rows={4} rowsMax={12} onChange={e => setClaimDescription(e.target.value)} />
                   </Grid>
                 </Grid>
               </CardContent>
