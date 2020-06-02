@@ -16,6 +16,7 @@ import { Mutate, useGet, useMutate } from 'restful-react'
 import { DatePicker } from '@material-ui/pickers'
 import * as assert from 'assert'
 import { useHistory } from 'react-router'
+import InfoTooltip from './InfoTooltip'
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -35,6 +36,13 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   leftMarginButton: {
     marginLeft: 'auto'
+  },
+  maxSpace: {
+    flexGrow: 10
+  },
+  centerItems: {
+    display: 'flex',
+    alignItems: 'center'
   }
 }))
 
@@ -96,9 +104,17 @@ const SubmitClaim: React.FC<{}> = () => {
                   <Grid item>
                     <Typography variant='h5' gutterBottom>Source of Claim</Typography>
                   </Grid>
-                  <Grid item>
-                    <TextField fullWidth label="Source URL" variant="outlined" value={sourceUrl}
-                               onChange={e => setSourceUrl(e.target.value)} />
+                  <Grid item container>
+                    <Grid item className={classes.maxSpace}>
+                      <TextField fullWidth label="Source URL" variant="outlined" value={sourceUrl}
+                                 onChange={e => setSourceUrl(e.target.value)} />
+                    </Grid>
+                    <Grid item className={classes.centerItems}>
+                      <InfoTooltip
+                        fieldName='Source URL'
+                        required={false}
+                        description={'If this source has a URL, like an article or Tweet, paste it here. Some source data may be auto-filled from the URL. Try to eliminate unnecessary parameters (the portion after the question mark) if applicable, making sure that the URL remains valid. Must begin with https:// or http://'} />
+                    </Grid>
                     {
                       showOtherFields ?
                         ''
@@ -116,18 +132,42 @@ const SubmitClaim: React.FC<{}> = () => {
                       :
                       showOtherFields ?
                         <>
-                          <Grid item>
-                            <TextField fullWidth label='Title' variant='outlined' value={sourceTitle}
-                                       onChange={e => setSourceTitle(e.target.value)} />
+                          <Grid item container>
+                            <Grid item className={classes.maxSpace}>
+                              <TextField fullWidth label='Title' variant='outlined' value={sourceTitle}
+                                         onChange={e => setSourceTitle(e.target.value)} />
+                            </Grid>
+                            <Grid item className={classes.centerItems}>
+                              <InfoTooltip
+                                fieldName='Source Title'
+                                required={false}
+                                description={'The title of this source. Usually the headline, if an article. If the source is a tweet, use "Tweet from @User".'} />
+                            </Grid>
                           </Grid>
-                          <Grid item>
-                            <TextField fullWidth multiline label='Summary' variant='outlined' value={sourceSummary}
-                                       rows={4} rowsMax={12} onChange={e => setSourceSummary(e.target.value)} />
+                          <Grid item container>
+                            <Grid item className={classes.maxSpace}>
+                              <TextField fullWidth multiline label='Summary' variant='outlined' value={sourceSummary}
+                                         rows={4} rowsMax={12} onChange={e => setSourceSummary(e.target.value)} />
+                            </Grid>
+                            <Grid item className={classes.centerItems}>
+                              <InfoTooltip
+                                fieldName='Source Summary'
+                                required={false}
+                                description={'Summary of the info in the source. This may be auto-generated in the case of an article. If so, please proofread and edit as needed. If this source is original research (i.e. mathematical deduction), include all necessary information here.'} />
+                            </Grid>
                           </Grid>
-                          <Grid item>
-                            <DatePicker value={sourceDatePublished} label='Date Published' fullWidth
-                                        format='MMMM d, yyyy'
-                                        onChange={date => setSourceDatePublished(new Date(date.toString()))} />
+                          <Grid item container>
+                            <Grid item className={classes.maxSpace}>
+                              <DatePicker value={sourceDatePublished} label='Date Published' fullWidth
+                                          format='MMMM d, yyyy'
+                                          onChange={date => setSourceDatePublished(new Date(date.toString()))} />
+                            </Grid>
+                            <Grid item className={classes.centerItems}>
+                              <InfoTooltip
+                                fieldName='Source Publication Date'
+                                required={false}
+                                description={'The date the source was published. This may be auto-filled in the case of an article. Please double-check the value here if so.'} />
+                            </Grid>
                           </Grid>
                         </>
                         :
@@ -155,13 +195,30 @@ const SubmitClaim: React.FC<{}> = () => {
                   <Grid item>
                     <Typography variant='h5' gutterBottom>Claim Details</Typography>
                   </Grid>
-                  <Grid item>
-                    <TextField fullWidth label="Claim Text" variant="outlined" value={claimText}
-                               onChange={e => setClaimText(e.target.value)} />
+                  <Grid item container>
+                    <Grid item className={classes.maxSpace}>
+                      <TextField fullWidth label="Claim Text" variant="outlined" value={claimText}
+                                 onChange={e => setClaimText(e.target.value)} />
+                    </Grid>
+                    <Grid item className={classes.centerItems}>
+                      <InfoTooltip
+                        fieldName='Claim Text'
+                        required={true}
+                        description={'The text of the claim. Dont use quotes or end with punctuation.\nExample: Wearing a face mask helps reduce transmission of Covid-19'} />
+                    </Grid>
                   </Grid>
-                  <Grid item>
-                    <TextField fullWidth label="Claim Description" variant="outlined" value={claimDescription} multiline
-                               rows={4} rowsMax={12} onChange={e => setClaimDescription(e.target.value)} />
+                  <Grid item container>
+                    <Grid item className={classes.maxSpace}>
+                      <TextField fullWidth label="Claim Description" variant="outlined" value={claimDescription}
+                                 multiline
+                                 rows={4} rowsMax={12} onChange={e => setClaimDescription(e.target.value)} />
+                    </Grid>
+                    <Grid item className={classes.centerItems}>
+                      <InfoTooltip
+                        fieldName='Claim Description'
+                        required={false}
+                        description={'Provide some context for the claim.'} />
+                    </Grid>
                   </Grid>
                 </Grid>
               </CardContent>
