@@ -14,7 +14,6 @@ import os
 from decouple import config, Csv
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-from lensoftruth.evidence_relationship import EvidenceRelationship
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -56,7 +55,7 @@ REST_FRAMEWORK = {
 
 SPECTACULAR_SETTINGS = {
     'ENUM_NAME_OVERRIDES': {
-        'EvidenceRelationship': EvidenceRelationship.choices
+        'EvidenceRelationship': 'api.models.EvidenceRelationship'
     },
     'TITLE': 'Lens of Truth API',
     'VERSION': '1.0.0'

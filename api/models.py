@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.db import models
 
-from lensoftruth.evidence_relationship import EvidenceRelationship
 from users.models import User
 
 
@@ -18,6 +17,16 @@ class SourceDegree(models.TextChoices):
     PRIMARY = 'PRIMARY'
     SECONDARY = 'SECONDARY'
     TERTIARY = 'TERTIARY'
+
+
+class EvidenceRelationship(models.TextChoices):
+    PROVES = 'PROVES'
+    SUPPORTS = 'SUPPORTS'
+    UNRELATED = 'UNRELATED'
+    INCONCLUSIVE = 'INCONCLUSIVE'
+    DISPUTES = 'DISPUTES'
+    DISPROVES = 'DISPROVES'
+    SPLIT = 'SPLIT'
 
 
 class Source(models.Model):
@@ -56,9 +65,6 @@ class Claim(models.Model):
         if len(self.claim_text) > 30:
             truncated_claim += '...'
         return 'Claim: "{}" ({})'.format(truncated_claim, self.source_of_claim.url[:30])
-
-
-
 
 
 class Evidence(models.Model):
