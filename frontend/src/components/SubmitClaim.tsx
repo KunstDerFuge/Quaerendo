@@ -3,16 +3,18 @@ import {
   Button,
   Card,
   CardActions,
-  CardContent, Checkbox,
-  CircularProgress, FormControlLabel,
+  CardContent,
+  Checkbox,
+  FormControlLabel,
   Grid,
+  LinearProgress,
   Link,
   TextField,
   Theme,
   Typography
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
-import { Mutate, useGet, useMutate } from 'restful-react'
+import { Mutate, useGet } from 'restful-react'
 import { DatePicker } from '@material-ui/pickers'
 import * as assert from 'assert'
 import { useHistory } from 'react-router'
@@ -136,7 +138,7 @@ const SubmitClaim: React.FC<{}> = () => {
                   </Grid>
                   {
                     loading && sourceUrl ?
-                      <CircularProgress />
+                      <LinearProgress />
                       :
                       showOtherFields ?
                         <>
