@@ -6,7 +6,7 @@ import * as assert from 'assert'
 import { useHistory } from 'react-router'
 import InfoTooltip from './InfoTooltip'
 import SubmitSourceForm from './SubmitSourceForm'
-import { Source } from '../openapi-types'
+import { PatchedSource } from '../openapi-types'
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -28,7 +28,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginLeft: 'auto'
   },
   maxSpace: {
-    flexGrow: 10
+    flexGrow: 10,
+    flexBasis: 'min-content'
   },
   centerItems: {
     display: 'flex',
@@ -63,7 +64,7 @@ const SubmitClaim: React.FC<{}> = () => {
     <Grid container direction='column' className={classes.root}>
       <Grid item>
         <SubmitSourceForm setShowNextPage={(show: boolean) => setShowClaimForm(show)}
-                          setSource={(source: Source) => setSource(source)} visible={!showClaimForm} />
+                          setSource={(source: PatchedSource) => setSource(source)} visible={!showClaimForm} />
         {
           !showClaimForm ?
             ''
