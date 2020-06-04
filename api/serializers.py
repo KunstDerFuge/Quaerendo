@@ -14,11 +14,20 @@ class EntitySerializer(serializers.ModelSerializer):
 
 
 class SourceSerializer(serializers.ModelSerializer):
-    authors = EntitySerializer(many=True, read_only=True)
+    authors = EntitySerializer(many=True, read_only=False)
 
     class Meta:
         model = Source
         fields = ['id', 'title', 'url', 'summary', 'source_degree', 'authors', 'date_published', 'date_retrieved']
+
+    def create(self, validated_data):
+        authors = EntitySerializer(many=True, data=validated_data.pop('authors'))
+        source_instance = Source.objects.create(**validated_data)
+        if authors.is_valid():
+            authors_instances = authors.save()
+            source_instance.authors.set(authors_instances)
+            source_instance.save()
+        return source_instance
 
 
 class SourceLinkSerializer(serializers.ModelSerializer):
@@ -47,7 +56,7 @@ class ClaimSerializer(serializers.ModelSerializer):
         source = SourceSerializer(data=validated_data.pop('source_of_claim'))
         claim_instance = Claim.objects.create(**validated_data)
         if source.is_valid():
-            source_instance = source.create(source.validated_data)
+            source_instance = source.save()
             claim_instance.source_of_claim = source_instance
             claim_instance.save()
         return claim_instance
