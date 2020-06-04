@@ -23,6 +23,7 @@ export interface ClaimWithEvidence {
 }
 
 export interface Entity {
+  id: number;
   name: string;
   description?: string;
 }
@@ -49,6 +50,7 @@ export interface PatchedClaimWithEvidence {
 }
 
 export interface PatchedEntity {
+  id?: number;
   name?: string;
   description?: string;
 }
@@ -69,7 +71,7 @@ export interface PatchedSource {
   url?: string;
   summary?: string;
   source_degree?: SourceDegreeEnum | null;
-  authors?: Entity[];
+  authors?: PatchedEntity[];
   date_published?: string | null;
   date_retrieved?: string;
 }
@@ -105,6 +107,30 @@ export const ApiArticleInfo = (props: ApiArticleInfoProps) => (
 export type UseApiArticleInfoProps = Omit<UseGetProps<ApiArticleInfoResponse, void>, "path">;
 
 export const useApiArticleInfo = (props: UseApiArticleInfoProps) => useGet<ApiArticleInfoResponse, unknown, void>(`/api/article/`, props);
+
+
+export interface ApiAuthorsRetrieveResponse {[key: string]: any}
+
+export type ApiAuthorsRetrieveProps = Omit<GetProps<ApiAuthorsRetrieveResponse, unknown, void>, "path">;
+
+/**
+ * Takes a list of author names, gets or creates a list of matching
+ * Entities and returns them.
+ */
+export const ApiAuthorsRetrieve = (props: ApiAuthorsRetrieveProps) => (
+  <Get<ApiAuthorsRetrieveResponse, unknown, void>
+    path={`/api/authors/`}
+    {...props}
+  />
+);
+
+export type UseApiAuthorsRetrieveProps = Omit<UseGetProps<ApiAuthorsRetrieveResponse, void>, "path">;
+
+/**
+ * Takes a list of author names, gets or creates a list of matching
+ * Entities and returns them.
+ */
+export const useApiAuthorsRetrieve = (props: UseApiAuthorsRetrieveProps) => useGet<ApiAuthorsRetrieveResponse, unknown, void>(`/api/authors/`, props);
 
 
 export type ApiClaimsListProps = Omit<GetProps<Claim[], unknown, void>, "path">;
