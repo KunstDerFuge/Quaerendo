@@ -1,6 +1,7 @@
 from drf_spectacular.utils import extend_schema
 from newspaper import Article
 from rest_framework import generics
+from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -27,6 +28,16 @@ class ArticleInfo(APIView):
             'title': article.title,
             'date_published': article.publish_date
         })
+
+
+class AuthorNegotiation(APIView):
+    """
+    Takes a list of author names, gets or creates a list of matching Entities and returns them.
+    """
+
+    def get(self, request: Request):
+        authors = request.query_params.getlist('authors')
+        print(authors)
 
 
 class EntitiesList(generics.ListCreateAPIView):

@@ -11,5 +11,6 @@ urlpatterns = [
     path('claims/<int:pk>', views.ClaimDetail.as_view()),
     path('evidence/', views.EvidenceList.as_view()),
     path('evidence/<int:pk>', views.EvidenceDetail.as_view()),
-    re_path(r'^article/$', views.ArticleInfo.as_view())
+    re_path(r'^article/$', views.ArticleInfo.as_view()),
+    re_path(r'^authors/$', views.AuthorNegotiation.as_view())
 ]
