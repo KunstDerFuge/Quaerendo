@@ -10,7 +10,7 @@ from api.models import Entity, Source, Claim, Evidence, EvidenceReview, Topic, E
 class EntitySerializer(serializers.ModelSerializer):
     class Meta:
         model = Entity
-        fields = ['name', 'description']
+        fields = ['id', 'name', 'description']
 
 
 class SourceSerializer(serializers.ModelSerializer):
