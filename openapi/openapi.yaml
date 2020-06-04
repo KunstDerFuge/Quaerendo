@@ -22,6 +22,25 @@ paths:
       - cookieAuth: []
       - basicAuth: []
       - {}
+  /api/authors/:
+    get:
+      tags:
+      - api
+      description: Takes a list of author names, gets or creates a list of matching
+        Entities and returns them.
+      operationId: api_authors_retrieve
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+                description: Unspecified response body
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
   /api/claims/:
     get:
       tags:
@@ -468,6 +487,7 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/Source'
+        required: true
       responses:
         "200":
           content:
@@ -526,6 +546,7 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/Source'
+        required: true
       responses:
         "200":
           content:
@@ -593,9 +614,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/Topic'
         source_of_claim:
-          readOnly: true
-          allOf:
-          - $ref: '#/components/schemas/Source'
+          $ref: '#/components/schemas/Source'
     ClaimWithEvidence:
       required:
       - claim_text
@@ -628,9 +647,13 @@ components:
             $ref: '#/components/schemas/Evidence'
     Entity:
       required:
+      - id
       - name
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         name:
           maxLength: 100
           type: string
@@ -706,6 +729,9 @@ components:
     PatchedEntity:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         name:
           maxLength: 100
           type: string
@@ -758,12 +784,11 @@ components:
           - $ref: '#/components/schemas/SourceDegreeEnum'
         authors:
           type: array
-          readOnly: true
           items:
-            $ref: '#/components/schemas/Entity'
+            $ref: '#/components/schemas/PatchedEntity'
         date_published:
           type: string
-          format: date
+          format: date-time
           nullable: true
         date_retrieved:
           type: string
@@ -794,12 +819,11 @@ components:
           - $ref: '#/components/schemas/SourceDegreeEnum'
         authors:
           type: array
-          readOnly: true
           items:
             $ref: '#/components/schemas/Entity'
         date_published:
           type: string
-          format: date
+          format: date-time
           nullable: true
         date_retrieved:
           type: string
