@@ -17,7 +17,7 @@ class ArticleInfo(APIView):
     """
 
     def get(self, request):
-        article_url = request.GET.get('url')
+        article_url = request.query_params.get('url')
         article = Article(article_url)
         article.download()
         article.parse()
