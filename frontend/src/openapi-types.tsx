@@ -40,6 +40,15 @@ export interface Evidence {
 
 export type EvidenceRelationship = "PROVES" | "SUPPORTS" | "UNRELATED" | "INCONCLUSIVE" | "DISPUTES" | "DISPROVES" | "SPLIT";
 
+export interface EvidenceReview {
+  evidence: Evidence;
+  reviewer: number;
+  deduced_evidence_relationship: EvidenceRelationship;
+  deduced_source_degree: SourceDegree;
+  is_reliable: boolean;
+  additional_comments?: string;
+}
+
 export interface PatchedClaimWithEvidence {
   id?: number;
   claim_text?: string;
@@ -65,12 +74,21 @@ export interface PatchedEvidence {
   num_community_reviews?: number;
 }
 
+export interface PatchedEvidenceReview {
+  evidence?: PatchedEvidence;
+  reviewer?: number;
+  deduced_evidence_relationship?: EvidenceRelationship;
+  deduced_source_degree?: SourceDegree;
+  is_reliable?: boolean;
+  additional_comments?: string;
+}
+
 export interface PatchedSource {
   id?: number;
   title?: string;
   url?: string;
   summary?: string;
-  source_degree?: SourceDegreeEnum | null;
+  source_degree?: SourceDegree | null;
   authors?: PatchedEntity[];
   date_published?: string | null;
   date_retrieved?: string;
@@ -81,13 +99,13 @@ export interface Source {
   title?: string;
   url?: string;
   summary?: string;
-  source_degree?: SourceDegreeEnum | null;
+  source_degree?: SourceDegree | null;
   authors: Entity[];
   date_published?: string | null;
   date_retrieved: string;
 }
 
-export type SourceDegreeEnum = "ORIGINAL" | "PRIMARY" | "SECONDARY" | "TERTIARY";
+export type SourceDegree = "ORIGINAL" | "PRIMARY" | "SECONDARY" | "TERTIARY";
 
 export interface Topic {
   name: string;
@@ -342,6 +360,91 @@ export type UseApiEvidenceCreateProps = Omit<UseMutateProps<Evidence, void, Evid
  * REST endpoints for viewing and submitting claims
  */
 export const useApiEvidenceCreate = (props: UseApiEvidenceCreateProps) => useMutate<Evidence, unknown, void, Evidence>("POST", `/api/evidence/`, props);
+
+
+export type ApiEvidenceReviewsListProps = Omit<GetProps<EvidenceReview[], unknown, void>, "path">;
+
+/**
+ * REST endpoints for viewing and submitting evidence reviews
+ */
+export const ApiEvidenceReviewsList = (props: ApiEvidenceReviewsListProps) => (
+  <Get<EvidenceReview[], unknown, void>
+    path={`/api/evidence/reviews/`}
+    {...props}
+  />
+);
+
+export type UseApiEvidenceReviewsListProps = Omit<UseGetProps<EvidenceReview[], void>, "path">;
+
+/**
+ * REST endpoints for viewing and submitting evidence reviews
+ */
+export const useApiEvidenceReviewsList = (props: UseApiEvidenceReviewsListProps) => useGet<EvidenceReview[], unknown, void>(`/api/evidence/reviews/`, props);
+
+
+export type ApiEvidenceReviewsCreateProps = Omit<MutateProps<EvidenceReview, unknown, void, EvidenceReview>, "path" | "verb">;
+
+/**
+ * REST endpoints for viewing and submitting evidence reviews
+ */
+export const ApiEvidenceReviewsCreate = (props: ApiEvidenceReviewsCreateProps) => (
+  <Mutate<EvidenceReview, unknown, void, EvidenceReview>
+    verb="POST"
+    path={`/api/evidence/reviews/`}
+    {...props}
+  />
+);
+
+export type UseApiEvidenceReviewsCreateProps = Omit<UseMutateProps<EvidenceReview, void, EvidenceReview>, "path" | "verb">;
+
+/**
+ * REST endpoints for viewing and submitting evidence reviews
+ */
+export const useApiEvidenceReviewsCreate = (props: UseApiEvidenceReviewsCreateProps) => useMutate<EvidenceReview, unknown, void, EvidenceReview>("POST", `/api/evidence/reviews/`, props);
+
+
+export type ApiEvidenceReviewDetailProps = Omit<GetProps<EvidenceReview, unknown, void>, "path"> & {id: number};
+
+export const ApiEvidenceReviewDetail = ({id, ...props}: ApiEvidenceReviewDetailProps) => (
+  <Get<EvidenceReview, unknown, void>
+    path={`/api/evidence/reviews/${id}`}
+    {...props}
+  />
+);
+
+export type UseApiEvidenceReviewDetailProps = Omit<UseGetProps<EvidenceReview, void>, "path"> & {id: number};
+
+export const useApiEvidenceReviewDetail = ({id, ...props}: UseApiEvidenceReviewDetailProps) => useGet<EvidenceReview, unknown, void>(`/api/evidence/reviews/${id}`, props);
+
+
+export type ApiEvidenceReviewsUpdateProps = Omit<MutateProps<EvidenceReview, unknown, void, EvidenceReview>, "path" | "verb"> & {id: number};
+
+export const ApiEvidenceReviewsUpdate = ({id, ...props}: ApiEvidenceReviewsUpdateProps) => (
+  <Mutate<EvidenceReview, unknown, void, EvidenceReview>
+    verb="PUT"
+    path={`/api/evidence/reviews/${id}`}
+    {...props}
+  />
+);
+
+export type UseApiEvidenceReviewsUpdateProps = Omit<UseMutateProps<EvidenceReview, void, EvidenceReview>, "path" | "verb"> & {id: number};
+
+export const useApiEvidenceReviewsUpdate = ({id, ...props}: UseApiEvidenceReviewsUpdateProps) => useMutate<EvidenceReview, unknown, void, EvidenceReview>("PUT", `/api/evidence/reviews/${id}`, props);
+
+
+export type ApiEvidenceReviewsPartialUpdateProps = Omit<MutateProps<EvidenceReview, unknown, void, PatchedEvidenceReview>, "path" | "verb"> & {id: number};
+
+export const ApiEvidenceReviewsPartialUpdate = ({id, ...props}: ApiEvidenceReviewsPartialUpdateProps) => (
+  <Mutate<EvidenceReview, unknown, void, PatchedEvidenceReview>
+    verb="PATCH"
+    path={`/api/evidence/reviews/${id}`}
+    {...props}
+  />
+);
+
+export type UseApiEvidenceReviewsPartialUpdateProps = Omit<UseMutateProps<EvidenceReview, void, PatchedEvidenceReview>, "path" | "verb"> & {id: number};
+
+export const useApiEvidenceReviewsPartialUpdate = ({id, ...props}: UseApiEvidenceReviewsPartialUpdateProps) => useMutate<EvidenceReview, unknown, void, PatchedEvidenceReview>("PATCH", `/api/evidence/reviews/${id}`, props);
 
 
 export type ApiEvidenceDetailProps = Omit<GetProps<Evidence, unknown, void>, "path"> & {id: number};
