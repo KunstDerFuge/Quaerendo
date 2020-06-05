@@ -62,12 +62,6 @@ class ClaimSerializer(serializers.ModelSerializer):
         return claim_instance
 
 
-class EvidenceReviewSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = EvidenceReview
-        fields = ['deduced_evidence_relationship', 'additional_comments']
-
-
 class EvidenceSerializer(serializers.ModelSerializer):
     source_of_evidence = SourceSerializer(read_only=True)
     expert_consensus_relationship = serializers.SerializerMethodField()
@@ -124,6 +118,21 @@ class EvidenceSerializer(serializers.ModelSerializer):
 
     def get_num_community_reviews(self, obj: Evidence) -> int:
         return self.get_num_reviews(obj, expert=False)
+
+
+class EvidenceReviewSerializer(serializers.ModelSerializer):
+    evidence = EvidenceSerializer()
+
+    class Meta:
+        model = EvidenceReview
+        fields = ['evidence', 'reviewer', 'deduced_evidence_relationship', 'deduced_source_degree', 'is_reliable',
+                  'additional_comments']
+
+
+class EvidenceReviewPartialSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EvidenceReview
+        fields = ['deduced_evidence_relationship', 'additional_comments']
 
 
 class ClaimWithEvidenceSerializer(serializers.ModelSerializer):
