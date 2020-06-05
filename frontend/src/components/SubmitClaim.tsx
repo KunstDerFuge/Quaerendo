@@ -63,7 +63,7 @@ const SubmitClaim: React.FC<{}> = () => {
   return (
     <Grid container direction='column' className={classes.root}>
       <Grid item>
-        <SubmitSourceForm setShowNextPage={(show: boolean) => setShowClaimForm(show)}
+        <SubmitSourceForm setShowNextPage={(show: boolean) => setShowClaimForm(show)} sourceOf='Claim'
                           setSource={(source: PatchedSource) => setSource(source)} visible={!showClaimForm} />
         {
           !showClaimForm ?

@@ -24,6 +24,7 @@ interface SubmitSourceFormProps {
   setSource: (source: PatchedSource) => void
   setShowNextPage: (show: boolean) => void
   visible: boolean
+  sourceOf: 'Claim' | 'Evidence'
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -111,7 +112,7 @@ const SubmitSourceForm: React.FC<SubmitSourceFormProps> = (props) => {
             <CardContent>
               <Grid container direction='column' spacing={2}>
                 <Grid item>
-                  <Typography variant='h5' gutterBottom>Source of Claim</Typography>
+                  <Typography variant='h5' gutterBottom>Source of {props.sourceOf}</Typography>
                 </Grid>
                 <Grid item container>
                   <Grid item className={classes.maxSpace}>
