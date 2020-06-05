@@ -361,6 +361,144 @@ paths:
       - cookieAuth: []
       - basicAuth: []
       - {}
+  /api/evidence/reviews/:
+    get:
+      tags:
+      - api
+      description: REST endpoints for viewing and submitting evidence reviews
+      operationId: api_evidence_reviews_list
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EvidenceReview'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+    post:
+      tags:
+      - api
+      description: REST endpoints for viewing and submitting evidence reviews
+      operationId: api_evidence_reviews_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EvidenceReview'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EvidenceReview'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EvidenceReview'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvidenceReview'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+  /api/evidence/reviews/{id}:
+    get:
+      tags:
+      - api
+      operationId: api_evidence_review_detail
+      parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this evidence review.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvidenceReview'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+    put:
+      tags:
+      - api
+      operationId: api_evidence_reviews_update
+      parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this evidence review.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EvidenceReview'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EvidenceReview'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EvidenceReview'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvidenceReview'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+    patch:
+      tags:
+      - api
+      operationId: api_evidence_reviews_partial_update
+      parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this evidence review.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedEvidenceReview'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedEvidenceReview'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedEvidenceReview'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvidenceReview'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
   /api/evidence/{id}:
     get:
       tags:
@@ -702,6 +840,28 @@ components:
       - DISPUTES
       - DISPROVES
       - SPLIT
+    EvidenceReview:
+      required:
+      - deduced_evidence_relationship
+      - deduced_source_degree
+      - evidence
+      - is_reliable
+      - reviewer
+      type: object
+      properties:
+        evidence:
+          $ref: '#/components/schemas/Evidence'
+        reviewer:
+          type: integer
+        deduced_evidence_relationship:
+          $ref: '#/components/schemas/EvidenceRelationship'
+        deduced_source_degree:
+          $ref: '#/components/schemas/SourceDegree'
+        is_reliable:
+          type: boolean
+        additional_comments:
+          maxLength: 500
+          type: string
     PatchedClaimWithEvidence:
       type: object
       properties:
@@ -763,6 +923,22 @@ components:
         num_community_reviews:
           type: integer
           readOnly: true
+    PatchedEvidenceReview:
+      type: object
+      properties:
+        evidence:
+          $ref: '#/components/schemas/PatchedEvidence'
+        reviewer:
+          type: integer
+        deduced_evidence_relationship:
+          $ref: '#/components/schemas/EvidenceRelationship'
+        deduced_source_degree:
+          $ref: '#/components/schemas/SourceDegree'
+        is_reliable:
+          type: boolean
+        additional_comments:
+          maxLength: 500
+          type: string
     PatchedSource:
       type: object
       properties:
@@ -781,7 +957,7 @@ components:
         source_degree:
           nullable: true
           allOf:
-          - $ref: '#/components/schemas/SourceDegreeEnum'
+          - $ref: '#/components/schemas/SourceDegree'
         authors:
           type: array
           items:
@@ -816,7 +992,7 @@ components:
         source_degree:
           nullable: true
           allOf:
-          - $ref: '#/components/schemas/SourceDegreeEnum'
+          - $ref: '#/components/schemas/SourceDegree'
         authors:
           type: array
           items:
@@ -829,7 +1005,7 @@ components:
           type: string
           format: date-time
           readOnly: true
-    SourceDegreeEnum:
+    SourceDegree:
       type: string
       enum:
       - ORIGINAL
