@@ -51,8 +51,7 @@ class Topic(models.Model):
 
 
 class Claim(models.Model):
-    source_of_claim = models.ForeignKey(Source, related_name='claims_cited_in', null=True, blank=True,
-                                        on_delete=models.CASCADE)
+    source_of_claim = models.ForeignKey(Source, related_name='claims_cited_in', on_delete=models.CASCADE)
     claim_text = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     evidence = models.ManyToManyField(Source, through='Evidence', blank=True)
