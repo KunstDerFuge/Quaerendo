@@ -55,7 +55,8 @@ REST_FRAMEWORK = {
 
 SPECTACULAR_SETTINGS = {
     'ENUM_NAME_OVERRIDES': {
-        'EvidenceRelationship': 'api.models.EvidenceRelationship'
+        'EvidenceRelationship': 'api.models.EvidenceRelationship',
+        'SourceDegree': 'api.models.SourceDegree'
     },
     'TITLE': 'Lens of Truth API',
     'VERSION': '1.0.0'
