@@ -49,6 +49,11 @@ export interface EvidenceReview {
   additional_comments?: string;
 }
 
+export interface EvidenceWithReview {
+  source_of_evidence: Source;
+  reviews: EvidenceReview;
+}
+
 export interface PatchedClaimWithEvidence {
   id?: number;
   claim_text?: string;
@@ -81,6 +86,11 @@ export interface PatchedEvidenceReview {
   deduced_source_degree?: SourceDegree;
   is_reliable?: boolean;
   additional_comments?: string;
+}
+
+export interface PatchedEvidenceWithReview {
+  source_of_evidence?: PatchedSource;
+  reviews?: PatchedEvidenceReview;
 }
 
 export interface PatchedSource {
@@ -447,48 +457,48 @@ export type UseApiEvidenceReviewsPartialUpdateProps = Omit<UseMutateProps<Eviden
 export const useApiEvidenceReviewsPartialUpdate = ({id, ...props}: UseApiEvidenceReviewsPartialUpdateProps) => useMutate<EvidenceReview, unknown, void, PatchedEvidenceReview>("PATCH", `/api/evidence/reviews/${id}`, props);
 
 
-export type ApiEvidenceDetailProps = Omit<GetProps<Evidence, unknown, void>, "path"> & {id: number};
+export type ApiEvidenceDetailProps = Omit<GetProps<EvidenceWithReview, unknown, void>, "path"> & {id: number};
 
 export const ApiEvidenceDetail = ({id, ...props}: ApiEvidenceDetailProps) => (
-  <Get<Evidence, unknown, void>
+  <Get<EvidenceWithReview, unknown, void>
     path={`/api/evidence/${id}`}
     {...props}
   />
 );
 
-export type UseApiEvidenceDetailProps = Omit<UseGetProps<Evidence, void>, "path"> & {id: number};
+export type UseApiEvidenceDetailProps = Omit<UseGetProps<EvidenceWithReview, void>, "path"> & {id: number};
 
-export const useApiEvidenceDetail = ({id, ...props}: UseApiEvidenceDetailProps) => useGet<Evidence, unknown, void>(`/api/evidence/${id}`, props);
+export const useApiEvidenceDetail = ({id, ...props}: UseApiEvidenceDetailProps) => useGet<EvidenceWithReview, unknown, void>(`/api/evidence/${id}`, props);
 
 
-export type ApiEvidenceUpdateProps = Omit<MutateProps<Evidence, unknown, void, Evidence>, "path" | "verb"> & {id: number};
+export type ApiEvidenceUpdateProps = Omit<MutateProps<EvidenceWithReview, unknown, void, EvidenceWithReview>, "path" | "verb"> & {id: number};
 
 export const ApiEvidenceUpdate = ({id, ...props}: ApiEvidenceUpdateProps) => (
-  <Mutate<Evidence, unknown, void, Evidence>
+  <Mutate<EvidenceWithReview, unknown, void, EvidenceWithReview>
     verb="PUT"
     path={`/api/evidence/${id}`}
     {...props}
   />
 );
 
-export type UseApiEvidenceUpdateProps = Omit<UseMutateProps<Evidence, void, Evidence>, "path" | "verb"> & {id: number};
+export type UseApiEvidenceUpdateProps = Omit<UseMutateProps<EvidenceWithReview, void, EvidenceWithReview>, "path" | "verb"> & {id: number};
 
-export const useApiEvidenceUpdate = ({id, ...props}: UseApiEvidenceUpdateProps) => useMutate<Evidence, unknown, void, Evidence>("PUT", `/api/evidence/${id}`, props);
+export const useApiEvidenceUpdate = ({id, ...props}: UseApiEvidenceUpdateProps) => useMutate<EvidenceWithReview, unknown, void, EvidenceWithReview>("PUT", `/api/evidence/${id}`, props);
 
 
-export type ApiEvidencePartialUpdateProps = Omit<MutateProps<Evidence, unknown, void, PatchedEvidence>, "path" | "verb"> & {id: number};
+export type ApiEvidencePartialUpdateProps = Omit<MutateProps<EvidenceWithReview, unknown, void, PatchedEvidenceWithReview>, "path" | "verb"> & {id: number};
 
 export const ApiEvidencePartialUpdate = ({id, ...props}: ApiEvidencePartialUpdateProps) => (
-  <Mutate<Evidence, unknown, void, PatchedEvidence>
+  <Mutate<EvidenceWithReview, unknown, void, PatchedEvidenceWithReview>
     verb="PATCH"
     path={`/api/evidence/${id}`}
     {...props}
   />
 );
 
-export type UseApiEvidencePartialUpdateProps = Omit<UseMutateProps<Evidence, void, PatchedEvidence>, "path" | "verb"> & {id: number};
+export type UseApiEvidencePartialUpdateProps = Omit<UseMutateProps<EvidenceWithReview, void, PatchedEvidenceWithReview>, "path" | "verb"> & {id: number};
 
-export const useApiEvidencePartialUpdate = ({id, ...props}: UseApiEvidencePartialUpdateProps) => useMutate<Evidence, unknown, void, PatchedEvidence>("PATCH", `/api/evidence/${id}`, props);
+export const useApiEvidencePartialUpdate = ({id, ...props}: UseApiEvidencePartialUpdateProps) => useMutate<EvidenceWithReview, unknown, void, PatchedEvidenceWithReview>("PATCH", `/api/evidence/${id}`, props);
 
 
 export type ApiSourcesListProps = Omit<GetProps<Source[], unknown, void>, "path">;
