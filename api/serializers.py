@@ -121,30 +121,39 @@ class EvidenceSerializer(serializers.ModelSerializer):
 
 
 class EvidenceReviewSerializer(serializers.ModelSerializer):
-    evidence = EvidenceSerializer()
 
     class Meta:
         model = EvidenceReview
-        fields = ['evidence', 'reviewer', 'deduced_evidence_relationship', 'deduced_source_degree', 'is_reliable',
+        fields = ['deduced_evidence_relationship', 'deduced_source_degree', 'is_reliable',
                   'additional_comments']
 
 
 class EvidenceWithReviewSerializer(serializers.ModelSerializer):
-    source_of_evidence = SourceSerializer()
-    reviews = EvidenceReviewSerializer()
+    source_of_evidence = SourceSerializer(read_only=False)
+    reviews = EvidenceReviewSerializer(many=True, read_only=False)
+    claim = serializers.PrimaryKeyRelatedField(read_only=False, queryset=Claim.objects.all())
 
     class Meta:
         model = Evidence
-        fields = ['source_of_evidence', 'reviews']
+        fields = ['source_of_evidence', 'reviews', 'claim']
 
     def create(self, validated_data):
-        review = EvidenceReviewSerializer(data=validated_data.pop('review'))
-        evidence_instance = Evidence.objects.create(**validated_data)
-        if review.is_valid():
-            review_instance = review.save()
-            evidence_instance.reviews.add(review_instance)
-            evidence_instance.save()
-        return evidence_instance
+        review = EvidenceReviewSerializer(data=validated_data.pop('reviews'))
+        source = SourceSerializer(data=validated_data.pop('source_of_evidence'))
+        claim = validated_data.pop('claim')
+        evidence_data = validated_data
+        evidence_data['claim'] = claim
+        evidence_data['source_of_evidence'] = source
+        evidence = EvidenceSerializer(data=evidence_data)
+        if source.is_valid():
+            source_instance = source.save()
+            if evidence.is_valid():
+                evidence_instance = evidence.save(claim=claim, source_of_evidence=source_instance)
+                if review.is_valid():
+                    review_instance = review.save()
+                    evidence_instance.reviews.add(review_instance)
+                    evidence_instance.save()
+                return evidence_instance
 
 
 class EvidenceReviewPartialSerializer(serializers.ModelSerializer):

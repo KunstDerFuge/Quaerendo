@@ -97,7 +97,7 @@ class EvidenceList(generics.ListCreateAPIView):
     """
 
     queryset = Evidence.objects.all()
-    serializer_class = EvidenceSerializer
+    serializer_class = EvidenceWithReviewSerializer
 
 
 @extend_schema(operation_id='api_evidence_detail', methods=['GET'])
@@ -106,7 +106,7 @@ class EvidenceDetail(generics.RetrieveUpdateAPIView):
     REST endpoints for viewing and modifying individual pieces of evidence
     """
     queryset = Evidence.objects.all()
-    serializer_class = EvidenceWithReviewSerializer
+    serializer_class = EvidenceSerializer
 
 
 class EvidenceReviewList(generics.ListCreateAPIView):
