@@ -518,7 +518,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Evidence'
+                $ref: '#/components/schemas/EvidenceWithReview'
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -540,19 +540,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Evidence'
+              $ref: '#/components/schemas/EvidenceWithReview'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Evidence'
+              $ref: '#/components/schemas/EvidenceWithReview'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Evidence'
+              $ref: '#/components/schemas/EvidenceWithReview'
+        required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Evidence'
+                $ref: '#/components/schemas/EvidenceWithReview'
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -574,19 +575,19 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedEvidence'
+              $ref: '#/components/schemas/PatchedEvidenceWithReview'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedEvidence'
+              $ref: '#/components/schemas/PatchedEvidenceWithReview'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedEvidence'
+              $ref: '#/components/schemas/PatchedEvidenceWithReview'
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Evidence'
+                $ref: '#/components/schemas/EvidenceWithReview'
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -862,6 +863,16 @@ components:
         additional_comments:
           maxLength: 500
           type: string
+    EvidenceWithReview:
+      required:
+      - reviews
+      - source_of_evidence
+      type: object
+      properties:
+        source_of_evidence:
+          $ref: '#/components/schemas/Source'
+        reviews:
+          $ref: '#/components/schemas/EvidenceReview'
     PatchedClaimWithEvidence:
       type: object
       properties:
@@ -939,6 +950,13 @@ components:
         additional_comments:
           maxLength: 500
           type: string
+    PatchedEvidenceWithReview:
+      type: object
+      properties:
+        source_of_evidence:
+          $ref: '#/components/schemas/PatchedSource'
+        reviews:
+          $ref: '#/components/schemas/PatchedEvidenceReview'
     PatchedSource:
       type: object
       properties:
