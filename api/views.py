@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 
 from api.models import Entity, Source, Claim, Evidence, EvidenceReview
 from api.serializers import EntitySerializer, SourceSerializer, ClaimSerializer, EvidenceSerializer, \
-    ClaimWithEvidenceSerializer, EvidenceReviewSerializer
+    ClaimWithEvidenceSerializer, EvidenceReviewSerializer, EvidenceWithReviewSerializer
 
 
 @extend_schema(operation_id='api_article_info', methods=['GET'])
@@ -106,7 +106,7 @@ class EvidenceDetail(generics.RetrieveUpdateAPIView):
     REST endpoints for viewing and modifying individual pieces of evidence
     """
     queryset = Evidence.objects.all()
-    serializer_class = EvidenceSerializer
+    serializer_class = EvidenceWithReviewSerializer
 
 
 class EvidenceReviewList(generics.ListCreateAPIView):

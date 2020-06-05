@@ -120,10 +120,22 @@ class EvidenceSerializer(serializers.ModelSerializer):
         return self.get_num_reviews(obj, expert=False)
 
 
+class EvidenceReviewSerializer(serializers.ModelSerializer):
+    evidence = EvidenceSerializer()
+
+    class Meta:
+        model = EvidenceReview
+        fields = ['evidence', 'reviewer', 'deduced_evidence_relationship', 'deduced_source_degree', 'is_reliable',
+                  'additional_comments']
+
+
 class EvidenceWithReviewSerializer(serializers.ModelSerializer):
+    source_of_evidence = SourceSerializer()
+    reviews = EvidenceReviewSerializer()
+
     class Meta:
         model = Evidence
-        fields = ['source_of_evidence']
+        fields = ['source_of_evidence', 'reviews']
 
     def create(self, validated_data):
         review = EvidenceReviewSerializer(data=validated_data.pop('review'))
@@ -133,15 +145,6 @@ class EvidenceWithReviewSerializer(serializers.ModelSerializer):
             evidence_instance.reviews.add(review_instance)
             evidence_instance.save()
         return evidence_instance
-
-
-class EvidenceReviewSerializer(serializers.ModelSerializer):
-    evidence = EvidenceSerializer()
-
-    class Meta:
-        model = EvidenceReview
-        fields = ['evidence', 'reviewer', 'deduced_evidence_relationship', 'deduced_source_degree', 'is_reliable',
-                  'additional_comments']
 
 
 class EvidenceReviewPartialSerializer(serializers.ModelSerializer):
