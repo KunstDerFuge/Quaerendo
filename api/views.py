@@ -5,9 +5,9 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from api.models import Entity, Source, Claim, Evidence
+from api.models import Entity, Source, Claim, Evidence, EvidenceReview
 from api.serializers import EntitySerializer, SourceSerializer, ClaimSerializer, EvidenceSerializer, \
-    ClaimWithEvidenceSerializer
+    ClaimWithEvidenceSerializer, EvidenceReviewSerializer
 
 
 @extend_schema(operation_id='api_article_info', methods=['GET'])
@@ -107,3 +107,21 @@ class EvidenceDetail(generics.RetrieveUpdateAPIView):
     """
     queryset = Evidence.objects.all()
     serializer_class = EvidenceSerializer
+
+
+class EvidenceReviewList(generics.ListCreateAPIView):
+    """
+    REST endpoints for viewing and submitting evidence reviews
+    """
+
+    queryset = EvidenceReview.objects.all()
+    serializer_class = EvidenceReviewSerializer
+
+
+@extend_schema(operation_id='api_evidence_review_detail', methods=['GET'])
+class EvidenceReviewDetail(generics.RetrieveUpdateAPIView):
+    """
+    REST endpoints for viewing and modifying individual evidence reviews
+    """
+    queryset = EvidenceReview.objects.all()
+    serializer_class = EvidenceReviewSerializer
