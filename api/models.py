@@ -70,13 +70,12 @@ class Claim(models.Model):
 class Evidence(models.Model):
     claim = models.ForeignKey(Claim, related_name='related_evidence', on_delete=models.CASCADE)
     source_of_evidence = models.ForeignKey(Source, related_name='evidence_cited_in', on_delete=models.CASCADE)
-    evidence_relationship = models.CharField(choices=EvidenceRelationship.choices, max_length=25)
     description = models.TextField(blank=True)
     submitted_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, null=True, blank=True,
                                      related_name='evidence_submitted')
 
     def __str__(self):
-        return 'Evidence {} {} | {}'.format(self.evidence_relationship, str(self.claim), str(self.source_of_evidence))
+        return 'Evidence {} | {}'.format(str(self.claim), str(self.source_of_evidence))
 
 
 class EvidenceReview(models.Model):
