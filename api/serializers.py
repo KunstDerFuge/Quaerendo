@@ -1,10 +1,10 @@
-import json
 import math
 
 from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 
 from api.models import Entity, Source, Claim, Evidence, EvidenceReview, Topic, EvidenceRelationship
+from users.models import User
 
 
 class EntitySerializer(serializers.ModelSerializer):
@@ -138,7 +138,7 @@ class EvidenceWithReviewSerializer(serializers.ModelSerializer):
         fields = ['source_of_evidence', 'reviews', 'claim']
 
     def create(self, validated_data):
-        review = EvidenceReviewSerializer(data=validated_data.pop('reviews'))
+        review = EvidenceReviewSerializer(data=validated_data.pop('reviews'), many=True)
         source = SourceSerializer(data=validated_data.pop('source_of_evidence'))
         claim = validated_data.pop('claim')
         evidence_data = validated_data
@@ -150,8 +150,9 @@ class EvidenceWithReviewSerializer(serializers.ModelSerializer):
             if evidence.is_valid():
                 evidence_instance = evidence.save(claim=claim, source_of_evidence=source_instance)
                 if review.is_valid():
-                    review_instance = review.save()
-                    evidence_instance.reviews.add(review_instance)
+                    # TODO: Remove this User.objects.first():
+                    review_instance = review.save(evidence=evidence_instance, reviewer=User.objects.first())
+                    evidence_instance.reviews.set(review_instance)
                     evidence_instance.save()
                 return evidence_instance
 
