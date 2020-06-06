@@ -85,7 +85,12 @@ const SubmitClaim: React.FC<{}> = () => {
                       <InfoTooltip
                         fieldName='Claim Text'
                         required={true}
-                        description={'The text of the claim. Dont use quotes or end with punctuation.\nExample: Wearing a face mask helps reduce transmission of Covid-19'} />
+                        description={
+                          <>
+                            The text of the claim. Don't use quotes or end with punctuation.
+                            <p>Example: Wearing a face mask helps reduce transmission of Covid-19</p>
+                          </>
+                        } />
                     </Grid>
                   </Grid>
                   <Grid item container>
