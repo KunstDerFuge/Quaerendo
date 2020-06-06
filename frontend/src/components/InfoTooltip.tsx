@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Grid, IconButton, Popover, Theme, Typography } from '@material-ui/core'
 import InfoRoundedIcon from '@material-ui/icons/InfoRounded'
 import { makeStyles } from '@material-ui/styles'
+import { ReactElement } from 'react'
 
 const useStyles = makeStyles((theme: Theme) => ({
   garamond: {
@@ -16,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 interface InfoTooltipProps {
   fieldName: string
   required: boolean
-  description: string
+  description: string | ReactElement
 }
 
 const InfoTooltip: React.FC<InfoTooltipProps> = (props) => {
