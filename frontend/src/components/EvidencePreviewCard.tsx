@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Evidence } from '../openapi-types'
-import { Card, CardActionArea, CardContent, Theme, Typography } from '@material-ui/core'
+import { Card, CardActionArea, CardContent, Grid, Theme, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import EvidenceChips from './EvidenceChips'
 import { useHistory } from 'react-router'
@@ -25,23 +25,31 @@ const EvidencePreviewCard: React.FC<EvidenceProps> = (props) => {
     <Card variant='outlined' className={classes.evidenceCard}>
       <CardActionArea onClick={() => history.push('/evidence/' + props.evidence.id)}>
         <CardContent>
-          <Typography variant='h6' display='inline' gutterBottom>
-            {
-              props.evidence.source_of_evidence.title !== '' ?
-                props.evidence.source_of_evidence.title
-                :
-                'Untitled'
-            }
-          </Typography>
-          <EvidenceChips evidence={props.evidence} />
-          <Typography variant='body2' component='p'>
-            {
-              props.evidence.description !== '' ?
-                props.evidence.description
-                :
-                'No description has been provided for this piece of evidence.'
-            }
-          </Typography>
+          <Grid container direction='column' spacing={1}>
+            <Grid item>
+              <Typography variant='h6'>
+                {
+                  props.evidence.source_of_evidence.title !== '' ?
+                    props.evidence.source_of_evidence.title
+                    :
+                    'Untitled'
+                }
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography variant='body2' component='p'>
+                {
+                  props.evidence.description !== '' ?
+                    props.evidence.description
+                    :
+                    'No description has been provided for this piece of evidence.'
+                }
+              </Typography>
+            </Grid>
+            <Grid item>
+              <EvidenceChips evidence={props.evidence} />
+            </Grid>
+          </Grid>
         </CardContent>
       </CardActionArea>
     </Card>

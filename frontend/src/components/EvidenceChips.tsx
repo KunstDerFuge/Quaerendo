@@ -33,7 +33,7 @@ function getColorFromRelationship(relationship: EvidenceRelationship | 'UNDER RE
 
 const useStyles = makeStyles((theme: Theme) => ({
   chip: (props: EvidenceRelationshipChipProps) => ({
-    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
     marginTop: theme.spacing(-1),
     backgroundColor: getColorFromRelationship(props.relationship),
     color: '#fff',
