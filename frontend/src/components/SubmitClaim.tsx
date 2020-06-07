@@ -7,6 +7,7 @@ import { useHistory } from 'react-router'
 import InfoTooltip from './InfoTooltip'
 import SubmitSourceForm from './SubmitSourceForm'
 import { PatchedSource } from '../openapi-types'
+import CardPage from './CardPage'
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -60,6 +61,31 @@ const SubmitClaim: React.FC<{}> = () => {
     return true
   }
 
+  const cardActions = (
+    <CardActions>
+      <Button id='back' className={classes.leftMarginButton} onClick={() => setShowClaimForm(false)}>
+        Back
+      </Button>
+      <Mutate verb='POST' path='/api/claims/'>
+        {
+          mutate => (
+            <Button type='submit' onClick={() => mutate({
+              claim_text: claimText,
+              description: claimDescription,
+              source_of_claim: source
+            }).then((claim) => {
+              console.log(claim)
+              history.push('/claim/' + claim.id)
+            })
+            }>
+              Submit
+            </Button>
+          )
+        }
+      </Mutate>
+    </CardActions>
+  )
+
   return (
     <Grid container direction='column' className={classes.root}>
       <Grid item>
@@ -70,67 +96,38 @@ const SubmitClaim: React.FC<{}> = () => {
             ''
             :
             // Claim form
-            <Card className={classes.card} elevation={8}>
-              <CardContent>
-                <Grid container direction='column' spacing={2}>
-                  <Grid item>
-                    <Typography variant='h5' gutterBottom>Claim Details</Typography>
-                  </Grid>
-                  <Grid item container>
-                    <Grid item className={classes.maxSpace}>
-                      <TextField fullWidth label="Claim Text" variant="outlined" value={claimText}
-                                 onChange={e => setClaimText(e.target.value)} />
-                    </Grid>
-                    <Grid item className={classes.centerItems}>
-                      <InfoTooltip
-                        fieldName='Claim Text'
-                        required={true}
-                        description={
-                          <>
-                            The text of the claim. Don't use quotes or end with punctuation.
-                            <p>Example: Wearing a face mask helps reduce transmission of Covid-19</p>
-                          </>
-                        } />
-                    </Grid>
-                  </Grid>
-                  <Grid item container>
-                    <Grid item className={classes.maxSpace}>
-                      <TextField fullWidth label="Claim Description" variant="outlined" value={claimDescription}
-                                 multiline
-                                 rows={4} rowsMax={12} onChange={e => setClaimDescription(e.target.value)} />
-                    </Grid>
-                    <Grid item className={classes.centerItems}>
-                      <InfoTooltip
-                        fieldName='Claim Description'
-                        required={false}
-                        description={'Provide some context for the claim.'} />
-                    </Grid>
-                  </Grid>
+            <CardPage title='Claim Details' actions={cardActions} width='40em'>
+              <Grid item container>
+                <Grid item className={classes.maxSpace}>
+                  <TextField fullWidth label="Claim Text" variant="outlined" value={claimText}
+                             onChange={e => setClaimText(e.target.value)} />
                 </Grid>
-              </CardContent>
-              <CardActions>
-                <Button id='back' className={classes.leftMarginButton} onClick={() => setShowClaimForm(false)}>
-                  Back
-                </Button>
-                <Mutate verb='POST' path='/api/claims/'>
-                  {
-                    mutate => (
-                      <Button type='submit' onClick={() => mutate({
-                        claim_text: claimText,
-                        description: claimDescription,
-                        source_of_claim: source
-                      }).then((claim) => {
-                        console.log(claim)
-                        history.push('/claim/' + claim.id)
-                      })
-                      }>
-                        Submit
-                      </Button>
-                    )
-                  }
-                </Mutate>
-              </CardActions>
-            </Card>
+                <Grid item className={classes.centerItems}>
+                  <InfoTooltip
+                    fieldName='Claim Text'
+                    required={true}
+                    description={
+                      <>
+                        The text of the claim. Don't use quotes or end with punctuation.
+                        <p>Example: Wearing a face mask helps reduce transmission of Covid-19</p>
+                      </>
+                    } />
+                </Grid>
+              </Grid>
+              <Grid item container>
+                <Grid item className={classes.maxSpace}>
+                  <TextField fullWidth label="Claim Description" variant="outlined" value={claimDescription}
+                             multiline
+                             rows={4} rowsMax={12} onChange={e => setClaimDescription(e.target.value)} />
+                </Grid>
+                <Grid item className={classes.centerItems}>
+                  <InfoTooltip
+                    fieldName='Claim Description'
+                    required={false}
+                    description={'Provide some context for the claim.'} />
+                </Grid>
+              </Grid>
+            </CardPage>
         }
       </Grid>
     </Grid>
