@@ -3,8 +3,8 @@ attrs==19.3.0
 Django==3.0.7
 django-cors-headers==3.3.0
 djangorestframework==3.11.0
-drf-spectacular==0.9.6
-inflection==0.4.0
+drf-spectacular==0.9.7
+inflection==0.5.0
 jsonschema==3.2.0
 psycopg2-binary==2.8.5
 pyrsistent==0.16.0
@@ -14,3 +14,4 @@ PyYAML==5.3.1
 six==1.15.0
 sqlparse==0.3.1
 uritemplate==3.0.1
+django-rest-auth~=0.9.5
