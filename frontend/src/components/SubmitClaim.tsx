@@ -1,13 +1,13 @@
 import * as React from 'react'
-import { Button, Card, CardActions, CardContent, Grid, TextField, Theme, Typography } from '@material-ui/core'
+import { Button, CardActions, Grid, TextField, Theme } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import { Mutate } from 'restful-react'
 import * as assert from 'assert'
 import { useHistory } from 'react-router'
-import InfoTooltip from './InfoTooltip'
 import SubmitSourceForm from './SubmitSourceForm'
 import { PatchedSource } from '../openapi-types'
 import CardPage from './CardPage'
+import CardFormField from './CardFormField'
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -97,36 +97,21 @@ const SubmitClaim: React.FC<{}> = () => {
             :
             // Claim form
             <CardPage title='Claim Details' actions={cardActions} width='40em'>
-              <Grid item container>
-                <Grid item className={classes.maxSpace}>
-                  <TextField fullWidth label="Claim Text" variant="outlined" value={claimText}
-                             onChange={e => setClaimText(e.target.value)} />
-                </Grid>
-                <Grid item className={classes.centerItems}>
-                  <InfoTooltip
-                    fieldName='Claim Text'
-                    required={true}
-                    description={
-                      <>
-                        The text of the claim. Don't use quotes or end with punctuation.
-                        <p>Example: Wearing a face mask helps reduce transmission of Covid-19</p>
-                      </>
-                    } />
-                </Grid>
-              </Grid>
-              <Grid item container>
-                <Grid item className={classes.maxSpace}>
-                  <TextField fullWidth label="Claim Description" variant="outlined" value={claimDescription}
-                             multiline
-                             rows={4} rowsMax={12} onChange={e => setClaimDescription(e.target.value)} />
-                </Grid>
-                <Grid item className={classes.centerItems}>
-                  <InfoTooltip
-                    fieldName='Claim Description'
-                    required={false}
-                    description={'Provide some context for the claim.'} />
-                </Grid>
-              </Grid>
+              <CardFormField fieldName='Claim Text' required={true} description={
+                <>
+                  The text of the claim. Don't use quotes or end with punctuation.
+                  <p>Example: Wearing a face mask helps reduce transmission of Covid-19</p>
+                </>
+              }>
+                <TextField fullWidth label="Claim Text" variant="outlined" value={claimText}
+                           onChange={e => setClaimText(e.target.value)} />
+              </CardFormField>
+              <CardFormField fieldName='Claim Description' required={false}
+                             description='Provide some context for the claim.'>
+                <TextField fullWidth label="Claim Description" variant="outlined" value={claimDescription}
+                           multiline
+                           rows={4} rowsMax={12} onChange={e => setClaimDescription(e.target.value)} />
+              </CardFormField>
             </CardPage>
         }
       </Grid>
