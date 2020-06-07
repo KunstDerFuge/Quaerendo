@@ -1,5 +1,9 @@
+from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
+from allauth.socialaccount.providers.twitter.views import TwitterOAuthAdapter
 from drf_spectacular.utils import extend_schema
 from newspaper import Article
+from rest_auth.registration.views import SocialConnectView
+from rest_auth.social_serializers import TwitterConnectSerializer
 from rest_framework import generics
 from rest_framework.request import Request
 from rest_framework.response import Response
@@ -125,3 +129,12 @@ class EvidenceReviewDetail(generics.RetrieveUpdateAPIView):
     """
     queryset = EvidenceReview.objects.all()
     serializer_class = EvidenceReviewSerializer
+
+
+class FacebookConnect(SocialConnectView):
+    adapter_class = FacebookOAuth2Adapter
+
+
+class TwitterConnect(SocialConnectView):
+    serializer_class = TwitterConnectSerializer
+    adapter_class = TwitterOAuthAdapter
