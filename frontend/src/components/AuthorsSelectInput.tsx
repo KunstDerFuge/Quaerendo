@@ -14,7 +14,8 @@ interface AuthorsSelectInputProps {
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
-  whiteText: {
+  chip: {
+    margin: '2px',
     color: '#fff'
   }
 }))
@@ -47,7 +48,8 @@ const AuthorsSelectInput: React.FC<AuthorsSelectInputProps> = (props) => {
         // @ts-ignore (newValues can be string[] or string)
         renderTags={(value: Entity[], getTagProps) =>
           value.map((option: Entity, index) => (
-            <Chip id={option.id.toString()} label={option.name} {...getTagProps({index})} color='primary' className={classes.whiteText} />
+            <Chip id={option.id.toString()} className={classes.chip} label={option.name} {...getTagProps({index})}
+                  color='primary' />
           ))
         }
         renderInput={(params) => (
