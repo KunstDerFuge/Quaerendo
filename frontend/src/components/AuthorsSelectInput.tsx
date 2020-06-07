@@ -36,12 +36,12 @@ const AuthorsSelectInput: React.FC<AuthorsSelectInputProps> = (props) => {
               const newAuthor = newValues.filter((value) => typeof value === 'string')
               // @ts-ignore (newValues can be string[] or string)
               const newUnconfirmedAuthors: string[] = props.unconfirmedAuthors.concat(newAuthor)
-            props.setUnconfirmedAuthors(newUnconfirmedAuthors)
-            break
+              props.setUnconfirmedAuthors(newUnconfirmedAuthors)
+              break
 
             case 'remove-option':
-            // @ts-ignore (newValues can be string[] or string)
-            props.setConfirmedAuthors(newValues as Entity[])
+              // @ts-ignore (newValues can be string[] or string)
+              props.setConfirmedAuthors(newValues as Entity[])
           }
         }}
         freeSolo
@@ -59,32 +59,32 @@ const AuthorsSelectInput: React.FC<AuthorsSelectInputProps> = (props) => {
       {
         props.unconfirmedAuthors.length > 0 ?
           <>
-          <Typography variant='caption' component='div'>
-            {props.unconfirmedAuthors.length} authors unconfirmed
-          </Typography>
-          <Typography variant='caption'>
-            Author '{props.unconfirmedAuthors[0]}' is not known. Double check the spelling, or&nbsp;
-            <Mutate verb='POST' path='/api/entities/'>
-              {
-                mutate => (
-                  <Link onClick={() => mutate({
-                    name: props.unconfirmedAuthors[0]
-                  }).then((author: Entity) => {
-                    props.unconfirmedAuthors.length > 1 ?
-                      props.setUnconfirmedAuthors(props.unconfirmedAuthors.filter((authorName) => authorName !== author.name))
-                      :
-                      props.setUnconfirmedAuthors([])
-                    props.setConfirmedAuthors(props.confirmedAuthors.concat(author))
-                  })
-                  }>
-                    click here
-                  </Link>
-                )
-              }
-            </Mutate>
-             &nbsp;to add a new entry for this author.
-          </Typography>
-            </>
+            <Typography variant='caption' component='div'>
+              {props.unconfirmedAuthors.length} authors unconfirmed
+            </Typography>
+            <Typography variant='caption'>
+              Author '{props.unconfirmedAuthors[0]}' is not known. Double check the spelling, or&nbsp;
+              <Mutate verb='POST' path='/api/entities/'>
+                {
+                  mutate => (
+                    <Link onClick={() => mutate({
+                      name: props.unconfirmedAuthors[0]
+                    }).then((author: Entity) => {
+                      props.unconfirmedAuthors.length > 1 ?
+                        props.setUnconfirmedAuthors(props.unconfirmedAuthors.filter((authorName) => authorName !== author.name))
+                        :
+                        props.setUnconfirmedAuthors([])
+                      props.setConfirmedAuthors(props.confirmedAuthors.concat(author))
+                    })
+                    }>
+                      click here
+                    </Link>
+                  )
+                }
+              </Mutate>
+              &nbsp;to add a new entry for this author.
+            </Typography>
+          </>
           :
           ''
       }
