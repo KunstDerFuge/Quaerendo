@@ -31,7 +31,7 @@ const Footer: React.FC<{}> = () => {
     <footer className={classes.footer}>
       <Grid container direction='column' className={classes.gridRoot}>
         <Grid item className={classes.margin}>
-          <i>Quaerendo Invenietis</i>
+          <i>Quærendo Invenietis</i>
         </Grid>
       </Grid>
     </footer>
