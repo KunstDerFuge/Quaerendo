@@ -5,6 +5,7 @@ import CardFormField from './CardFormField'
 import { Mutate } from 'restful-react'
 import { makeStyles } from '@material-ui/styles'
 import { useHistory } from 'react-router'
+import { useAuth } from './auth'
 
 const useStyles = makeStyles((theme: Theme) => ({
   leftMarginButton: {
@@ -36,6 +37,9 @@ const RegistrationPage: React.FC<{}> = () => {
   const [password2, setPassword2] = React.useState('')
   const [formErrors, setFormErrors] = React.useState<RegistrationFormErrors>({})
 
+  // @ts-ignore
+  const {setAuthToken} = useAuth()
+
   const cardActions = (
     <CardActions>
       <Mutate verb='POST' path='/rest-auth/registration/'>
@@ -47,8 +51,7 @@ const RegistrationPage: React.FC<{}> = () => {
               password1: password1,
               password2: password2
             }).then((response) => {
-              console.log(response)
-              localStorage.setItem('token', response.key)
+              setAuthToken(response.key)
               history.push('/')
             }).catch((error) => {
               console.log(error)
