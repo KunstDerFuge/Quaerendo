@@ -45,20 +45,20 @@ class TopicSerializer(serializers.ModelSerializer):
 
 class ClaimSerializer(serializers.ModelSerializer):
     topic = TopicSerializer(read_only=True)
-    source_of_claim = SourceSerializer(read_only=False)
+    source_of_claim = SourceSerializer()
 
     class Meta:
         model = Claim
         fields = ['id', 'claim_text', 'description', 'topic', 'source_of_claim']
 
     def create(self, validated_data):
-        source = SourceSerializer(data=validated_data.pop('source_of_claim'))
-        claim_instance = Claim.objects.create(**validated_data)
+        source_data = validated_data.pop('source_of_claim')
+        source = SourceSerializer(data=source_data)
         if source.is_valid():
             source_instance = source.save()
-            claim_instance.source_of_claim = source_instance
+            claim_instance = Claim.objects.create(**validated_data, source_of_claim=source_instance)
             claim_instance.save()
-        return claim_instance
+            return claim_instance
 
 
 class EvidenceSerializer(serializers.ModelSerializer):
