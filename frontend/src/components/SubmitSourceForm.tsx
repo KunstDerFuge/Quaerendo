@@ -104,9 +104,7 @@ const SubmitSourceForm: React.FC<SubmitSourceFormProps> = (props) => {
           <TextField fullWidth label="Source URL" variant="outlined" value={sourceUrl}
                      onChange={e => setSourceUrl(e.target.value)} />
           {
-            showOtherFields ?
-              ''
-              :
+            !showOtherFields &&
               <Link onClick={() => setShowOtherFields(true)} color='secondary'>
                 <Typography align='right' className={classes.skipUrl}>
                   Skip, this source does not have a URL 🠖
@@ -118,7 +116,7 @@ const SubmitSourceForm: React.FC<SubmitSourceFormProps> = (props) => {
           loading && sourceUrl ?
             <LinearProgress />
             :
-            showOtherFields ?
+            showOtherFields &&
               <>
                 <CardFormField fieldName='Source Title' required={false}
                                description={'The title of this source. Usually the headline, if an article. If the source is a tweet, use "Tweet from @User".'}>
@@ -158,8 +156,6 @@ const SubmitSourceForm: React.FC<SubmitSourceFormProps> = (props) => {
                   </div>
                 </CardFormField>
               </>
-              :
-              ''
         }
       </CardPage>
     </>
