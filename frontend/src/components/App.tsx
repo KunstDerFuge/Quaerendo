@@ -60,7 +60,7 @@ function App() {
       <RestfulProvider
         base=''
         // @ts-ignore
-        requestOptions={() => ({headers: {Authorization: 'TOKEN ' + token}})}>
+        requestOptions={() => (token && {headers: {Authorization: 'TOKEN ' + token}})}>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <Router>
             <div className={classes.root}>
