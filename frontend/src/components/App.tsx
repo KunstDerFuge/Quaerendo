@@ -16,6 +16,8 @@ import AddCommentRoundedIcon from '@material-ui/icons/AddCommentRounded'
 import SubmitClaim from './SubmitClaim'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
+import RegistrationPage from './RegistrationPage'
+import { RestfulProvider } from 'restful-react'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -50,65 +52,75 @@ const useStyles = makeStyles(theme => ({
 function App() {
   const classes = useStyles()
 
+  const token = localStorage.getItem('token')
+  console.log(token)
+
   return (
     <ThemeProvider theme={MainTheme}>
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <Router>
-          <div className={classes.root}>
-            <Drawer
-              className={classes.drawer}
-              variant='permanent'
-              classes={{
-                paper: classes.drawerPaper
-              }}
-              anchor="left"
-            >
-              <Divider />
-              <List>
-                <ListItem button>
-                  <ListItemIcon>
-                    <CommentRoundedIcon color='primary' />
-                  </ListItemIcon>
-                  <ListItemText primary='Popular Claims' />
-                </ListItem>
-                <ListItem button>
-                  <ListItemIcon>
-                    <RateReviewRoundedIcon color='primary' />
-                  </ListItemIcon>
-                  <ListItemText primary='Review' />
-                </ListItem>
-                <ListItem>
-                  <Link to='/submit/claim' className={classes.submitClaimFab}>
-                    <Fab size='medium' variant="extended" color="secondary" aria-label="add">
-                      <AddCommentRoundedIcon className={classes.extendedIcon} />
-                      Submit Claim
-                    </Fab>
-                  </Link>
-                </ListItem>
-              </List>
-            </Drawer>
-            <Grid container direction='column' alignContent='space-between' className={classes.mainWindow}>
-              <HeaderAppBar />
-              <Grid item className={classes.content}>
-                <Switch>
-                  <Route path='/claim/:id'
-                         component={(routerProps: any) => <ClaimDetails id={routerProps.match.params.id} />} />
-                  <Route path='/evidence/:id'
-                         component={(routerProps: any) => <EvidenceDetails id={routerProps.match.params.id} />} />
-                  <Route path='/submit/claim'
-                         component={SubmitClaim} />
-                  <Route path='/submit/evidence/for/:id'
-                         component={(routerProps: any) => <SubmitEvidence id={routerProps.match.params.id} />} />
-                  <Route path='/'>
-                    <ClaimList />
-                  </Route>
-                </Switch>
+      <RestfulProvider
+        base=''
+        // @ts-ignore
+        requestOptions={authtoken => ({headers: {Authorization: 'TOKEN ' + token}})}>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <Router>
+            <div className={classes.root}>
+              <Drawer
+                className={classes.drawer}
+                variant='permanent'
+                classes={{
+                  paper: classes.drawerPaper
+                }}
+                anchor="left"
+              >
+                <Divider />
+                <List>
+                  <ListItem button>
+                    <ListItemIcon>
+                      <CommentRoundedIcon color='primary' />
+                    </ListItemIcon>
+                    <ListItemText primary='Popular Claims' />
+                  </ListItem>
+                  <ListItem button>
+                    <ListItemIcon>
+                      <RateReviewRoundedIcon color='primary' />
+                    </ListItemIcon>
+                    <ListItemText primary='Review' />
+                  </ListItem>
+                  <ListItem>
+                    <Link to='/submit/claim' className={classes.submitClaimFab}>
+                      <Fab size='medium' variant="extended" color="secondary" aria-label="add">
+                        <AddCommentRoundedIcon className={classes.extendedIcon} />
+                        Submit Claim
+                      </Fab>
+                    </Link>
+                  </ListItem>
+                </List>
+              </Drawer>
+              <Grid container direction='column' alignContent='space-between' className={classes.mainWindow}>
+                <HeaderAppBar />
+                <Grid item className={classes.content}>
+                  <Switch>
+                    <Route path='/claim/:id'
+                           component={(routerProps: any) => <ClaimDetails id={routerProps.match.params.id} />} />
+                    <Route path='/evidence/:id'
+                           component={(routerProps: any) => <EvidenceDetails id={routerProps.match.params.id} />} />
+                    <Route path='/submit/claim'
+                           component={SubmitClaim} />
+                    <Route path='/submit/evidence/for/:id'
+                           component={(routerProps: any) => <SubmitEvidence id={routerProps.match.params.id} />} />
+                    <Route path='/register'
+                           component={RegistrationPage} />
+                    <Route path='/'>
+                      <ClaimList />
+                    </Route>
+                  </Switch>
+                </Grid>
+                <Footer />
               </Grid>
-              <Footer />
-            </Grid>
-          </div>
-        </Router>
-      </MuiPickersUtilsProvider>
+            </div>
+          </Router>
+        </MuiPickersUtilsProvider>
+      </RestfulProvider>
     </ThemeProvider>
   )
 }
