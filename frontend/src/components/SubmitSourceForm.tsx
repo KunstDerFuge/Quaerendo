@@ -81,7 +81,7 @@ const SubmitSourceForm: React.FC<SubmitSourceFormProps> = (props) => {
     props.setSource({
       authors: sourceAuthors,
       url: sourceUrl,
-      date_published: new Date(sourceDatePublished).toISOString(),
+      date_published: publishDateUnknown ? null : new Date(sourceDatePublished).toISOString(),
       title: sourceTitle,
       summary: sourceSummary
     })
