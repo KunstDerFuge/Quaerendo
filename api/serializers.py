@@ -4,7 +4,6 @@ from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 
 from api.models import Entity, Source, Claim, Evidence, EvidenceReview, Topic, EvidenceRelationship
-from users.models import User
 
 
 class EntitySerializer(serializers.ModelSerializer):
@@ -121,7 +120,6 @@ class EvidenceSerializer(serializers.ModelSerializer):
 
 
 class EvidenceReviewSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = EvidenceReview
         fields = ['deduced_evidence_relationship', 'deduced_source_degree', 'is_reliable',
@@ -150,8 +148,7 @@ class EvidenceWithReviewSerializer(serializers.ModelSerializer):
             if evidence.is_valid():
                 evidence_instance = evidence.save(claim=claim, source_of_evidence=source_instance)
                 if review.is_valid():
-                    # TODO: Remove this User.objects.first():
-                    review_instance = review.save(evidence=evidence_instance, reviewer=User.objects.first())
+                    review_instance = review.save(evidence=evidence_instance, reviewer=self.context['request'].user)
                     evidence_instance.reviews.set(review_instance)
                     evidence_instance.save()
                 return evidence_instance
