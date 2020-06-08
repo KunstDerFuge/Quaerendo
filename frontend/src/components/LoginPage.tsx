@@ -4,7 +4,7 @@ import CardPage from './CardPage'
 import { makeStyles } from '@material-ui/styles'
 import CardFormField from './CardFormField'
 import { Mutate } from 'restful-react'
-import { useHistory } from 'react-router'
+import { Redirect, useHistory } from 'react-router'
 import { useAuth } from './auth'
 
 interface LoginFormErrors {
@@ -34,7 +34,7 @@ const LoginPage: React.FC<{}> = () => {
   const [formErrors, setFormErrors] = React.useState<LoginFormErrors>({})
 
   // @ts-ignore
-  const {setAuthToken} = useAuth()
+  const {setAuthToken, authToken} = useAuth()
 
   const cardActions = (
     <CardActions>
@@ -60,6 +60,11 @@ const LoginPage: React.FC<{}> = () => {
       </Mutate>
     </CardActions>
   )
+  if (authToken) {
+    return (
+      <Redirect to='/' />
+    )
+  }
 
   return (
     <Grid container className={classes.root}>
