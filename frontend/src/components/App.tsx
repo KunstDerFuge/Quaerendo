@@ -20,6 +20,7 @@ import RegistrationPage from './RegistrationPage'
 import { RestfulProvider } from 'restful-react'
 import LoginPage from './LoginPage'
 import { AuthContext } from './auth'
+import QuaerendoLogo from './QuaerendoLogo'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -81,6 +82,7 @@ function App() {
                   }}
                   anchor="left"
                 >
+                  <QuaerendoLogo />
                   <Divider />
                   <List>
                     <ListItem button>
