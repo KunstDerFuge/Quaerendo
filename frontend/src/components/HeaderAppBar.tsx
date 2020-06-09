@@ -55,6 +55,18 @@ export function HeaderAppBar() {
               Submit Evidence
             </Typography>
           </Route>
+          <Route path='/register'>
+            <BackButton />
+            <Typography variant='h6' className={classes.roboto}>
+              Register an Account
+            </Typography>
+          </Route>
+          <Route path='/login'>
+            <BackButton />
+            <Typography variant='h6' className={classes.roboto}>
+              Log in
+            </Typography>
+          </Route>
           <Route path='/'>
             <Typography variant='h6' className={classes.roboto}>
               Claims
