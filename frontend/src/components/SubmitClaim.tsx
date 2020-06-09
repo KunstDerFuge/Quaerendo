@@ -3,11 +3,12 @@ import { Button, CardActions, Grid, TextField, Theme } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import { Mutate } from 'restful-react'
 import * as assert from 'assert'
-import { useHistory } from 'react-router'
+import { Redirect, useHistory } from 'react-router'
 import SubmitSourceForm from './SubmitSourceForm'
 import { PatchedSource } from '../openapi-types'
 import CardPage from './CardPage'
 import CardFormField from './CardFormField'
+import { useAuth } from './auth'
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -51,6 +52,11 @@ const SubmitClaim: React.FC<{}> = () => {
   const [claimText, setClaimText] = React.useState('')
   const [claimDescription, setClaimDescription] = React.useState('')
 
+  // @ts-ignore
+  const {authToken} = useAuth()
+  if (!authToken) {
+    return <Redirect to='/login' />
+  }
 
   function validateForm() {
     try {

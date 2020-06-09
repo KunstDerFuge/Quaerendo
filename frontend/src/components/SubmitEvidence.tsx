@@ -5,7 +5,8 @@ import SubmitSourceForm from './SubmitSourceForm'
 import { EvidenceWithReview, PatchedEvidenceReview, PatchedEvidenceWithReview, PatchedSource } from '../openapi-types'
 import EvidenceReviewForm from './EvidenceReviewForm'
 import { useMutate } from 'restful-react'
-import { useHistory } from 'react-router'
+import { Redirect, useHistory } from 'react-router'
+import { useAuth } from './auth'
 
 interface SubmitEvidenceProps {
   id: number
@@ -47,6 +48,12 @@ const SubmitEvidence: React.FC<SubmitEvidenceProps> = (props) => {
     verb: 'POST',
     path: '/api/evidence/'
   })
+
+  // @ts-ignore
+  const {authToken} = useAuth()
+  if (!authToken) {
+    return <Redirect to='/login' />
+  }
 
   function submitForm(review: PatchedEvidenceReview) {
     let evidence: PatchedEvidenceWithReview = {
