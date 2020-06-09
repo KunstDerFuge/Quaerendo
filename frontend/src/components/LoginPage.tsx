@@ -3,7 +3,7 @@ import { Button, CardActions, Grid, TextField, Theme, Typography } from '@materi
 import CardPage from './CardPage'
 import { makeStyles } from '@material-ui/styles'
 import CardFormField from './CardFormField'
-import { Mutate } from 'restful-react'
+import { useMutate } from 'restful-react'
 import { Redirect, useHistory } from 'react-router'
 import { useAuth } from './auth'
 
@@ -33,31 +33,33 @@ const LoginPage: React.FC<{}> = () => {
   const [password, setPassword] = React.useState('')
   const [formErrors, setFormErrors] = React.useState<LoginFormErrors>({})
 
+  const {mutate: post, loading} = useMutate({
+    verb: 'POST',
+    path: '/rest-auth/login/'
+  })
+
   // @ts-ignore
   const {setAuthToken, authToken} = useAuth()
 
+  const submitForm = () => {
+    post({
+      username: username,
+      password: password
+    }).then((response) => {
+      console.log(response)
+      setAuthToken(response.key)
+      history.push('/')
+    }).catch((error) => {
+      console.log(error)
+      error.data && setFormErrors(error.data)
+    })
+  }
+
   const cardActions = (
     <CardActions>
-      <Mutate verb='POST' path='/rest-auth/login/'>
-        {
-          mutate => (
-            <Button className={classes.leftMarginButton} type='submit' onClick={() => mutate({
-              username: username,
-              password: password
-            }).then((response) => {
-              console.log(response)
-              setAuthToken(response.key)
-              history.push('/')
-            }).catch((error) => {
-              console.log(error)
-              error.data && setFormErrors(error.data)
-            })
-            }>
-              Submit
-            </Button>
-          )
-        }
-      </Mutate>
+      <Button className={classes.leftMarginButton} type='submit' onClick={submitForm}>
+        Submit
+      </Button>
     </CardActions>
   )
   if (authToken) {
@@ -70,24 +72,26 @@ const LoginPage: React.FC<{}> = () => {
     <Grid container className={classes.root}>
       <Grid item>
         <CardPage title='Log in' actions={cardActions} width='20em'>
-          <CardFormField fieldName='Username' required={true}>
-            <TextField fullWidth label='Username' variant='outlined' value={username}
-                       onChange={e => setUsername(e.target.value)} error={formErrors.hasOwnProperty('username')}
-                       helperText={formErrors['username']} />
-          </CardFormField>
-          <CardFormField fieldName='Password' required={true}>
-            <TextField fullWidth label='Password' variant="outlined" value={password} type='password'
-                       onChange={e => setPassword(e.target.value)} error={formErrors.hasOwnProperty('password')}
-                       helperText={formErrors['password']} />
-          </CardFormField>
-          {
-            formErrors.hasOwnProperty('non_field_errors') &&
-            <Grid item>
-              <Typography variant='caption'>
-                {formErrors.non_field_errors}
-              </Typography>
-            </Grid>
-          }
+          <form onSubmit={submitForm}>
+            <CardFormField fieldName='Username' required={true}>
+              <TextField fullWidth label='Username' variant='outlined' value={username}
+                         onChange={e => setUsername(e.target.value)} error={formErrors.hasOwnProperty('username')}
+                         helperText={formErrors['username']} />
+            </CardFormField>
+            <CardFormField fieldName='Password' required={true}>
+              <TextField fullWidth label='Password' variant="outlined" value={password} type='password'
+                         onChange={e => setPassword(e.target.value)} error={formErrors.hasOwnProperty('password')}
+                         helperText={formErrors['password']} />
+            </CardFormField>
+            {
+              formErrors.hasOwnProperty('non_field_errors') &&
+              <Grid item>
+                <Typography variant='caption'>
+                  {formErrors.non_field_errors}
+                </Typography>
+              </Grid>
+            }
+          </form>
         </CardPage>
       </Grid>
     </Grid>
