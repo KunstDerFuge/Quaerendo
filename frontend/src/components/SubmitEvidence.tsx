@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { FormEvent } from 'react'
 import { makeStyles } from '@material-ui/styles'
 import { Grid, Theme } from '@material-ui/core'
 import SubmitSourceForm from './SubmitSourceForm'
@@ -44,6 +45,7 @@ const SubmitEvidence: React.FC<SubmitEvidenceProps> = (props) => {
 
   const [source, setSource] = React.useState<PatchedSource>(null)
   const [showReviewForm, setShowReviewForm] = React.useState(false)
+
   const {mutate: post, loading} = useMutate({
     verb: 'POST',
     path: '/api/evidence/'
@@ -55,7 +57,8 @@ const SubmitEvidence: React.FC<SubmitEvidenceProps> = (props) => {
     return <Redirect to='/login' />
   }
 
-  function submitForm(review: PatchedEvidenceReview) {
+  function submitForm(event: FormEvent, review: PatchedEvidenceReview) {
+    event.preventDefault()
     let evidence: PatchedEvidenceWithReview = {
       source_of_evidence: source,
       // @ts-ignore

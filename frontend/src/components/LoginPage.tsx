@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { FormEvent } from 'react'
 import { Button, CardActions, Grid, TextField, Theme, Typography } from '@material-ui/core'
 import CardPage from './CardPage'
 import { makeStyles } from '@material-ui/styles'
@@ -41,7 +42,8 @@ const LoginPage: React.FC<{}> = () => {
   // @ts-ignore
   const {setAuthToken, authToken} = useAuth()
 
-  const submitForm = () => {
+  const submitForm = (event: FormEvent) => {
+    event.preventDefault()
     post({
       username: username,
       password: password
@@ -62,6 +64,7 @@ const LoginPage: React.FC<{}> = () => {
       </Button>
     </CardActions>
   )
+
   if (authToken) {
     return (
       <Redirect to='/' />
@@ -71,8 +74,8 @@ const LoginPage: React.FC<{}> = () => {
   return (
     <Grid container className={classes.root}>
       <Grid item>
-        <CardPage title='Log in' actions={cardActions} width='20em'>
-          <form onSubmit={submitForm}>
+        <form onSubmit={submitForm}>
+          <CardPage title='Log in' actions={cardActions} width='20em'>
             <CardFormField fieldName='Username' required={true}>
               <TextField fullWidth label='Username' variant='outlined' value={username}
                          onChange={e => setUsername(e.target.value)} error={formErrors.hasOwnProperty('username')}
@@ -91,8 +94,8 @@ const LoginPage: React.FC<{}> = () => {
                 </Typography>
               </Grid>
             }
-          </form>
-        </CardPage>
+          </CardPage>
+        </form>
       </Grid>
     </Grid>
   )

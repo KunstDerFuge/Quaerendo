@@ -105,11 +105,11 @@ const SubmitSourceForm: React.FC<SubmitSourceFormProps> = (props) => {
                      onChange={e => setSourceUrl(e.target.value)} />
           {
             !showOtherFields &&
-              <Link onClick={() => setShowOtherFields(true)} color='secondary'>
-                <Typography align='right' className={classes.skipUrl}>
-                  Skip, this source does not have a URL 🠖
-                </Typography>
-              </Link>
+            <Link onClick={() => setShowOtherFields(true)} color='secondary'>
+              <Typography align='right' className={classes.skipUrl}>
+                Skip, this source does not have a URL 🠖
+              </Typography>
+            </Link>
           }
         </CardFormField>
         {
@@ -117,45 +117,45 @@ const SubmitSourceForm: React.FC<SubmitSourceFormProps> = (props) => {
             <LinearProgress />
             :
             showOtherFields &&
-              <>
-                <CardFormField fieldName='Source Title' required={false}
-                               description={'The title of this source. Usually the headline, if an article. If the source is a tweet, use "Tweet from @User".'}>
-                  <TextField fullWidth label='Title' variant='outlined' value={sourceTitle}
-                             onChange={e => setSourceTitle(e.target.value)} />
-                </CardFormField>
-                <CardFormField fieldName='Authors' required={false}
-                               description={'The authors of this source. Do not include \'et al\', include all authors where possible. This may be auto-filled from the URL. If so, please correct as needed.'}>
-                  <AuthorsSelectInput
-                    unconfirmedAuthors={unconfirmedAuthors}
-                    setUnconfirmedAuthors={(authors) => setUnconfirmedAuthors(authors)}
-                    confirmedAuthors={sourceAuthors}
-                    setConfirmedAuthors={(authors) => setSourceAuthors(authors)} />
-                </CardFormField>
-                <CardFormField fieldName='Source Summary' required={false}
-                               description={'Summary of the info in the source. This may be auto-generated in the case of an article. If so, please proofread and edit as needed. If this source is original research (i.e. mathematical deduction), include all necessary information here.'}>
-                  <TextField fullWidth multiline label='Summary' variant='outlined' value={sourceSummary}
-                             rows={4} rowsMax={12} onChange={e => setSourceSummary(e.target.value)} />
-                </CardFormField>
-                <CardFormField fieldName='Source Publication Date' required={false}
-                               description={'The date the source was published. This may be auto-filled in the case of an article. Please double-check the value here if so.'}>
-                  <DatePicker value={sourceDatePublished} label='Date Published' fullWidth
-                              format='MMMM d, yyyy'
-                              disabled={publishDateUnknown}
-                              onChange={date => setSourceDatePublished(new Date(date.toString()))} />
-                  <div className={classes.alignItemsRight}>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={publishDateUnknown}
-                          onChange={() => setPublishDateUnknown(!publishDateUnknown)}
-                        />
-                      }
-                      label="I don't know the publication date"
-                      labelPlacement='start'
-                    />
-                  </div>
-                </CardFormField>
-              </>
+            <>
+              <CardFormField fieldName='Source Title' required={false}
+                             description={'The title of this source. Usually the headline, if an article. If the source is a tweet, use "Tweet from @User".'}>
+                <TextField fullWidth label='Title' variant='outlined' value={sourceTitle}
+                           onChange={e => setSourceTitle(e.target.value)} />
+              </CardFormField>
+              <CardFormField fieldName='Authors' required={false}
+                             description={'The authors of this source. Do not include \'et al\', include all authors where possible. This may be auto-filled from the URL. If so, please correct as needed.'}>
+                <AuthorsSelectInput
+                  unconfirmedAuthors={unconfirmedAuthors}
+                  setUnconfirmedAuthors={(authors) => setUnconfirmedAuthors(authors)}
+                  confirmedAuthors={sourceAuthors}
+                  setConfirmedAuthors={(authors) => setSourceAuthors(authors)} />
+              </CardFormField>
+              <CardFormField fieldName='Source Summary' required={false}
+                             description={'Summary of the info in the source. This may be auto-generated in the case of an article. If so, please proofread and edit as needed. If this source is original research (i.e. mathematical deduction), include all necessary information here.'}>
+                <TextField fullWidth multiline label='Summary' variant='outlined' value={sourceSummary}
+                           rows={4} rowsMax={12} onChange={e => setSourceSummary(e.target.value)} />
+              </CardFormField>
+              <CardFormField fieldName='Source Publication Date' required={false}
+                             description={'The date the source was published. This may be auto-filled in the case of an article. Please double-check the value here if so.'}>
+                <DatePicker value={sourceDatePublished} label='Date Published' fullWidth
+                            format='MMMM d, yyyy'
+                            disabled={publishDateUnknown}
+                            onChange={date => setSourceDatePublished(new Date(date.toString()))} />
+                <div className={classes.alignItemsRight}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={publishDateUnknown}
+                        onChange={() => setPublishDateUnknown(!publishDateUnknown)}
+                      />
+                    }
+                    label="I don't know the publication date"
+                    labelPlacement='start'
+                  />
+                </div>
+              </CardFormField>
+            </>
         }
       </CardPage>
     </>

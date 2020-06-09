@@ -1,7 +1,8 @@
 import * as React from 'react'
+import { FormEvent } from 'react'
 import { Button, CardActions, Grid, TextField, Theme } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
-import { Mutate } from 'restful-react'
+import { useMutate } from 'restful-react'
 import * as assert from 'assert'
 import { Redirect, useHistory } from 'react-router'
 import SubmitSourceForm from './SubmitSourceForm'
@@ -52,6 +53,11 @@ const SubmitClaim: React.FC<{}> = () => {
   const [claimText, setClaimText] = React.useState('')
   const [claimDescription, setClaimDescription] = React.useState('')
 
+  const {mutate: post, loading} = useMutate({
+    verb: 'POST',
+    path: '/api/claims/'
+  })
+
   // @ts-ignore
   const {authToken} = useAuth()
   if (!authToken) {
@@ -67,28 +73,27 @@ const SubmitClaim: React.FC<{}> = () => {
     return true
   }
 
+  function submitForm(event: FormEvent) {
+    event.preventDefault()
+    post({
+      claim_text: claimText,
+      description: claimDescription,
+      source_of_claim: source
+    }).then((claim) => {
+      console.log(claim)
+      history.push('/claim/' + claim.id)
+    })
+  }
+
   const cardActions = (
     <CardActions>
       <Button id='back' className={classes.leftMarginButton} onClick={() => setShowClaimForm(false)}>
         Back
       </Button>
-      <Mutate verb='POST' path='/api/claims/'>
-        {
-          mutate => (
-            <Button type='submit' onClick={() => mutate({
-              claim_text: claimText,
-              description: claimDescription,
-              source_of_claim: source
-            }).then((claim) => {
-              console.log(claim)
-              history.push('/claim/' + claim.id)
-            })
-            }>
-              Submit
-            </Button>
-          )
-        }
-      </Mutate>
+      <Button type='submit' onClick={submitForm}>
+        Submit
+      </Button>
+      )
     </CardActions>
   )
 
@@ -102,23 +107,25 @@ const SubmitClaim: React.FC<{}> = () => {
             ''
             :
             // Claim form
-            <CardPage title='Claim Details' actions={cardActions} width='40em'>
-              <CardFormField fieldName='Claim Text' required={true} description={
-                <>
-                  The text of the claim. Don't use quotes or end with punctuation.
-                  <p>Example: Wearing a face mask helps reduce transmission of Covid-19</p>
-                </>
-              }>
-                <TextField fullWidth label="Claim Text" variant="outlined" value={claimText}
-                           onChange={e => setClaimText(e.target.value)} />
-              </CardFormField>
-              <CardFormField fieldName='Claim Description' required={false}
-                             description='Provide some context for the claim.'>
-                <TextField fullWidth label="Claim Description" variant="outlined" value={claimDescription}
-                           multiline
-                           rows={4} rowsMax={12} onChange={e => setClaimDescription(e.target.value)} />
-              </CardFormField>
-            </CardPage>
+            <form onSubmit={submitForm}>
+              <CardPage title='Claim Details' actions={cardActions} width='40em'>
+                <CardFormField fieldName='Claim Text' required={true} description={
+                  <>
+                    The text of the claim. Don't use quotes or end with punctuation.
+                    <p>Example: Wearing a face mask helps reduce transmission of Covid-19</p>
+                  </>
+                }>
+                  <TextField fullWidth label="Claim Text" variant="outlined" value={claimText}
+                             onChange={e => setClaimText(e.target.value)} />
+                </CardFormField>
+                <CardFormField fieldName='Claim Description' required={false}
+                               description='Provide some context for the claim.'>
+                  <TextField fullWidth label="Claim Description" variant="outlined" value={claimDescription}
+                             multiline
+                             rows={4} rowsMax={12} onChange={e => setClaimDescription(e.target.value)} />
+                </CardFormField>
+              </CardPage>
+            </form>
         }
       </Grid>
     </Grid>
