@@ -93,7 +93,6 @@ const SubmitClaim: React.FC<{}> = () => {
       <Button type='submit' onClick={submitForm}>
         Submit
       </Button>
-      )
     </CardActions>
   )
 
