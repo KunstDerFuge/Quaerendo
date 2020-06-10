@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: Lens of Truth API
+  title: Quaerendo API
   version: 1.0.0
 servers:
 - url: /
@@ -19,8 +19,7 @@ paths:
                 additionalProperties: {}
                 description: Unspecified response body
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - tokenAuth: []
       - {}
   /api/authors/:
     get:
@@ -38,8 +37,7 @@ paths:
                 additionalProperties: {}
                 description: Unspecified response body
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - tokenAuth: []
       - {}
   /api/claims/:
     get:
@@ -56,8 +54,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Claim'
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - tokenAuth: []
       - {}
     post:
       tags:
@@ -83,9 +80,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Claim'
       security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
+      - tokenAuth: []
   /api/claims/{id}:
     get:
       tags:
@@ -107,8 +102,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ClaimWithEvidence'
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - tokenAuth: []
       - {}
     put:
       tags:
@@ -142,9 +136,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ClaimWithEvidence'
       security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
+      - tokenAuth: []
     patch:
       tags:
       - api
@@ -176,9 +168,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ClaimWithEvidence'
       security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
+      - tokenAuth: []
   /api/entities/:
     get:
       tags:
@@ -194,8 +184,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Entity'
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - tokenAuth: []
       - {}
     post:
       tags:
@@ -221,9 +210,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Entity'
       security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
+      - tokenAuth: []
   /api/entities/{id}:
     get:
       tags:
@@ -245,8 +232,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Entity'
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - tokenAuth: []
       - {}
     put:
       tags:
@@ -280,9 +266,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Entity'
       security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
+      - tokenAuth: []
     patch:
       tags:
       - api
@@ -314,9 +298,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Entity'
       security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
+      - tokenAuth: []
   /api/evidence/:
     get:
       tags:
@@ -330,10 +312,9 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Evidence'
+                  $ref: '#/components/schemas/EvidenceWithReview'
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - tokenAuth: []
       - {}
     post:
       tags:
@@ -344,23 +325,22 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Evidence'
+              $ref: '#/components/schemas/EvidenceWithReview'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Evidence'
+              $ref: '#/components/schemas/EvidenceWithReview'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Evidence'
+              $ref: '#/components/schemas/EvidenceWithReview'
+        required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Evidence'
+                $ref: '#/components/schemas/EvidenceWithReview'
       security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
+      - tokenAuth: []
   /api/evidence/reviews/:
     get:
       tags:
@@ -376,8 +356,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/EvidenceReview'
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - tokenAuth: []
       - {}
     post:
       tags:
@@ -403,9 +382,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/EvidenceReview'
       security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
+      - tokenAuth: []
   /api/evidence/reviews/{id}:
     get:
       tags:
@@ -427,8 +404,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/EvidenceReview'
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - tokenAuth: []
       - {}
     put:
       tags:
@@ -462,9 +438,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/EvidenceReview'
       security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
+      - tokenAuth: []
     patch:
       tags:
       - api
@@ -496,9 +470,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/EvidenceReview'
       security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
+      - tokenAuth: []
   /api/evidence/{id}:
     get:
       tags:
@@ -518,10 +490,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EvidenceWithReview'
+                $ref: '#/components/schemas/Evidence'
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - tokenAuth: []
       - {}
     put:
       tags:
@@ -540,24 +511,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/EvidenceWithReview'
+              $ref: '#/components/schemas/Evidence'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/EvidenceWithReview'
+              $ref: '#/components/schemas/Evidence'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/EvidenceWithReview'
-        required: true
+              $ref: '#/components/schemas/Evidence'
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EvidenceWithReview'
+                $ref: '#/components/schemas/Evidence'
       security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
+      - tokenAuth: []
     patch:
       tags:
       - api
@@ -575,23 +543,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedEvidenceWithReview'
+              $ref: '#/components/schemas/PatchedEvidence'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedEvidenceWithReview'
+              $ref: '#/components/schemas/PatchedEvidence'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedEvidenceWithReview'
+              $ref: '#/components/schemas/PatchedEvidence'
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EvidenceWithReview'
+                $ref: '#/components/schemas/Evidence'
       security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
+      - tokenAuth: []
   /api/sources/:
     get:
       tags:
@@ -607,8 +573,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Source'
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - tokenAuth: []
       - {}
     post:
       tags:
@@ -634,9 +599,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Source'
       security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
+      - tokenAuth: []
   /api/sources/{id}:
     get:
       tags:
@@ -658,8 +621,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Source'
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - tokenAuth: []
       - {}
     put:
       tags:
@@ -693,9 +655,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Source'
       security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
+      - tokenAuth: []
     patch:
       tags:
       - api
@@ -727,9 +687,432 @@ paths:
               schema:
                 $ref: '#/components/schemas/Source'
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - tokenAuth: []
+  /rest-auth/facebook/connect/:
+    post:
+      tags:
+      - rest-auth
+      operationId: rest_auth_facebook_connect_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SocialConnect'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SocialConnect'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SocialConnect'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialConnect'
+      security:
+      - tokenAuth: []
+  /rest-auth/login/:
+    post:
+      tags:
+      - rest-auth
+      description: |-
+        Check the credentials and return the REST Token
+        if the credentials are valid and authenticated.
+        Calls Django Auth login method to register User ID
+        in Django session framework
+
+        Accept the following POST parameters: username, password
+        Return the REST Framework Token Object's key.
+      operationId: rest_auth_login_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Login'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Login'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Login'
+      security:
+      - tokenAuth: []
       - {}
+  /rest-auth/logout/:
+    get:
+      tags:
+      - rest-auth
+      description: |-
+        Calls Django logout method and delete the Token object
+        assigned to the current User object.
+
+        Accepts/Returns nothing.
+      operationId: rest_auth_logout_retrieve
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+                description: Unspecified response body
+      security:
+      - tokenAuth: []
+      - {}
+    post:
+      tags:
+      - rest-auth
+      description: |-
+        Calls Django logout method and delete the Token object
+        assigned to the current User object.
+
+        Accepts/Returns nothing.
+      operationId: rest_auth_logout_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: {}
+              description: Unspecified request body
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              additionalProperties: {}
+              description: Unspecified request body
+          multipart/form-data:
+            schema:
+              type: object
+              additionalProperties: {}
+              description: Unspecified request body
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+                description: Unspecified response body
+      security:
+      - tokenAuth: []
+      - {}
+  /rest-auth/password/change/:
+    post:
+      tags:
+      - rest-auth
+      description: |-
+        Calls Django Auth SetPasswordForm save method.
+
+        Accepts the following POST parameters: new_password1, new_password2
+        Returns the success/fail message.
+      operationId: rest_auth_password_change_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordChange'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PasswordChange'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PasswordChange'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PasswordChange'
+      security:
+      - tokenAuth: []
+  /rest-auth/password/reset/:
+    post:
+      tags:
+      - rest-auth
+      description: |-
+        Calls Django Auth PasswordResetForm save method.
+
+        Accepts the following POST parameters: email
+        Returns the success/fail message.
+      operationId: rest_auth_password_reset_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordReset'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PasswordReset'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PasswordReset'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PasswordReset'
+      security:
+      - tokenAuth: []
+      - {}
+  /rest-auth/password/reset/confirm/:
+    post:
+      tags:
+      - rest-auth
+      description: |-
+        Password reset e-mail link is confirmed, therefore
+        this resets the user's password.
+
+        Accepts the following POST parameters: token, uid,
+            new_password1, new_password2
+        Returns the success/fail message.
+      operationId: rest_auth_password_reset_confirm_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordResetConfirm'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PasswordResetConfirm'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PasswordResetConfirm'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PasswordResetConfirm'
+      security:
+      - tokenAuth: []
+      - {}
+  /rest-auth/registration/:
+    post:
+      tags:
+      - rest-auth
+      operationId: rest_auth_registration_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Register'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Register'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Register'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Register'
+      security:
+      - tokenAuth: []
+      - {}
+  /rest-auth/registration/verify-email/:
+    post:
+      tags:
+      - rest-auth
+      operationId: rest_auth_registration_verify_email_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyEmail'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/VerifyEmail'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/VerifyEmail'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerifyEmail'
+      security:
+      - tokenAuth: []
+      - {}
+  /rest-auth/twitter/connect/:
+    post:
+      tags:
+      - rest-auth
+      operationId: rest_auth_twitter_connect_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TwitterConnect'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TwitterConnect'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TwitterConnect'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TwitterConnect'
+      security:
+      - tokenAuth: []
+  /rest-auth/user/:
+    get:
+      tags:
+      - rest-auth
+      description: |-
+        Reads and updates UserModel fields
+        Accepts GET, PUT, PATCH methods.
+
+        Default accepted fields: username, first_name, last_name
+        Default display fields: pk, username, email, first_name, last_name
+        Read-only fields: pk, email
+
+        Returns UserModel fields.
+      operationId: rest_auth_user_retrieve
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDetails'
+      security:
+      - tokenAuth: []
+    put:
+      tags:
+      - rest-auth
+      description: |-
+        Reads and updates UserModel fields
+        Accepts GET, PUT, PATCH methods.
+
+        Default accepted fields: username, first_name, last_name
+        Default display fields: pk, username, email, first_name, last_name
+        Read-only fields: pk, email
+
+        Returns UserModel fields.
+      operationId: rest_auth_user_update
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDetails'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserDetails'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserDetails'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDetails'
+      security:
+      - tokenAuth: []
+    patch:
+      tags:
+      - rest-auth
+      description: |-
+        Reads and updates UserModel fields
+        Accepts GET, PUT, PATCH methods.
+
+        Default accepted fields: username, first_name, last_name
+        Default display fields: pk, username, email, first_name, last_name
+        Read-only fields: pk, email
+
+        Returns UserModel fields.
+      operationId: rest_auth_user_partial_update
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUserDetails'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUserDetails'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUserDetails'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDetails'
+      security:
+      - tokenAuth: []
+  /socialaccounts/:
+    get:
+      tags:
+      - socialaccounts
+      description: List SocialAccounts for the currently logged in user
+      operationId: socialaccounts_list
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SocialAccount'
+      security:
+      - tokenAuth: []
+  /socialaccounts/{id}/disconnect/:
+    post:
+      tags:
+      - socialaccounts
+      description: |-
+        Disconnect SocialAccount from remote service for
+        the currently logged in user
+      operationId: socialaccounts_disconnect_create
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SocialConnect'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SocialConnect'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SocialConnect'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialConnect'
+      security:
+      - tokenAuth: []
 components:
   schemas:
     Claim:
@@ -845,15 +1228,9 @@ components:
       required:
       - deduced_evidence_relationship
       - deduced_source_degree
-      - evidence
       - is_reliable
-      - reviewer
       type: object
       properties:
-        evidence:
-          $ref: '#/components/schemas/Evidence'
-        reviewer:
-          type: integer
         deduced_evidence_relationship:
           $ref: '#/components/schemas/EvidenceRelationship'
         deduced_source_degree:
@@ -865,6 +1242,7 @@ components:
           type: string
     EvidenceWithReview:
       required:
+      - claim
       - reviews
       - source_of_evidence
       type: object
@@ -872,7 +1250,63 @@ components:
         source_of_evidence:
           $ref: '#/components/schemas/Source'
         reviews:
-          $ref: '#/components/schemas/EvidenceReview'
+          type: array
+          items:
+            $ref: '#/components/schemas/EvidenceReview'
+        claim:
+          type: integer
+    Login:
+      required:
+      - password
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+    PasswordChange:
+      required:
+      - new_password1
+      - new_password2
+      type: object
+      properties:
+        new_password1:
+          maxLength: 128
+          type: string
+        new_password2:
+          maxLength: 128
+          type: string
+    PasswordReset:
+      required:
+      - email
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+      description: Serializer for requesting a password reset e-mail.
+    PasswordResetConfirm:
+      required:
+      - new_password1
+      - new_password2
+      - token
+      - uid
+      type: object
+      properties:
+        new_password1:
+          maxLength: 128
+          type: string
+        new_password2:
+          maxLength: 128
+          type: string
+        uid:
+          type: string
+        token:
+          type: string
+      description: Serializer for requesting a password reset e-mail.
     PatchedClaimWithEvidence:
       type: object
       properties:
@@ -937,10 +1371,6 @@ components:
     PatchedEvidenceReview:
       type: object
       properties:
-        evidence:
-          $ref: '#/components/schemas/PatchedEvidence'
-        reviewer:
-          type: integer
         deduced_evidence_relationship:
           $ref: '#/components/schemas/EvidenceRelationship'
         deduced_source_degree:
@@ -950,13 +1380,6 @@ components:
         additional_comments:
           maxLength: 500
           type: string
-    PatchedEvidenceWithReview:
-      type: object
-      properties:
-        source_of_evidence:
-          $ref: '#/components/schemas/PatchedSource'
-        reviews:
-          $ref: '#/components/schemas/PatchedEvidenceReview'
     PatchedSource:
       type: object
       properties:
@@ -988,6 +1411,86 @@ components:
           type: string
           format: date-time
           readOnly: true
+    PatchedUserDetails:
+      type: object
+      properties:
+        pk:
+          type: integer
+          readOnly: true
+        username:
+          maxLength: 150
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+        email:
+          type: string
+          format: email
+          readOnly: true
+        first_name:
+          maxLength: 30
+          type: string
+        last_name:
+          maxLength: 150
+          type: string
+      description: User model w/o password
+    ProviderEnum:
+      type: string
+      enum:
+      - facebook
+      - twitter
+    Register:
+      required:
+      - password1
+      - password2
+      - username
+      type: object
+      properties:
+        username:
+          maxLength: 150
+          minLength: 1
+          type: string
+        email:
+          type: string
+          format: email
+        password1:
+          type: string
+          writeOnly: true
+        password2:
+          type: string
+          writeOnly: true
+    SocialAccount:
+      required:
+      - date_joined
+      - id
+      - last_login
+      - provider
+      - uid
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        provider:
+          $ref: '#/components/schemas/ProviderEnum'
+        uid:
+          maxLength: 191
+          type: string
+        last_login:
+          type: string
+          format: date-time
+          readOnly: true
+        date_joined:
+          type: string
+          format: date-time
+          readOnly: true
+      description: serialize allauth SocialAccounts for use with a REST API
+    SocialConnect:
+      type: object
+      properties:
+        access_token:
+          type: string
+        code:
+          type: string
     Source:
       required:
       - authors
@@ -1038,11 +1541,51 @@ components:
         name:
           maxLength: 100
           type: string
+    TwitterConnect:
+      required:
+      - access_token
+      - token_secret
+      type: object
+      properties:
+        access_token:
+          type: string
+        token_secret:
+          type: string
+    UserDetails:
+      required:
+      - email
+      - pk
+      - username
+      type: object
+      properties:
+        pk:
+          type: integer
+          readOnly: true
+        username:
+          maxLength: 150
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+        email:
+          type: string
+          format: email
+          readOnly: true
+        first_name:
+          maxLength: 30
+          type: string
+        last_name:
+          maxLength: 150
+          type: string
+      description: User model w/o password
+    VerifyEmail:
+      required:
+      - key
+      type: object
+      properties:
+        key:
+          type: string
   securitySchemes:
-    basicAuth:
+    tokenAuth:
       type: http
-      scheme: basic
-    cookieAuth:
-      type: apiKey
-      name: Session
-      in: cookie
+      scheme: bearer
+      bearerFormat: Token
