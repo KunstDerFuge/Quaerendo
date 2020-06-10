@@ -41,8 +41,6 @@ export interface Evidence {
 export type EvidenceRelationship = "PROVES" | "SUPPORTS" | "UNRELATED" | "INCONCLUSIVE" | "DISPUTES" | "DISPROVES" | "SPLIT";
 
 export interface EvidenceReview {
-  evidence: Evidence;
-  reviewer: number;
   deduced_evidence_relationship: EvidenceRelationship;
   deduced_source_degree: SourceDegree;
   is_reliable: boolean;
@@ -51,7 +49,36 @@ export interface EvidenceReview {
 
 export interface EvidenceWithReview {
   source_of_evidence: Source;
-  reviews: EvidenceReview;
+  reviews: EvidenceReview[];
+  claim: number;
+}
+
+export interface Login {
+  username?: string;
+  email?: string;
+  password: string;
+}
+
+export interface PasswordChange {
+  new_password1: string;
+  new_password2: string;
+}
+
+/**
+ * Serializer for requesting a password reset e-mail.
+ */
+export interface PasswordReset {
+  email: string;
+}
+
+/**
+ * Serializer for requesting a password reset e-mail.
+ */
+export interface PasswordResetConfirm {
+  new_password1: string;
+  new_password2: string;
+  uid: string;
+  token: string;
 }
 
 export interface PatchedClaimWithEvidence {
@@ -80,17 +107,10 @@ export interface PatchedEvidence {
 }
 
 export interface PatchedEvidenceReview {
-  evidence?: PatchedEvidence;
-  reviewer?: number;
   deduced_evidence_relationship?: EvidenceRelationship;
   deduced_source_degree?: SourceDegree;
   is_reliable?: boolean;
   additional_comments?: string;
-}
-
-export interface PatchedEvidenceWithReview {
-  source_of_evidence?: PatchedSource;
-  reviews?: PatchedEvidenceReview;
 }
 
 export interface PatchedSource {
@@ -102,6 +122,46 @@ export interface PatchedSource {
   authors?: PatchedEntity[];
   date_published?: string | null;
   date_retrieved?: string;
+}
+
+/**
+ * User model w/o password
+ */
+export interface PatchedUserDetails {
+  pk?: number;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+   * only.
+   */
+  username?: string;
+  email?: string;
+  first_name?: string;
+  last_name?: string;
+}
+
+export type ProviderEnum = "facebook" | "twitter";
+
+export interface Register {
+  username: string;
+  email?: string;
+  password1: string;
+  password2: string;
+}
+
+/**
+ * serialize allauth SocialAccounts for use with a REST API
+ */
+export interface SocialAccount {
+  id: number;
+  provider: ProviderEnum;
+  uid: string;
+  last_login: string;
+  date_joined: string;
+}
+
+export interface SocialConnect {
+  access_token?: string;
+  code?: string;
 }
 
 export interface Source {
@@ -119,6 +179,30 @@ export type SourceDegree = "ORIGINAL" | "PRIMARY" | "SECONDARY" | "TERTIARY";
 
 export interface Topic {
   name: string;
+}
+
+export interface TwitterConnect {
+  access_token: string;
+  token_secret: string;
+}
+
+/**
+ * User model w/o password
+ */
+export interface UserDetails {
+  pk: number;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+   * only.
+   */
+  username: string;
+  email: string;
+  first_name?: string;
+  last_name?: string;
+}
+
+export interface VerifyEmail {
+  key: string;
 }
 
 export interface ApiArticleInfoResponse {[key: string]: any}
@@ -331,45 +415,45 @@ export type UseApiEntitiesPartialUpdateProps = Omit<UseMutateProps<Entity, void,
 export const useApiEntitiesPartialUpdate = ({id, ...props}: UseApiEntitiesPartialUpdateProps) => useMutate<Entity, unknown, void, PatchedEntity>("PATCH", `/api/entities/${id}`, props);
 
 
-export type ApiEvidenceListProps = Omit<GetProps<Evidence[], unknown, void>, "path">;
+export type ApiEvidenceListProps = Omit<GetProps<EvidenceWithReview[], unknown, void>, "path">;
 
 /**
  * REST endpoints for viewing and submitting claims
  */
 export const ApiEvidenceList = (props: ApiEvidenceListProps) => (
-  <Get<Evidence[], unknown, void>
+  <Get<EvidenceWithReview[], unknown, void>
     path={`/api/evidence/`}
     {...props}
   />
 );
 
-export type UseApiEvidenceListProps = Omit<UseGetProps<Evidence[], void>, "path">;
+export type UseApiEvidenceListProps = Omit<UseGetProps<EvidenceWithReview[], void>, "path">;
 
 /**
  * REST endpoints for viewing and submitting claims
  */
-export const useApiEvidenceList = (props: UseApiEvidenceListProps) => useGet<Evidence[], unknown, void>(`/api/evidence/`, props);
+export const useApiEvidenceList = (props: UseApiEvidenceListProps) => useGet<EvidenceWithReview[], unknown, void>(`/api/evidence/`, props);
 
 
-export type ApiEvidenceCreateProps = Omit<MutateProps<Evidence, unknown, void, Evidence>, "path" | "verb">;
+export type ApiEvidenceCreateProps = Omit<MutateProps<EvidenceWithReview, unknown, void, EvidenceWithReview>, "path" | "verb">;
 
 /**
  * REST endpoints for viewing and submitting claims
  */
 export const ApiEvidenceCreate = (props: ApiEvidenceCreateProps) => (
-  <Mutate<Evidence, unknown, void, Evidence>
+  <Mutate<EvidenceWithReview, unknown, void, EvidenceWithReview>
     verb="POST"
     path={`/api/evidence/`}
     {...props}
   />
 );
 
-export type UseApiEvidenceCreateProps = Omit<UseMutateProps<Evidence, void, Evidence>, "path" | "verb">;
+export type UseApiEvidenceCreateProps = Omit<UseMutateProps<EvidenceWithReview, void, EvidenceWithReview>, "path" | "verb">;
 
 /**
  * REST endpoints for viewing and submitting claims
  */
-export const useApiEvidenceCreate = (props: UseApiEvidenceCreateProps) => useMutate<Evidence, unknown, void, Evidence>("POST", `/api/evidence/`, props);
+export const useApiEvidenceCreate = (props: UseApiEvidenceCreateProps) => useMutate<EvidenceWithReview, unknown, void, EvidenceWithReview>("POST", `/api/evidence/`, props);
 
 
 export type ApiEvidenceReviewsListProps = Omit<GetProps<EvidenceReview[], unknown, void>, "path">;
@@ -457,48 +541,48 @@ export type UseApiEvidenceReviewsPartialUpdateProps = Omit<UseMutateProps<Eviden
 export const useApiEvidenceReviewsPartialUpdate = ({id, ...props}: UseApiEvidenceReviewsPartialUpdateProps) => useMutate<EvidenceReview, unknown, void, PatchedEvidenceReview>("PATCH", `/api/evidence/reviews/${id}`, props);
 
 
-export type ApiEvidenceDetailProps = Omit<GetProps<EvidenceWithReview, unknown, void>, "path"> & {id: number};
+export type ApiEvidenceDetailProps = Omit<GetProps<Evidence, unknown, void>, "path"> & {id: number};
 
 export const ApiEvidenceDetail = ({id, ...props}: ApiEvidenceDetailProps) => (
-  <Get<EvidenceWithReview, unknown, void>
+  <Get<Evidence, unknown, void>
     path={`/api/evidence/${id}`}
     {...props}
   />
 );
 
-export type UseApiEvidenceDetailProps = Omit<UseGetProps<EvidenceWithReview, void>, "path"> & {id: number};
+export type UseApiEvidenceDetailProps = Omit<UseGetProps<Evidence, void>, "path"> & {id: number};
 
-export const useApiEvidenceDetail = ({id, ...props}: UseApiEvidenceDetailProps) => useGet<EvidenceWithReview, unknown, void>(`/api/evidence/${id}`, props);
+export const useApiEvidenceDetail = ({id, ...props}: UseApiEvidenceDetailProps) => useGet<Evidence, unknown, void>(`/api/evidence/${id}`, props);
 
 
-export type ApiEvidenceUpdateProps = Omit<MutateProps<EvidenceWithReview, unknown, void, EvidenceWithReview>, "path" | "verb"> & {id: number};
+export type ApiEvidenceUpdateProps = Omit<MutateProps<Evidence, unknown, void, Evidence>, "path" | "verb"> & {id: number};
 
 export const ApiEvidenceUpdate = ({id, ...props}: ApiEvidenceUpdateProps) => (
-  <Mutate<EvidenceWithReview, unknown, void, EvidenceWithReview>
+  <Mutate<Evidence, unknown, void, Evidence>
     verb="PUT"
     path={`/api/evidence/${id}`}
     {...props}
   />
 );
 
-export type UseApiEvidenceUpdateProps = Omit<UseMutateProps<EvidenceWithReview, void, EvidenceWithReview>, "path" | "verb"> & {id: number};
+export type UseApiEvidenceUpdateProps = Omit<UseMutateProps<Evidence, void, Evidence>, "path" | "verb"> & {id: number};
 
-export const useApiEvidenceUpdate = ({id, ...props}: UseApiEvidenceUpdateProps) => useMutate<EvidenceWithReview, unknown, void, EvidenceWithReview>("PUT", `/api/evidence/${id}`, props);
+export const useApiEvidenceUpdate = ({id, ...props}: UseApiEvidenceUpdateProps) => useMutate<Evidence, unknown, void, Evidence>("PUT", `/api/evidence/${id}`, props);
 
 
-export type ApiEvidencePartialUpdateProps = Omit<MutateProps<EvidenceWithReview, unknown, void, PatchedEvidenceWithReview>, "path" | "verb"> & {id: number};
+export type ApiEvidencePartialUpdateProps = Omit<MutateProps<Evidence, unknown, void, PatchedEvidence>, "path" | "verb"> & {id: number};
 
 export const ApiEvidencePartialUpdate = ({id, ...props}: ApiEvidencePartialUpdateProps) => (
-  <Mutate<EvidenceWithReview, unknown, void, PatchedEvidenceWithReview>
+  <Mutate<Evidence, unknown, void, PatchedEvidence>
     verb="PATCH"
     path={`/api/evidence/${id}`}
     {...props}
   />
 );
 
-export type UseApiEvidencePartialUpdateProps = Omit<UseMutateProps<EvidenceWithReview, void, PatchedEvidenceWithReview>, "path" | "verb"> & {id: number};
+export type UseApiEvidencePartialUpdateProps = Omit<UseMutateProps<Evidence, void, PatchedEvidence>, "path" | "verb"> & {id: number};
 
-export const useApiEvidencePartialUpdate = ({id, ...props}: UseApiEvidencePartialUpdateProps) => useMutate<EvidenceWithReview, unknown, void, PatchedEvidenceWithReview>("PATCH", `/api/evidence/${id}`, props);
+export const useApiEvidencePartialUpdate = ({id, ...props}: UseApiEvidencePartialUpdateProps) => useMutate<Evidence, unknown, void, PatchedEvidence>("PATCH", `/api/evidence/${id}`, props);
 
 
 export type ApiSourcesListProps = Omit<GetProps<Source[], unknown, void>, "path">;
@@ -584,4 +668,388 @@ export const ApiSourcesPartialUpdate = ({id, ...props}: ApiSourcesPartialUpdateP
 export type UseApiSourcesPartialUpdateProps = Omit<UseMutateProps<Source, void, PatchedSource>, "path" | "verb"> & {id: number};
 
 export const useApiSourcesPartialUpdate = ({id, ...props}: UseApiSourcesPartialUpdateProps) => useMutate<Source, unknown, void, PatchedSource>("PATCH", `/api/sources/${id}`, props);
+
+
+export type RestAuthFacebookConnectCreateProps = Omit<MutateProps<SocialConnect, unknown, void, SocialConnect>, "path" | "verb">;
+
+export const RestAuthFacebookConnectCreate = (props: RestAuthFacebookConnectCreateProps) => (
+  <Mutate<SocialConnect, unknown, void, SocialConnect>
+    verb="POST"
+    path={`/rest-auth/facebook/connect/`}
+    {...props}
+  />
+);
+
+export type UseRestAuthFacebookConnectCreateProps = Omit<UseMutateProps<SocialConnect, void, SocialConnect>, "path" | "verb">;
+
+export const useRestAuthFacebookConnectCreate = (props: UseRestAuthFacebookConnectCreateProps) => useMutate<SocialConnect, unknown, void, SocialConnect>("POST", `/rest-auth/facebook/connect/`, props);
+
+
+export type RestAuthLoginCreateProps = Omit<MutateProps<Login, unknown, void, Login>, "path" | "verb">;
+
+/**
+ * Check the credentials and return the REST Token
+ * if the credentials are valid and authenticated.
+ * Calls Django Auth login method to register User ID
+ * in Django session framework
+ * 
+ * Accept the following POST parameters: username, password
+ * Return the REST Framework Token Object's key.
+ */
+export const RestAuthLoginCreate = (props: RestAuthLoginCreateProps) => (
+  <Mutate<Login, unknown, void, Login>
+    verb="POST"
+    path={`/rest-auth/login/`}
+    {...props}
+  />
+);
+
+export type UseRestAuthLoginCreateProps = Omit<UseMutateProps<Login, void, Login>, "path" | "verb">;
+
+/**
+ * Check the credentials and return the REST Token
+ * if the credentials are valid and authenticated.
+ * Calls Django Auth login method to register User ID
+ * in Django session framework
+ * 
+ * Accept the following POST parameters: username, password
+ * Return the REST Framework Token Object's key.
+ */
+export const useRestAuthLoginCreate = (props: UseRestAuthLoginCreateProps) => useMutate<Login, unknown, void, Login>("POST", `/rest-auth/login/`, props);
+
+
+export interface RestAuthLogoutRetrieveResponse {[key: string]: any}
+
+export type RestAuthLogoutRetrieveProps = Omit<GetProps<RestAuthLogoutRetrieveResponse, unknown, void>, "path">;
+
+/**
+ * Calls Django logout method and delete the Token object
+ * assigned to the current User object.
+ * 
+ * Accepts/Returns nothing.
+ */
+export const RestAuthLogoutRetrieve = (props: RestAuthLogoutRetrieveProps) => (
+  <Get<RestAuthLogoutRetrieveResponse, unknown, void>
+    path={`/rest-auth/logout/`}
+    {...props}
+  />
+);
+
+export type UseRestAuthLogoutRetrieveProps = Omit<UseGetProps<RestAuthLogoutRetrieveResponse, void>, "path">;
+
+/**
+ * Calls Django logout method and delete the Token object
+ * assigned to the current User object.
+ * 
+ * Accepts/Returns nothing.
+ */
+export const useRestAuthLogoutRetrieve = (props: UseRestAuthLogoutRetrieveProps) => useGet<RestAuthLogoutRetrieveResponse, unknown, void>(`/rest-auth/logout/`, props);
+
+
+export interface RestAuthLogoutCreateResponse {[key: string]: any}
+
+export interface RestAuthLogoutCreateRequestBody {[key: string]: any}
+
+export type RestAuthLogoutCreateProps = Omit<MutateProps<RestAuthLogoutCreateResponse, unknown, void, RestAuthLogoutCreateRequestBody>, "path" | "verb">;
+
+/**
+ * Calls Django logout method and delete the Token object
+ * assigned to the current User object.
+ * 
+ * Accepts/Returns nothing.
+ */
+export const RestAuthLogoutCreate = (props: RestAuthLogoutCreateProps) => (
+  <Mutate<RestAuthLogoutCreateResponse, unknown, void, RestAuthLogoutCreateRequestBody>
+    verb="POST"
+    path={`/rest-auth/logout/`}
+    {...props}
+  />
+);
+
+export type UseRestAuthLogoutCreateProps = Omit<UseMutateProps<RestAuthLogoutCreateResponse, void, RestAuthLogoutCreateRequestBody>, "path" | "verb">;
+
+/**
+ * Calls Django logout method and delete the Token object
+ * assigned to the current User object.
+ * 
+ * Accepts/Returns nothing.
+ */
+export const useRestAuthLogoutCreate = (props: UseRestAuthLogoutCreateProps) => useMutate<RestAuthLogoutCreateResponse, unknown, void, RestAuthLogoutCreateRequestBody>("POST", `/rest-auth/logout/`, props);
+
+
+export type RestAuthPasswordChangeCreateProps = Omit<MutateProps<PasswordChange, unknown, void, PasswordChange>, "path" | "verb">;
+
+/**
+ * Calls Django Auth SetPasswordForm save method.
+ * 
+ * Accepts the following POST parameters: new_password1, new_password2
+ * Returns the success/fail message.
+ */
+export const RestAuthPasswordChangeCreate = (props: RestAuthPasswordChangeCreateProps) => (
+  <Mutate<PasswordChange, unknown, void, PasswordChange>
+    verb="POST"
+    path={`/rest-auth/password/change/`}
+    {...props}
+  />
+);
+
+export type UseRestAuthPasswordChangeCreateProps = Omit<UseMutateProps<PasswordChange, void, PasswordChange>, "path" | "verb">;
+
+/**
+ * Calls Django Auth SetPasswordForm save method.
+ * 
+ * Accepts the following POST parameters: new_password1, new_password2
+ * Returns the success/fail message.
+ */
+export const useRestAuthPasswordChangeCreate = (props: UseRestAuthPasswordChangeCreateProps) => useMutate<PasswordChange, unknown, void, PasswordChange>("POST", `/rest-auth/password/change/`, props);
+
+
+export type RestAuthPasswordResetCreateProps = Omit<MutateProps<PasswordReset, unknown, void, PasswordReset>, "path" | "verb">;
+
+/**
+ * Calls Django Auth PasswordResetForm save method.
+ * 
+ * Accepts the following POST parameters: email
+ * Returns the success/fail message.
+ */
+export const RestAuthPasswordResetCreate = (props: RestAuthPasswordResetCreateProps) => (
+  <Mutate<PasswordReset, unknown, void, PasswordReset>
+    verb="POST"
+    path={`/rest-auth/password/reset/`}
+    {...props}
+  />
+);
+
+export type UseRestAuthPasswordResetCreateProps = Omit<UseMutateProps<PasswordReset, void, PasswordReset>, "path" | "verb">;
+
+/**
+ * Calls Django Auth PasswordResetForm save method.
+ * 
+ * Accepts the following POST parameters: email
+ * Returns the success/fail message.
+ */
+export const useRestAuthPasswordResetCreate = (props: UseRestAuthPasswordResetCreateProps) => useMutate<PasswordReset, unknown, void, PasswordReset>("POST", `/rest-auth/password/reset/`, props);
+
+
+export type RestAuthPasswordResetConfirmCreateProps = Omit<MutateProps<PasswordResetConfirm, unknown, void, PasswordResetConfirm>, "path" | "verb">;
+
+/**
+ * Password reset e-mail link is confirmed, therefore
+ * this resets the user's password.
+ * 
+ * Accepts the following POST parameters: token, uid,
+ *     new_password1, new_password2
+ * Returns the success/fail message.
+ */
+export const RestAuthPasswordResetConfirmCreate = (props: RestAuthPasswordResetConfirmCreateProps) => (
+  <Mutate<PasswordResetConfirm, unknown, void, PasswordResetConfirm>
+    verb="POST"
+    path={`/rest-auth/password/reset/confirm/`}
+    {...props}
+  />
+);
+
+export type UseRestAuthPasswordResetConfirmCreateProps = Omit<UseMutateProps<PasswordResetConfirm, void, PasswordResetConfirm>, "path" | "verb">;
+
+/**
+ * Password reset e-mail link is confirmed, therefore
+ * this resets the user's password.
+ * 
+ * Accepts the following POST parameters: token, uid,
+ *     new_password1, new_password2
+ * Returns the success/fail message.
+ */
+export const useRestAuthPasswordResetConfirmCreate = (props: UseRestAuthPasswordResetConfirmCreateProps) => useMutate<PasswordResetConfirm, unknown, void, PasswordResetConfirm>("POST", `/rest-auth/password/reset/confirm/`, props);
+
+
+export type RestAuthRegistrationCreateProps = Omit<MutateProps<Register, unknown, void, Register>, "path" | "verb">;
+
+export const RestAuthRegistrationCreate = (props: RestAuthRegistrationCreateProps) => (
+  <Mutate<Register, unknown, void, Register>
+    verb="POST"
+    path={`/rest-auth/registration/`}
+    {...props}
+  />
+);
+
+export type UseRestAuthRegistrationCreateProps = Omit<UseMutateProps<Register, void, Register>, "path" | "verb">;
+
+export const useRestAuthRegistrationCreate = (props: UseRestAuthRegistrationCreateProps) => useMutate<Register, unknown, void, Register>("POST", `/rest-auth/registration/`, props);
+
+
+export type RestAuthRegistrationVerifyEmailCreateProps = Omit<MutateProps<VerifyEmail, unknown, void, VerifyEmail>, "path" | "verb">;
+
+export const RestAuthRegistrationVerifyEmailCreate = (props: RestAuthRegistrationVerifyEmailCreateProps) => (
+  <Mutate<VerifyEmail, unknown, void, VerifyEmail>
+    verb="POST"
+    path={`/rest-auth/registration/verify-email/`}
+    {...props}
+  />
+);
+
+export type UseRestAuthRegistrationVerifyEmailCreateProps = Omit<UseMutateProps<VerifyEmail, void, VerifyEmail>, "path" | "verb">;
+
+export const useRestAuthRegistrationVerifyEmailCreate = (props: UseRestAuthRegistrationVerifyEmailCreateProps) => useMutate<VerifyEmail, unknown, void, VerifyEmail>("POST", `/rest-auth/registration/verify-email/`, props);
+
+
+export type RestAuthTwitterConnectCreateProps = Omit<MutateProps<TwitterConnect, unknown, void, TwitterConnect>, "path" | "verb">;
+
+export const RestAuthTwitterConnectCreate = (props: RestAuthTwitterConnectCreateProps) => (
+  <Mutate<TwitterConnect, unknown, void, TwitterConnect>
+    verb="POST"
+    path={`/rest-auth/twitter/connect/`}
+    {...props}
+  />
+);
+
+export type UseRestAuthTwitterConnectCreateProps = Omit<UseMutateProps<TwitterConnect, void, TwitterConnect>, "path" | "verb">;
+
+export const useRestAuthTwitterConnectCreate = (props: UseRestAuthTwitterConnectCreateProps) => useMutate<TwitterConnect, unknown, void, TwitterConnect>("POST", `/rest-auth/twitter/connect/`, props);
+
+
+export type RestAuthUserRetrieveProps = Omit<GetProps<UserDetails, unknown, void>, "path">;
+
+/**
+ * Reads and updates UserModel fields
+ * Accepts GET, PUT, PATCH methods.
+ * 
+ * Default accepted fields: username, first_name, last_name
+ * Default display fields: pk, username, email, first_name, last_name
+ * Read-only fields: pk, email
+ * 
+ * Returns UserModel fields.
+ */
+export const RestAuthUserRetrieve = (props: RestAuthUserRetrieveProps) => (
+  <Get<UserDetails, unknown, void>
+    path={`/rest-auth/user/`}
+    {...props}
+  />
+);
+
+export type UseRestAuthUserRetrieveProps = Omit<UseGetProps<UserDetails, void>, "path">;
+
+/**
+ * Reads and updates UserModel fields
+ * Accepts GET, PUT, PATCH methods.
+ * 
+ * Default accepted fields: username, first_name, last_name
+ * Default display fields: pk, username, email, first_name, last_name
+ * Read-only fields: pk, email
+ * 
+ * Returns UserModel fields.
+ */
+export const useRestAuthUserRetrieve = (props: UseRestAuthUserRetrieveProps) => useGet<UserDetails, unknown, void>(`/rest-auth/user/`, props);
+
+
+export type RestAuthUserUpdateProps = Omit<MutateProps<UserDetails, unknown, void, UserDetails>, "path" | "verb">;
+
+/**
+ * Reads and updates UserModel fields
+ * Accepts GET, PUT, PATCH methods.
+ * 
+ * Default accepted fields: username, first_name, last_name
+ * Default display fields: pk, username, email, first_name, last_name
+ * Read-only fields: pk, email
+ * 
+ * Returns UserModel fields.
+ */
+export const RestAuthUserUpdate = (props: RestAuthUserUpdateProps) => (
+  <Mutate<UserDetails, unknown, void, UserDetails>
+    verb="PUT"
+    path={`/rest-auth/user/`}
+    {...props}
+  />
+);
+
+export type UseRestAuthUserUpdateProps = Omit<UseMutateProps<UserDetails, void, UserDetails>, "path" | "verb">;
+
+/**
+ * Reads and updates UserModel fields
+ * Accepts GET, PUT, PATCH methods.
+ * 
+ * Default accepted fields: username, first_name, last_name
+ * Default display fields: pk, username, email, first_name, last_name
+ * Read-only fields: pk, email
+ * 
+ * Returns UserModel fields.
+ */
+export const useRestAuthUserUpdate = (props: UseRestAuthUserUpdateProps) => useMutate<UserDetails, unknown, void, UserDetails>("PUT", `/rest-auth/user/`, props);
+
+
+export type RestAuthUserPartialUpdateProps = Omit<MutateProps<UserDetails, unknown, void, PatchedUserDetails>, "path" | "verb">;
+
+/**
+ * Reads and updates UserModel fields
+ * Accepts GET, PUT, PATCH methods.
+ * 
+ * Default accepted fields: username, first_name, last_name
+ * Default display fields: pk, username, email, first_name, last_name
+ * Read-only fields: pk, email
+ * 
+ * Returns UserModel fields.
+ */
+export const RestAuthUserPartialUpdate = (props: RestAuthUserPartialUpdateProps) => (
+  <Mutate<UserDetails, unknown, void, PatchedUserDetails>
+    verb="PATCH"
+    path={`/rest-auth/user/`}
+    {...props}
+  />
+);
+
+export type UseRestAuthUserPartialUpdateProps = Omit<UseMutateProps<UserDetails, void, PatchedUserDetails>, "path" | "verb">;
+
+/**
+ * Reads and updates UserModel fields
+ * Accepts GET, PUT, PATCH methods.
+ * 
+ * Default accepted fields: username, first_name, last_name
+ * Default display fields: pk, username, email, first_name, last_name
+ * Read-only fields: pk, email
+ * 
+ * Returns UserModel fields.
+ */
+export const useRestAuthUserPartialUpdate = (props: UseRestAuthUserPartialUpdateProps) => useMutate<UserDetails, unknown, void, PatchedUserDetails>("PATCH", `/rest-auth/user/`, props);
+
+
+export type SocialaccountsListProps = Omit<GetProps<SocialAccount[], unknown, void>, "path">;
+
+/**
+ * List SocialAccounts for the currently logged in user
+ */
+export const SocialaccountsList = (props: SocialaccountsListProps) => (
+  <Get<SocialAccount[], unknown, void>
+    path={`/socialaccounts/`}
+    {...props}
+  />
+);
+
+export type UseSocialaccountsListProps = Omit<UseGetProps<SocialAccount[], void>, "path">;
+
+/**
+ * List SocialAccounts for the currently logged in user
+ */
+export const useSocialaccountsList = (props: UseSocialaccountsListProps) => useGet<SocialAccount[], unknown, void>(`/socialaccounts/`, props);
+
+
+export type SocialaccountsDisconnectCreateProps = Omit<MutateProps<SocialConnect, unknown, void, SocialConnect>, "path" | "verb"> & {id: string};
+
+/**
+ * Disconnect SocialAccount from remote service for
+ * the currently logged in user
+ */
+export const SocialaccountsDisconnectCreate = ({id, ...props}: SocialaccountsDisconnectCreateProps) => (
+  <Mutate<SocialConnect, unknown, void, SocialConnect>
+    verb="POST"
+    path={`/socialaccounts/${id}/disconnect/`}
+    {...props}
+  />
+);
+
+export type UseSocialaccountsDisconnectCreateProps = Omit<UseMutateProps<SocialConnect, void, SocialConnect>, "path" | "verb"> & {id: string};
+
+/**
+ * Disconnect SocialAccount from remote service for
+ * the currently logged in user
+ */
+export const useSocialaccountsDisconnectCreate = ({id, ...props}: UseSocialaccountsDisconnectCreateProps) => useMutate<SocialConnect, unknown, void, SocialConnect>("POST", `/socialaccounts/${id}/disconnect/`, props);
 
