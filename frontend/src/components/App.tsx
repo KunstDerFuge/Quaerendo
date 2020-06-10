@@ -71,6 +71,8 @@ function App() {
                              component={SubmitClaim} />
                       <Route path='/submit/evidence/for/:id'
                              component={(routerProps: any) => <SubmitEvidence id={routerProps.match.params.id} />} />
+                      <Route path='/review'
+                             component={ReviewPage} />
                       <Route path='/register'
                              component={RegistrationPage} />
                       <Route path='/login'
