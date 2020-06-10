@@ -3,7 +3,7 @@ import { FormEvent } from 'react'
 import { makeStyles } from '@material-ui/styles'
 import { Grid, Theme } from '@material-ui/core'
 import SubmitSourceForm from './SubmitSourceForm'
-import { EvidenceWithReview, PatchedEvidenceReview, PatchedEvidenceWithReview, PatchedSource } from '../openapi-types'
+import { EvidenceReview, EvidenceWithReview, PatchedEvidenceReview, PatchedSource, Source } from '../openapi-types'
 import EvidenceReviewForm from './EvidenceReviewForm'
 import { useMutate } from 'restful-react'
 import { Redirect, useHistory } from 'react-router'
@@ -59,12 +59,10 @@ const SubmitEvidence: React.FC<SubmitEvidenceProps> = (props) => {
 
   function submitForm(event: FormEvent, review: PatchedEvidenceReview) {
     event.preventDefault()
-    let evidence: PatchedEvidenceWithReview = {
-      source_of_evidence: source,
-      // @ts-ignore
-      claim: Number.parseInt(props.id),
-      // @ts-ignore
-      reviews: [review]
+    let evidence: EvidenceWithReview = {
+      source_of_evidence: source as Source,
+      claim: props.id,
+      reviews: [review as EvidenceReview]
     }
     console.log(evidence)
     post(evidence).then((response: EvidenceWithReview) => {
