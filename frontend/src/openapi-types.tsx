@@ -245,6 +245,20 @@ export type UseApiAuthorsRetrieveProps = Omit<UseGetProps<ApiAuthorsRetrieveResp
 export const useApiAuthorsRetrieve = (props: UseApiAuthorsRetrieveProps) => useGet<ApiAuthorsRetrieveResponse, unknown, void>(`/api/authors/`, props);
 
 
+export type ApiAuthorInfoProps = Omit<GetProps<Entity, unknown, void>, "path">;
+
+export const ApiAuthorInfo = (props: ApiAuthorInfoProps) => (
+  <Get<Entity, unknown, void>
+    path={`/api/authors/match/`}
+    {...props}
+  />
+);
+
+export type UseApiAuthorInfoProps = Omit<UseGetProps<Entity, void>, "path">;
+
+export const useApiAuthorInfo = (props: UseApiAuthorInfoProps) => useGet<Entity, unknown, void>(`/api/authors/match/`, props);
+
+
 export type ApiClaimsListProps = Omit<GetProps<Claim[], unknown, void>, "path">;
 
 /**
