@@ -605,7 +605,6 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/Source'
-        required: true
       responses:
         "200":
           content:
@@ -633,7 +632,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Source'
+                $ref: '#/components/schemas/SourceCreate'
       security:
       - tokenAuth: []
       - {}
@@ -654,20 +653,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Source'
+              $ref: '#/components/schemas/SourceCreate'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Source'
+              $ref: '#/components/schemas/SourceCreate'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Source'
+              $ref: '#/components/schemas/SourceCreate'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Source'
+                $ref: '#/components/schemas/SourceCreate'
       security:
       - tokenAuth: []
     patch:
@@ -687,19 +686,19 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedSource'
+              $ref: '#/components/schemas/PatchedSourceCreate'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedSource'
+              $ref: '#/components/schemas/PatchedSourceCreate'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedSource'
+              $ref: '#/components/schemas/PatchedSourceCreate'
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Source'
+                $ref: '#/components/schemas/SourceCreate'
       security:
       - tokenAuth: []
   /rest-auth/facebook/connect/:
@@ -1394,7 +1393,7 @@ components:
         additional_comments:
           maxLength: 500
           type: string
-    PatchedSource:
+    PatchedSourceCreate:
       type: object
       properties:
         id:
@@ -1415,8 +1414,10 @@ components:
           - $ref: '#/components/schemas/SourceDegree'
         authors:
           type: array
+          writeOnly: true
           items:
-            $ref: '#/components/schemas/PatchedEntity'
+            type: integer
+            writeOnly: true
         date_published:
           type: string
           format: date-time
@@ -1530,8 +1531,46 @@ components:
           - $ref: '#/components/schemas/SourceDegree'
         authors:
           type: array
+          readOnly: true
           items:
             $ref: '#/components/schemas/Entity'
+        date_published:
+          type: string
+          format: date-time
+          nullable: true
+        date_retrieved:
+          type: string
+          format: date-time
+          readOnly: true
+    SourceCreate:
+      required:
+      - authors
+      - date_retrieved
+      - id
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          maxLength: 250
+          type: string
+        url:
+          maxLength: 200
+          type: string
+          format: uri
+        summary:
+          type: string
+        source_degree:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/SourceDegree'
+        authors:
+          type: array
+          writeOnly: true
+          items:
+            type: integer
+            writeOnly: true
         date_published:
           type: string
           format: date-time
