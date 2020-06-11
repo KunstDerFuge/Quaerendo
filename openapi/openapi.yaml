@@ -1415,10 +1415,8 @@ components:
           - $ref: '#/components/schemas/SourceDegree'
         authors:
           type: array
-          writeOnly: true
           items:
             type: integer
-            writeOnly: true
         date_published:
           type: string
           format: date-time
@@ -1532,10 +1530,8 @@ components:
           - $ref: '#/components/schemas/SourceDegree'
         authors:
           type: array
-          writeOnly: true
           items:
             type: integer
-            writeOnly: true
         date_published:
           type: string
           format: date-time
