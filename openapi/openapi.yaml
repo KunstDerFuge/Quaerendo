@@ -1396,9 +1396,6 @@ components:
     PatchedSourceCreate:
       type: object
       properties:
-        id:
-          type: integer
-          readOnly: true
         title:
           maxLength: 250
           type: string
@@ -1422,10 +1419,6 @@ components:
           type: string
           format: date-time
           nullable: true
-        date_retrieved:
-          type: string
-          format: date-time
-          readOnly: true
     PatchedUserDetails:
       type: object
       properties:
@@ -1545,13 +1538,8 @@ components:
     SourceCreate:
       required:
       - authors
-      - date_retrieved
-      - id
       type: object
       properties:
-        id:
-          type: integer
-          readOnly: true
         title:
           maxLength: 250
           type: string
@@ -1575,10 +1563,6 @@ components:
           type: string
           format: date-time
           nullable: true
-        date_retrieved:
-          type: string
-          format: date-time
-          readOnly: true
     SourceDegree:
       type: string
       enum:
