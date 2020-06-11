@@ -1416,7 +1416,7 @@ components:
         authors:
           type: array
           items:
-            type: integer
+            $ref: '#/components/schemas/PatchedEntity'
         date_published:
           type: string
           format: date-time
@@ -1531,7 +1531,7 @@ components:
         authors:
           type: array
           items:
-            type: integer
+            $ref: '#/components/schemas/Entity'
         date_published:
           type: string
           format: date-time
