@@ -1,5 +1,6 @@
 from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
 from allauth.socialaccount.providers.twitter.views import TwitterOAuthAdapter
+from django.contrib.postgres.search import TrigramSimilarity
 from drf_spectacular.utils import extend_schema
 from newspaper import Article
 from rest_auth.registration.views import SocialConnectView
@@ -32,6 +33,22 @@ class ArticleInfo(APIView):
             'title': article.title,
             'date_published': article.publish_date
         })
+
+
+@extend_schema(operation_id='api_author_info', methods=['GET'])
+class AuthorMatch(APIView):
+    """
+    Takes a partial author name and returns a list of possibly matching entities
+    """
+
+    def get(self, request):
+        partial_name = request.query_params.get('name')
+        matches = Entity.objects.annotate(similarity=TrigramSimilarity('name', partial_name)) \
+            .filter(similarity__gt=0.25) \
+            .order_by('-similarity') \
+            .all()
+
+        return Response(EntitySerializer(matches, many=True).data)
 
 
 class AuthorNegotiation(APIView):
