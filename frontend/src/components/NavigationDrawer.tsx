@@ -3,7 +3,7 @@ import QuaerendoLogo from './QuaerendoLogo'
 import { Divider, Drawer, Fab, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
 import CommentRoundedIcon from '@material-ui/icons/CommentRounded'
 import RateReviewRoundedIcon from '@material-ui/icons/RateReviewRounded'
-import { Link, Redirect, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import AddCommentRoundedIcon from '@material-ui/icons/AddCommentRounded'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -53,12 +53,11 @@ const NavigationDrawer: React.FC<{}> = () => {
           <ListItemText primary='Review' />
         </ListItem>
         <ListItem>
-          <Link to='/submit/claim' className={classes.submitClaimFab}>
-            <Fab size='medium' variant="extended" color="secondary" aria-label="add">
-              <AddCommentRoundedIcon className={classes.extendedIcon} />
-              Submit Claim
-            </Fab>
-          </Link>
+          <Fab size='medium' variant="extended" color="secondary" aria-label="add" className={classes.submitClaimFab}
+               onClick={() => history.push('/submit/claim')}>
+            <AddCommentRoundedIcon className={classes.extendedIcon} />
+            Submit Claim
+          </Fab>
         </ListItem>
       </List>
     </Drawer>
