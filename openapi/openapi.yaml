@@ -39,6 +39,20 @@ paths:
       security:
       - tokenAuth: []
       - {}
+  /api/authors/match/:
+    get:
+      tags:
+      - api
+      operationId: api_author_info
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Entity'
+      security:
+      - tokenAuth: []
+      - {}
   /api/claims/:
     get:
       tags:
