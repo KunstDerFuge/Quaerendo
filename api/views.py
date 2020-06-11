@@ -35,7 +35,7 @@ class ArticleInfo(APIView):
         })
 
 
-@extend_schema(operation_id='api_author_info', methods=['GET'])
+@extend_schema(operation_id='api_author_info', methods=['GET'], responses=EntitySerializer)
 class AuthorMatch(APIView):
     """
     Takes a partial author name and returns a list of possibly matching entities
