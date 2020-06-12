@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Entity } from '../openapi-types'
 import { Chip, Link, TextField, Theme, Typography } from '@material-ui/core'
 import { Autocomplete } from '@material-ui/lab'
-import { Mutate } from 'restful-react'
+import { Mutate, useGet } from 'restful-react'
 import { makeStyles } from '@material-ui/styles'
 
 
@@ -22,16 +22,35 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const AuthorsSelectInput: React.FC<AuthorsSelectInputProps> = (props) => {
   const classes = useStyles()
+
+  const [authorOptions, setAuthorOptions] = React.useState<Entity[]>([])
+  const [textValue, setTextValue] = React.useState<string>('')
+
+  const {data, loading} = useGet({
+    path: 'api/authors/match/',
+    debounce: 200,
+    queryParams: {name: textValue},
+    resolve: data => {
+      setAuthorOptions(data)
+    }
+  })
+
   return (
     <>
       <Autocomplete
         multiple
         id='authors'
-        options={[]}
+        filterOptions={options => options}
+        options={authorOptions}
+        getOptionLabel={(option: Entity) => option.name}
         // @ts-ignore (newValues can be string[] or string)
         value={props.confirmedAuthors}
         onChange={(e, newValues, reason) => {
           switch (reason) {
+            case 'select-option':
+              props.setConfirmedAuthors(newValues as Entity[])
+              break
+
             case 'create-option':
               const newAuthor = newValues.filter((value) => typeof value === 'string')
               // @ts-ignore (newValues can be string[] or string)
@@ -42,6 +61,7 @@ const AuthorsSelectInput: React.FC<AuthorsSelectInputProps> = (props) => {
             case 'remove-option':
               // @ts-ignore (newValues can be string[] or string)
               props.setConfirmedAuthors(newValues as Entity[])
+              break
           }
         }}
         freeSolo
@@ -53,7 +73,8 @@ const AuthorsSelectInput: React.FC<AuthorsSelectInputProps> = (props) => {
           ))
         }
         renderInput={(params) => (
-          <TextField {...params} variant='outlined' label='Authors' placeholder='Add Authors...' />
+          <TextField {...params} value={textValue} onChange={(event) => setTextValue(event.target.value)}
+                     variant='outlined' label='Authors' placeholder='Add Authors...' />
         )}
       />
       {
