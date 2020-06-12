@@ -115,13 +115,13 @@ export interface PatchedEvidenceReview {
 
 export interface PatchedSource {
   id?: number;
-  title?: string;
-  url?: string;
-  summary?: string;
-  source_degree?: SourceDegree | null;
   authors?: PatchedEntity[];
-  date_published?: string | null;
+  url?: string;
+  title?: string;
+  summary?: string;
   date_retrieved?: string;
+  date_published?: string | null;
+  source_degree?: SourceDegree | null;
 }
 
 /**
@@ -166,13 +166,13 @@ export interface SocialConnect {
 
 export interface Source {
   id: number;
-  title?: string;
-  url?: string;
-  summary?: string;
-  source_degree?: SourceDegree | null;
   authors: Entity[];
-  date_published?: string | null;
+  url?: string;
+  title?: string;
+  summary?: string;
   date_retrieved: string;
+  date_published?: string | null;
+  source_degree?: SourceDegree | null;
 }
 
 export type SourceDegree = "ORIGINAL" | "PRIMARY" | "SECONDARY" | "TERTIARY";
