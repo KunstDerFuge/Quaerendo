@@ -1195,7 +1195,8 @@ components:
         name:
           maxLength: 100
           type: string
-        description:
+        short_bio:
+          maxLength: 80
           type: string
     Evidence:
       required:
@@ -1356,7 +1357,8 @@ components:
         name:
           maxLength: 100
           type: string
-        description:
+        short_bio:
+          maxLength: 80
           type: string
     PatchedEvidence:
       type: object
