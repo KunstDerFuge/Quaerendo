@@ -2,6 +2,7 @@ import math
 
 from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
+from rest_framework.relations import PrimaryKeyRelatedField
 
 from api.models import Entity, Source, Claim, Evidence, EvidenceReview, Topic, EvidenceRelationship
 
@@ -13,20 +14,19 @@ class EntitySerializer(serializers.ModelSerializer):
 
 
 class SourceSerializer(serializers.ModelSerializer):
-    authors = EntitySerializer(many=True, read_only=False)
+    authors = EntitySerializer(many=True)
 
     class Meta:
         model = Source
-        fields = ['id', 'title', 'url', 'summary', 'source_degree', 'authors', 'date_published', 'date_retrieved']
+        fields = '__all__'
 
-    def create(self, validated_data):
-        authors = EntitySerializer(many=True, data=validated_data.pop('authors'))
-        source_instance = Source.objects.create(**validated_data)
-        if authors.is_valid():
-            authors_instances = authors.save()
-            source_instance.authors.set(authors_instances)
-            source_instance.save()
-        return source_instance
+
+class SourceCreateSerializer(serializers.ModelSerializer):
+    authors = PrimaryKeyRelatedField(many=True, write_only=True, queryset=Entity.objects.all())
+
+    class Meta:
+        model = Source
+        fields = '__all__'
 
 
 class SourceLinkSerializer(serializers.ModelSerializer):
@@ -45,7 +45,16 @@ class TopicSerializer(serializers.ModelSerializer):
 
 class ClaimSerializer(serializers.ModelSerializer):
     topic = TopicSerializer(read_only=True)
-    source_of_claim = SourceSerializer()
+    source_of_claim = SourceSerializer(read_only=True)
+
+    class Meta:
+        model = Claim
+        fields = ['id', 'claim_text', 'description', 'topic', 'source_of_claim']
+
+
+class ClaimCreateSerializer(serializers.ModelSerializer):
+    topic = Topic.objects.first()
+    source_of_claim = SourceCreateSerializer()
 
     class Meta:
         model = Claim
@@ -53,12 +62,11 @@ class ClaimSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         source_data = validated_data.pop('source_of_claim')
-        source = SourceSerializer(data=source_data)
-        if source.is_valid():
-            source_instance = source.save()
-            claim_instance = Claim.objects.create(**validated_data, source_of_claim=source_instance)
-            claim_instance.save()
-            return claim_instance
+        authors = source_data.pop('authors')
+        source_instance = Source.objects.create(**source_data)
+        source_instance.authors.set(authors)
+        claim_instance = Claim.objects.create(**validated_data, source_of_claim=source_instance, topic=Topic.objects.first())
+        return claim_instance
 
 
 class EvidenceSerializer(serializers.ModelSerializer):
