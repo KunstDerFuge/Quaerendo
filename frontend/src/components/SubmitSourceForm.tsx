@@ -79,7 +79,8 @@ const SubmitSourceForm: React.FC<SubmitSourceFormProps> = (props) => {
   function handleClickNext() {
     props.setShowNextPage(true)
     props.setSource({
-      authors: sourceAuthors,
+      // @ts-ignore
+      authors: sourceAuthors.map((author) => author.id),
       url: sourceUrl,
       date_published: publishDateUnknown ? null : new Date(sourceDatePublished).toISOString(),
       title: sourceTitle,
