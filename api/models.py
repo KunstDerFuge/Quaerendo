@@ -4,6 +4,7 @@ from django.db import models
 
 class Entity(models.Model):
     name = models.CharField(max_length=100)
+    short_bio = models.CharField(max_length=80, blank=True)
     description = models.TextField(blank=True)
 
     def __str__(self):
