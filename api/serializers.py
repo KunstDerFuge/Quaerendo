@@ -65,6 +65,7 @@ class ClaimCreateSerializer(serializers.ModelSerializer):
         authors = source_data.pop('authors')
         source_instance = Source.objects.create(**source_data)
         source_instance.authors.set(authors)
+        # TODO: Remove this Topic.objects.first()
         claim_instance = Claim.objects.create(**validated_data, source_of_claim=source_instance, topic=Topic.objects.first())
         return claim_instance
 
