@@ -25,7 +25,7 @@ export interface ClaimWithEvidence {
 export interface Entity {
   id: number;
   name: string;
-  description?: string;
+  short_bio?: string;
 }
 
 export interface Evidence {
@@ -93,7 +93,7 @@ export interface PatchedClaimWithEvidence {
 export interface PatchedEntity {
   id?: number;
   name?: string;
-  description?: string;
+  short_bio?: string;
 }
 
 export interface PatchedEvidence {
