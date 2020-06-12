@@ -10,9 +10,9 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from api.models import Entity, Source, Claim, Evidence, EvidenceReview
+from api.models import Entity, Source, Claim, Evidence, EvidenceReview, Topic
 from api.serializers import EntitySerializer, SourceSerializer, ClaimSerializer, EvidenceSerializer, \
-    ClaimWithEvidenceSerializer, EvidenceReviewSerializer, EvidenceWithReviewSerializer
+    ClaimWithEvidenceSerializer, EvidenceReviewSerializer, EvidenceWithReviewSerializer, ClaimCreateSerializer
 
 
 @extend_schema(operation_id='api_article_info', methods=['GET'])
@@ -86,7 +86,7 @@ class SourcesList(generics.ListCreateAPIView):
     serializer_class = SourceSerializer
 
 
-@extend_schema(operation_id='api_source_detail', methods=['GET'])
+@extend_schema(operation_id='api_source_detail', methods=['GET', 'POST'])
 class SourceDetail(generics.RetrieveUpdateAPIView):
     """
     REST endpoints for viewing and modifying individual sources
@@ -102,8 +102,16 @@ class ClaimsList(generics.ListCreateAPIView):
     queryset = Claim.objects.all()
     serializer_class = ClaimSerializer
 
+    def post(self, request: Request, **kwargs):
+        serializer = ClaimCreateSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            print(serializer.errors)
+    
 
-@extend_schema(operation_id='api_claim_detail', methods=['GET'])
+@extend_schema(operation_id='api_claim_detail', methods=['GET', 'POST'])
 class ClaimDetail(generics.RetrieveUpdateAPIView):
     """
     REST endpoints for viewing and modifying individual claims
