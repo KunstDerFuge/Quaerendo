@@ -1,9 +1,10 @@
 import * as React from 'react'
 import { Entity } from '../openapi-types'
-import { Chip, Link, TextField, Theme, Typography } from '@material-ui/core'
+import { Chip, TextField, Theme, Typography } from '@material-ui/core'
 import { Autocomplete } from '@material-ui/lab'
-import { Mutate, useGet } from 'restful-react'
+import { useGet } from 'restful-react'
 import { makeStyles } from '@material-ui/styles'
+import ChooseOrCreateAuthorPopper from './ChooseOrCreateAuthorPopper'
 
 
 interface AuthorsSelectInputProps {
@@ -34,6 +35,20 @@ const AuthorsSelectInput: React.FC<AuthorsSelectInputProps> = (props) => {
       setAuthorOptions(data)
     }
   })
+
+  const handleDelete = (selectedName: string) => {
+    const nameIndex = props.unconfirmedAuthors.indexOf(selectedName)
+    if (nameIndex !== -1) {
+      // Deep copy array
+      let arrayCopy = JSON.parse(JSON.stringify(props.unconfirmedAuthors))
+      arrayCopy.splice(nameIndex, 1)
+      props.setUnconfirmedAuthors(arrayCopy)
+    }
+  }
+
+  const confirmAuthor = (author: Entity) => {
+    props.setConfirmedAuthors(props.confirmedAuthors.concat(author))
+  }
 
   return (
     <>
@@ -83,28 +98,10 @@ const AuthorsSelectInput: React.FC<AuthorsSelectInputProps> = (props) => {
             <Typography variant='caption' component='div'>
               {props.unconfirmedAuthors.length} authors unconfirmed
             </Typography>
-            <Typography variant='caption'>
-              Author '{props.unconfirmedAuthors[0]}' is not known. Double check the spelling, or&nbsp;
-              <Mutate verb='POST' path='/api/entities/'>
-                {
-                  mutate => (
-                    <Link onClick={() => mutate({
-                      name: props.unconfirmedAuthors[0]
-                    }).then((author: Entity) => {
-                      props.unconfirmedAuthors.length > 1 ?
-                        props.setUnconfirmedAuthors(props.unconfirmedAuthors.filter((authorName) => authorName !== author.name))
-                        :
-                        props.setUnconfirmedAuthors([])
-                      props.setConfirmedAuthors(props.confirmedAuthors.concat(author))
-                    })
-                    }>
-                      click here
-                    </Link>
-                  )
-                }
-              </Mutate>
-              &nbsp;to add a new entry for this author.
-            </Typography>
+            <ChooseOrCreateAuthorPopper unconfirmedAuthors={props.unconfirmedAuthors}
+                                        setUnconfirmedAuthors={props.setUnconfirmedAuthors}
+                                        confirmAuthor={confirmAuthor}
+                                        handleDelete={handleDelete} />
           </>
           :
           ''
