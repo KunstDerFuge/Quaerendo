@@ -1,11 +1,11 @@
 import * as React from 'react'
 import { makeStyles } from '@material-ui/styles'
-import { AppBar, Grid, Paper, Theme, Toolbar, Typography } from '@material-ui/core'
+import { Grid, Theme } from '@material-ui/core'
 
 const useStyles = makeStyles((theme: Theme) => ({
   footer: {
     textAlign: 'center',
-    marginTop: 120,
+    marginTop: 45,
     backgroundColor: theme.palette.primary.main,
     color: '#fff',
     fontFamily: 'garamond-premier-pro',
