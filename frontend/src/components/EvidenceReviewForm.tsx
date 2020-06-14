@@ -123,7 +123,7 @@ const EvidenceReviewForm: React.FC<EvidenceReviewFormProps> = (props) => {
                     <MenuItem value='placeholder' disabled><em>(Choose one...)</em></MenuItem>
                     <MenuItem value='trustworthy'><strong>factual</strong>.</MenuItem>
                     <MenuItem value='untrustworthy'><strong>not factual</strong>,&nbsp;
-                      <strong>dishonest</strong>,&nbsp;or an&nbsp;<strong>invalid source</strong>.</MenuItem>
+                      <strong>misleading</strong>,&nbsp;or an&nbsp;<strong>invalid source</strong>.</MenuItem>
                   </Select>
                 </Typography>
               </CardFormField>
