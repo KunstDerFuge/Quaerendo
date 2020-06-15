@@ -14,13 +14,13 @@ interface EvidenceRelationshipChipProps {
 function getColorFromRelationship(relationship: EvidenceRelationship | 'UNDER REVIEW') {
   switch (relationship) {
     case 'PROVES':
-      return '#00f'
+      return '#006'
     case 'SUPPORTS':
-      return '#070'
+      return '#060'
     case 'DISPUTES':
-      return '#611'
+      return '#4b3100'
     case 'DISPROVES':
-      return '#800'
+      return '#600'
     case 'INCONCLUSIVE':
       return '#000'
     case 'UNRELATED':

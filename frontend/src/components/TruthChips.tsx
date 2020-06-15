@@ -8,23 +8,25 @@ import DoneRoundedIcon from '@material-ui/icons/DoneRounded'
 interface TruthChipsProps {
   community_consensus: TruthJudgement
   expert_consensus: TruthJudgement
+  size?: 'medium' | 'small'
 }
 
 interface TruthChipProps {
   consensus: TruthJudgement
   expert: boolean
+  size?: 'medium' | 'small'
 }
 
 function getColorFromConsensus(consensus: TruthJudgement) {
   switch (consensus) {
     case 'TRUE':
-      return '#00f'
+      return '#006'
     case 'LIKELY_TRUE':
-      return '#070'
+      return '#060'
     case 'LIKELY_FALSE':
-      return '#611'
+      return '#4b3100'
     case 'FALSE':
-      return '#800'
+      return '#600'
     case 'SPLIT':
       return '#333'
   }
@@ -34,6 +36,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   chip: (props: TruthChipProps) => ({
     marginRight: theme.spacing(1),
     backgroundColor: getColorFromConsensus(props.consensus),
+    fontSize: props.size === 'medium' ? '1em' : undefined,
     color: '#fff',
     textTransform: 'capitalize'
   }),
@@ -77,7 +80,7 @@ const TruthChip: React.FC<TruthChipProps> = (props) => {
         label={consensus}
         aria-label={summary}
         icon={icon}
-        size='small'
+        size={props.size ? props.size : 'small'}
       />
     </Tooltip>
   )
@@ -96,11 +99,11 @@ const TruthChips: React.FC<TruthChipsProps> = (props) => {
       {
         hasTwoChips ?
           <span>
-            <TruthChip consensus={props.expert_consensus} expert={true} />
-            <TruthChip consensus={props.community_consensus} expert={false} />
+            <TruthChip consensus={props.expert_consensus} expert={true} size={props.size} />
+            <TruthChip consensus={props.community_consensus} expert={false} size={props.size} />
           </span>
           :
-          <TruthChip consensus={singleChipRelation} expert={useSingleExpertIcon} />
+          <TruthChip consensus={singleChipRelation} expert={useSingleExpertIcon} size={props.size} />
       }
     </>
   )

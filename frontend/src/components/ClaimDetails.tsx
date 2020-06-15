@@ -106,6 +106,16 @@ const ClaimDetails: React.FC<ClaimDetailsProps> = (props) => {
               </Typography>
             </Grid>
             <Grid item>
+              {
+                loading ?
+                  <Skeleton />
+                  :
+                  <TruthChips community_consensus={claim!.community_truth_consensus}
+                              expert_consensus={claim!.expert_truth_consensus}
+                              size='medium' />
+              }
+            </Grid>
+            <Grid item>
               <Typography variant='body1'>
                 {
                   loading ?
@@ -118,15 +128,7 @@ const ClaimDetails: React.FC<ClaimDetailsProps> = (props) => {
                 }
               </Typography>
             </Grid>
-            <Grid item>
-              {
-                loading ?
-                  <Skeleton />
-                  :
-                  <TruthChips community_consensus={claim!.community_truth_consensus}
-                              expert_consensus={claim!.expert_truth_consensus} />
-              }
-            </Grid>
+
           </Grid>
         </CardContent>
       </Card>
