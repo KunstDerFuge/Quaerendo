@@ -10,20 +10,19 @@ import {
   ExpansionPanelDetails,
   ExpansionPanelSummary,
   Fab,
-  Grid, Link,
+  Grid,
   Theme,
   Typography
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import AuthorsLinksList from './AuthorsLinksList'
-import SourceLink from './SourceLink'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import NoteAddRoundedIcon from '@material-ui/icons/NoteAddRounded'
-import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded'
 import EvidencePreviewCard from './EvidencePreviewCard'
 import { Skeleton } from '@material-ui/lab'
 import SourceInfo from './SourceInfo'
 import { useHistory } from 'react-router'
+import TruthChips from './TruthChips'
 
 interface ClaimDetailsProps {
   id: number
@@ -118,6 +117,15 @@ const ClaimDetails: React.FC<ClaimDetailsProps> = (props) => {
                       'No description has been provided for this claim.'
                 }
               </Typography>
+            </Grid>
+            <Grid item>
+              {
+                loading ?
+                  <Skeleton />
+                  :
+                  <TruthChips community_consensus={claim!.community_truth_consensus}
+                              expert_consensus={claim!.expert_truth_consensus} />
+              }
             </Grid>
           </Grid>
         </CardContent>
