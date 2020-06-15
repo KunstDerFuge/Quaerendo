@@ -1132,6 +1132,8 @@ components:
     Claim:
       required:
       - claim_text
+      - community_truth_consensus
+      - expert_truth_consensus
       - id
       - source_of_claim
       - topic
@@ -1153,9 +1155,19 @@ components:
           readOnly: true
           allOf:
           - $ref: '#/components/schemas/Source'
+        expert_truth_consensus:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/TruthJudgement'
+        community_truth_consensus:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/TruthJudgement'
     ClaimWithEvidence:
       required:
       - claim_text
+      - community_truth_consensus
+      - expert_truth_consensus
       - id
       - related_evidence
       - source_of_claim
@@ -1183,6 +1195,14 @@ components:
           readOnly: true
           items:
             $ref: '#/components/schemas/Evidence'
+        expert_truth_consensus:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/TruthJudgement'
+        community_truth_consensus:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/TruthJudgement'
     Entity:
       required:
       - id
@@ -1348,6 +1368,14 @@ components:
           readOnly: true
           items:
             $ref: '#/components/schemas/Evidence'
+        expert_truth_consensus:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/TruthJudgement'
+        community_truth_consensus:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/TruthJudgement'
     PatchedEntity:
       type: object
       properties:
@@ -1425,10 +1453,6 @@ components:
           type: string
           format: date-time
           nullable: true
-        source_degree:
-          nullable: true
-          allOf:
-          - $ref: '#/components/schemas/SourceDegree'
     PatchedUserDetails:
       type: object
       properties:
@@ -1540,10 +1564,6 @@ components:
           type: string
           format: date-time
           nullable: true
-        source_degree:
-          nullable: true
-          allOf:
-          - $ref: '#/components/schemas/SourceDegree'
     SourceDegree:
       type: string
       enum:
@@ -1559,6 +1579,14 @@ components:
         name:
           maxLength: 100
           type: string
+    TruthJudgement:
+      type: string
+      enum:
+      - "TRUE"
+      - LIKELY_TRUE
+      - SPLIT
+      - LIKELY_FALSE
+      - "FALSE"
     TwitterConnect:
       required:
       - access_token
