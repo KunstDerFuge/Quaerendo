@@ -57,7 +57,7 @@ const AuthorsSelectInput: React.FC<AuthorsSelectInputProps> = (props) => {
         id='authors'
         filterOptions={options => options}
         options={authorOptions}
-        getOptionLabel={(option: Entity) => option.name}
+        getOptionLabel={(option: Entity) => option.name + (option.short_bio ? ' - ' + option.short_bio : '')}
         // @ts-ignore (newValues can be string[] or string)
         value={props.confirmedAuthors}
         onChange={(e, newValues, reason) => {
