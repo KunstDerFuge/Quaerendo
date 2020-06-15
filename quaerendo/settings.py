@@ -11,10 +11,10 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+
 from decouple import config, Csv
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-from django.conf.global_settings import EMAIL_BACKEND
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -80,7 +80,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 SPECTACULAR_SETTINGS = {
     'ENUM_NAME_OVERRIDES': {
         'EvidenceRelationship': 'api.models.EvidenceRelationship',
-        'SourceDegree': 'api.models.SourceDegree'
+        'SourceDegree': 'api.models.SourceDegree',
+        'TruthJudgement': 'api.models.TruthJudgement'
     },
     'TITLE': 'Quaerendo API',
     'VERSION': '1.0.0'

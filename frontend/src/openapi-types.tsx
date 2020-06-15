@@ -11,6 +11,8 @@ export interface Claim {
   description?: string;
   topic: Topic;
   source_of_claim: Source;
+  expert_truth_consensus: TruthJudgement;
+  community_truth_consensus: TruthJudgement;
 }
 
 export interface ClaimWithEvidence {
@@ -20,6 +22,8 @@ export interface ClaimWithEvidence {
   topic: Topic;
   source_of_claim: Source;
   related_evidence: Evidence[];
+  expert_truth_consensus: TruthJudgement;
+  community_truth_consensus: TruthJudgement;
 }
 
 export interface Entity {
@@ -88,6 +92,8 @@ export interface PatchedClaimWithEvidence {
   topic?: Topic;
   source_of_claim?: Source;
   related_evidence?: Evidence[];
+  expert_truth_consensus?: TruthJudgement;
+  community_truth_consensus?: TruthJudgement;
 }
 
 export interface PatchedEntity {
@@ -121,7 +127,6 @@ export interface PatchedSource {
   summary?: string;
   date_retrieved?: string;
   date_published?: string | null;
-  source_degree?: SourceDegree | null;
 }
 
 /**
@@ -172,7 +177,6 @@ export interface Source {
   summary?: string;
   date_retrieved: string;
   date_published?: string | null;
-  source_degree?: SourceDegree | null;
 }
 
 export type SourceDegree = "ORIGINAL" | "PRIMARY" | "SECONDARY" | "TERTIARY";
@@ -180,6 +184,8 @@ export type SourceDegree = "ORIGINAL" | "PRIMARY" | "SECONDARY" | "TERTIARY";
 export interface Topic {
   name: string;
 }
+
+export type TruthJudgement = "TRUE" | "LIKELY_TRUE" | "SPLIT" | "LIKELY_FALSE" | "FALSE";
 
 export interface TwitterConnect {
   access_token: string;

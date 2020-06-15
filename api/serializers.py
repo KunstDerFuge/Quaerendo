@@ -52,11 +52,11 @@ class ClaimSerializer(serializers.ModelSerializer):
         fields = ['id', 'claim_text', 'description', 'topic', 'source_of_claim', 'expert_truth_consensus',
                   'community_truth_consensus']
 
-    @extend_schema_field(TruthJudgement or None)
+    @extend_schema_field(serializers.ChoiceField(choices=TruthJudgement.choices) or None)
     def get_expert_truth_consensus(self, obj: Claim) -> TruthJudgement or None:
         return obj.get_truth_consensus(expert=True)
 
-    @extend_schema_field(TruthJudgement or None)
+    @extend_schema_field(serializers.ChoiceField(choices=TruthJudgement.choices) or None)
     def get_community_truth_consensus(self, obj: Claim) -> TruthJudgement or None:
         return obj.get_truth_consensus(expert=False)
 
@@ -161,10 +161,10 @@ class ClaimWithEvidenceSerializer(serializers.ModelSerializer):
         fields = ['id', 'claim_text', 'description', 'topic', 'source_of_claim', 'related_evidence',
                   'expert_truth_consensus', 'community_truth_consensus']
 
-    @extend_schema_field(TruthJudgement or None)
+    @extend_schema_field(serializers.ChoiceField(choices=TruthJudgement.choices) or None)
     def get_expert_truth_consensus(self, obj: Claim) -> TruthJudgement or None:
         return obj.get_truth_consensus(expert=True)
 
-    @extend_schema_field(TruthJudgement or None)
+    @extend_schema_field(serializers.ChoiceField(choices=TruthJudgement.choices) or None)
     def get_community_truth_consensus(self, obj: Claim) -> TruthJudgement or None:
         return obj.get_truth_consensus(expert=False)
