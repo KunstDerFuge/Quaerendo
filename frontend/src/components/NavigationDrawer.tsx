@@ -13,7 +13,8 @@ const useStyles = makeStyles(theme => ({
     flexShrink: 0
   },
   drawerPaper: {
-    width: 240
+    width: 240,
+    justifyContent: 'space-between'
   },
   extendedIcon: {
     marginRight: theme.spacing(1)
@@ -21,6 +22,10 @@ const useStyles = makeStyles(theme => ({
   submitClaimFab: {
     marginLeft: 'auto',
     marginRight: 'auto'
+  },
+  mainNavigationContent: {
+    display: 'flex',
+    flexDirection: 'column'
   }
 }))
 
@@ -37,29 +42,32 @@ const NavigationDrawer: React.FC<{}> = () => {
       }}
       anchor="left"
     >
-      <QuaerendoLogo />
-      <Divider />
-      <List>
-        <ListItem button onClick={() => history.push('/')}>
-          <ListItemIcon>
-            <CommentRoundedIcon color='primary' />
-          </ListItemIcon>
-          <ListItemText primary='Popular Claims' />
-        </ListItem>
-        <ListItem button onClick={() => history.push('/review')}>
-          <ListItemIcon>
-            <RateReviewRoundedIcon color='primary' />
-          </ListItemIcon>
-          <ListItemText primary='Review' />
-        </ListItem>
-        <ListItem>
-          <Fab size='medium' variant="extended" color="secondary" aria-label="add" className={classes.submitClaimFab}
-               onClick={() => history.push('/submit/claim')}>
-            <AddCommentRoundedIcon className={classes.extendedIcon} />
-            Submit Claim
-          </Fab>
-        </ListItem>
-      </List>
+      <div className={classes.mainNavigationContent}>
+        <QuaerendoLogo />
+        <Divider />
+        <List>
+          <ListItem button onClick={() => history.push('/')}>
+            <ListItemIcon>
+              <CommentRoundedIcon color='primary' />
+            </ListItemIcon>
+            <ListItemText primary='Popular Claims' />
+          </ListItem>
+          <ListItem button onClick={() => history.push('/review')}>
+            <ListItemIcon>
+              <RateReviewRoundedIcon color='primary' />
+            </ListItemIcon>
+            <ListItemText primary='Review' />
+          </ListItem>
+          <ListItem>
+            <Fab size='medium' variant="extended" color="secondary" aria-label="add" className={classes.submitClaimFab}
+                 onClick={() => history.push('/submit/claim')}>
+              <AddCommentRoundedIcon className={classes.extendedIcon} />
+              Submit Claim
+            </Fab>
+          </ListItem>
+        </List>
+      </div>
+      <AvatarPanel />
     </Drawer>
   )
 }

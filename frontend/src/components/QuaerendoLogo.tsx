@@ -5,7 +5,10 @@ import { makeStyles } from '@material-ui/core/styles'
 const useStyles = makeStyles(theme => ({
   logo: {
     alignSelf: 'center',
-    margin: '3px'
+    margin: '3px',
+    display: 'flex',
+    fontVariantLigatures: 'contextual',
+    WebkitFontVariantLigatures: 'contextual'
   }
 }))
 
