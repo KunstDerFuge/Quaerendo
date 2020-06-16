@@ -64,7 +64,7 @@ const TruthChip: React.FC<TruthChipProps> = (props) => {
       summary += 'have deemed that this claim is likely true.'
       break
     case 'SPLIT':
-      summary += 'are split on the truthfulness of this claim'
+      summary += 'are split on the truthfulness of this claim.'
       break
     case 'LIKELY_FALSE':
       summary += 'have deemed that this claim is likely false.'
