@@ -94,7 +94,7 @@ const AvatarPanel: React.FC<{}> = () => {
   })
 
   useEffect(() => {
-    refetchUser().then((res) => console.log('Refetched User object, ' + res))
+    authToken && refetchUser().then((res) => console.log('Refetched User object, ' + res))
   }, [authToken])
 
   const login = (event: FormEvent) => {
