@@ -42,8 +42,8 @@ function App() {
   const existingToken = localStorage.getItem('token')
   const [authToken, setAuthToken] = React.useState(existingToken)
 
-  const setToken = (token: string) => {
-    localStorage.setItem('token', token)
+  const setToken = (token: string | null) => {
+    token ? localStorage.setItem('token', token) : localStorage.removeItem('token')
     setAuthToken(token)
     console.log(token)
   }
