@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { FormEvent } from 'react'
+import { FormEvent, useEffect } from 'react'
 import {
   Avatar,
   Button,
@@ -93,15 +93,20 @@ const AvatarPanel: React.FC<{}> = () => {
     path: '/rest-auth/login/'
   })
 
+  useEffect(() => {
+    refetchUser().then((res) => console.log('Refetched User object, ' + res))
+  }, [authToken])
+
   const login = (event: FormEvent) => {
     event.preventDefault()
     postLogin({
       username: loginUsername,
       password: loginPassword
     }).then((response) => {
-      console.log(response)
+      console.log('Received login response, key: ' + response.key)
       setAuthToken(response.key)
-      refetchUser().then((res) => console.log('Refetched User object, ' + res))
+      setLoginPassword('')
+      setLoginUsername('')
     }).catch((error) => {
       console.log(error)
       error.data && setFormErrors(error.data)
