@@ -105,7 +105,7 @@ class ClaimsList(generics.ListCreateAPIView):
     def post(self, request: Request, **kwargs):
         serializer = ClaimCreateSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(user=request.user)
             return Response(serializer.data)
         else:
             print(serializer.errors)
