@@ -65,7 +65,7 @@ const LoginPage: React.FC<{}> = () => {
     </CardActions>
   )
 
-  if (authToken) {
+  if (!!authToken) {
     return (
       <Redirect to='/' />
     )

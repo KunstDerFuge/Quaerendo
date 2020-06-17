@@ -6,14 +6,15 @@ import RateReviewRoundedIcon from '@material-ui/icons/RateReviewRounded'
 import { useHistory } from 'react-router-dom'
 import AddCommentRoundedIcon from '@material-ui/icons/AddCommentRounded'
 import { makeStyles } from '@material-ui/core/styles'
+import AvatarPanel from './AvatarPanel'
 
 const useStyles = makeStyles(theme => ({
   drawer: {
-    width: 240,
+    width: 260,
     flexShrink: 0
   },
   drawerPaper: {
-    width: 240,
+    width: 260,
     justifyContent: 'space-between'
   },
   extendedIcon: {
