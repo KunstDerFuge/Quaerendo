@@ -45,7 +45,7 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center'
   },
   nameContainer: {
-    margin: theme.spacing(1)
+    marginLeft: theme.spacing(1)
   },
   popper: {
     zIndex: 1250
