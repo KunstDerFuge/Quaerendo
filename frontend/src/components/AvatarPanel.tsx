@@ -23,7 +23,6 @@ import { useAuth } from './auth'
 import { useGet, useMutate } from 'restful-react'
 import { UserDetails } from '../openapi-types'
 import CardFormField from './CardFormField'
-import CardPage from './CardPage'
 
 interface LoginFormErrors {
   username?: string
@@ -142,7 +141,7 @@ const AvatarPanel: React.FC<{}> = () => {
                                  helperText={formErrors['username']} />
                     </CardFormField>
                     <CardFormField fieldName='Password' required={true}>
-                      <TextField fullWidth size='small' label='Password' variant="outlined" value={loginPassword}
+                      <TextField fullWidth size='small' label='Password' variant='outlined' value={loginPassword}
                                  type='password' onChange={e => setLoginPassword(e.target.value)}
                                  error={formErrors.hasOwnProperty('password')} helperText={formErrors['password']} />
                     </CardFormField>
