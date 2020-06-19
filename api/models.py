@@ -147,6 +147,12 @@ class Evidence(models.Model):
         return reviews.count()
 
 
+class ReviewInvitation(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='review_invitations')
+    evidence = models.ForeignKey(Evidence, on_delete=models.CASCADE, related_name='review_invitations')
+    expiration_date = models.DateTimeField()
+
+
 class EvidenceReview(models.Model):
     evidence = models.ForeignKey(Evidence, on_delete=models.CASCADE, related_name='reviews')
     reviewer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='evidence_reviews')
