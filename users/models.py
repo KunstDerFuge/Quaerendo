@@ -15,6 +15,8 @@ class User(AbstractUser):
         :param n: Number of random User objects requested.
         :return: RawQuerySet of <= N random User objects.
         """
+        # Source of this recursive random query:
+        # https://www.postgresql.org/message-id/CAL_0b1v-wu0NCuo96B_6BSBrRgWQS%2BYw3Ry5mUEAVtVVtuKx-w%40mail.gmail.com
         random_users = User.objects.raw(
             '''WITH RECURSIVE r AS (
                 WITH b AS (SELECT min(id), max(id) FROM users_user)

@@ -119,8 +119,6 @@ class Evidence(models.Model):
             # Randomly select some users to invite to review this evidence.
             # TODO: Literally any logic that's better than this random selection
             from users.models import User
-            # Source of this recursive random query:
-            # https://www.postgresql.org/message-id/CAL_0b1v-wu0NCuo96B_6BSBrRgWQS%2BYw3Ry5mUEAVtVVtuKx-w%40mail.gmail.com
             invite_users = set(User.get_n_random_users(10))
             seven_days_from_now = datetime.utcnow() + timedelta(days=7)
             users_who_have_already_reviewed = [review.reviewer for review in self.reviews.all()]
