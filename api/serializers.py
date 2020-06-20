@@ -2,7 +2,8 @@ from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 from rest_framework.relations import PrimaryKeyRelatedField
 
-from api.models import Entity, Source, Claim, Evidence, EvidenceReview, Topic, EvidenceRelationship, TruthJudgement
+from api.models import Entity, Source, Claim, Evidence, EvidenceReview, Topic, EvidenceRelationship, TruthJudgement, \
+    ReviewInvitation
 
 
 class EntitySerializer(serializers.ModelSerializer):
@@ -168,3 +169,11 @@ class ClaimWithEvidenceSerializer(serializers.ModelSerializer):
     @extend_schema_field(serializers.ChoiceField(choices=TruthJudgement.choices) or None)
     def get_community_truth_consensus(self, obj: Claim) -> TruthJudgement or None:
         return obj.get_truth_consensus(expert=False)
+
+
+class ReviewInvitationSerializer(serializers.ModelSerializer):
+    evidence = serializers.PrimaryKeyRelatedField(queryset=Evidence.objects.all())
+
+    class Meta:
+        model = ReviewInvitation
+        fields = '__all__'

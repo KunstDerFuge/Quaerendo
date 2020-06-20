@@ -1,18 +1,32 @@
 from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
 from allauth.socialaccount.providers.twitter.views import TwitterOAuthAdapter
+from django.contrib.auth.decorators import login_required
 from django.contrib.postgres.search import TrigramSimilarity
 from drf_spectacular.utils import extend_schema
 from newspaper import Article
 from rest_auth.registration.views import SocialConnectView
 from rest_auth.social_serializers import TwitterConnectSerializer
 from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from api.models import Entity, Source, Claim, Evidence, EvidenceReview, Topic
 from api.serializers import EntitySerializer, SourceSerializer, ClaimSerializer, EvidenceSerializer, \
-    ClaimWithEvidenceSerializer, EvidenceReviewSerializer, EvidenceWithReviewSerializer, ClaimCreateSerializer
+    ClaimWithEvidenceSerializer, EvidenceReviewSerializer, EvidenceWithReviewSerializer, ClaimCreateSerializer, \
+    ReviewInvitationSerializer
+
+
+@extend_schema(operation_id='api_review_invitations', methods=['GET'])
+class ReviewInvitations(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request: Request):
+        user = request.user
+        if user.is_authenticated:
+            invitations = user.review_invitations.all()
+            return Response(ReviewInvitationSerializer(invitations, many=True))
 
 
 @extend_schema(operation_id='api_article_info', methods=['GET'])
