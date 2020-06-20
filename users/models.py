@@ -11,7 +11,7 @@ class User(AbstractUser):
     @classmethod
     def get_n_random_users(cls, n: int):
         """
-        Get RawQuerySet of up to N random Users.
+        Get RawQuerySet of up to N random Users. May contain duplicates.
         :param n: Number of random User objects requested.
         :return: RawQuerySet of <= N random User objects.
         """
