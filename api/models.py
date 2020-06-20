@@ -142,7 +142,7 @@ class Evidence(models.Model):
                 SELECT t.id FROM users_user AS t, r WHERE r.id = t.id;
                 ''')
             invite_users = set(invite_users)
-            seven_days_from_now = datetime.now() + timedelta(days=7)
+            seven_days_from_now = datetime.utcnow() + timedelta(days=7)
             users_who_have_already_reviewed = [review.reviewer for review in self.reviews.all()]
             # Save this evidence  so that we can create ReviewInvitations with this instance
             super().save(*args, **kwargs)
