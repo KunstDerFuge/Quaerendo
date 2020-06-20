@@ -1,4 +1,5 @@
 import math
+from datetime import datetime, timedelta
 
 from django.conf import settings
 from django.db import models
@@ -112,6 +113,44 @@ class Evidence(models.Model):
 
     def __str__(self):
         return 'Evidence {} | {}'.format(str(self.claim), str(self.source_of_evidence))
+
+    def save(self, *args, **kwargs):
+        if not self.pk:  # If this object is being created, not updated:
+            # Randomly select some users to invite to review this evidence.
+            # TODO: Literally any logic that's better than this random selection
+            from users.models import User
+            # Source of this recursive random query:
+            # https://www.postgresql.org/message-id/CAL_0b1v-wu0NCuo96B_6BSBrRgWQS%2BYw3Ry5mUEAVtVVtuKx-w%40mail.gmail.com
+            invite_users = User.objects.raw(
+                '''WITH RECURSIVE r AS (
+                    WITH b AS (SELECT min(id), max(id) FROM users_user)
+                    (
+                        SELECT id, min, max, array[]::integer[] AS a, 0 AS n
+                        FROM users_user, b
+                        WHERE id > min + (max - min) * random()
+                        LIMIT 1
+                    ) UNION ALL (
+                        SELECT t.id, min, max, a || t.id, r.n + 1 AS n
+                        FROM users_user AS t, r
+                        WHERE
+                            t.id > min + (max - min) * random() AND
+                            t.id <> all(a) AND
+                            r.n + 1 < 10
+                        LIMIT 1
+                    )
+                )
+                SELECT t.id FROM users_user AS t, r WHERE r.id = t.id;
+                ''')
+            invite_users = set(invite_users)
+            seven_days_from_now = datetime.now() + timedelta(days=7)
+            users_who_have_already_reviewed = [review.reviewer for review in self.reviews.all()]
+            for user in invite_users:
+                if self.submitted_by == user or user in users_who_have_already_reviewed:
+                    continue
+                invitation = ReviewInvitation(evidence=self, user=user, expiration_date=seven_days_from_now)
+                invitation.save()
+
+        super().save(*args, **kwargs)
 
     def get_consensus(self, expert: bool) -> EvidenceRelationship or None:
         if self.claim.topic is None:
