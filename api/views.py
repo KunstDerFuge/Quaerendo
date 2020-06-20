@@ -123,6 +123,18 @@ class ClaimsList(generics.ListCreateAPIView):
             return Response(serializer.data)
         else:
             print(serializer.errors)
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            queryset = self.get_queryset()
+            serializer = ClaimSerializer(queryset, many=True)
+            return Response(serializer.data)
+        else:
+            # Filter out claims for which the user is invited to review evidence
+            invited_to_review_evidence = [invitation.evidence for invitation in request.user.review_invitations.all()]
+            queryset = Claim.objects.exclude(related_evidence__in=invited_to_review_evidence)
+            serializer = ClaimSerializer(queryset, many=True)
+            return Response(serializer.data)
     
 
 @extend_schema(operation_id='api_claim_detail', methods=['GET', 'POST'])
@@ -132,6 +144,19 @@ class ClaimDetail(generics.RetrieveUpdateAPIView):
     """
     queryset = Claim.objects.all()
     serializer_class = ClaimWithEvidenceSerializer
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            queryset = self.get_queryset()
+            serializer = ClaimWithEvidenceSerializer(queryset, many=True)
+            return Response(serializer.data)
+        else:
+            # Filter out claims for which the user is invited to review evidence
+            invited_to_review_evidence = [invitation.evidence for invitation in request.user.review_invitations.all()]
+            queryset = Claim.objects.exclude(related_evidence__in=invited_to_review_evidence)
+            object = queryset.get(id=kwargs.get('pk'))
+            serializer = ClaimWithEvidenceSerializer(object)
+            return Response(serializer.data)
 
 
 class EvidenceList(generics.ListCreateAPIView):
