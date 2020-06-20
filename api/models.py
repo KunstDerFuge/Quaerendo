@@ -1,6 +1,7 @@
 import math
 from datetime import datetime, timedelta
 
+import pytz
 from django.conf import settings
 from django.db import models
 
@@ -120,7 +121,7 @@ class Evidence(models.Model):
             # TODO: Literally any logic that's better than this random selection
             from users.models import User
             invite_users = set(User.get_n_random_users(10))
-            seven_days_from_now = datetime.utcnow() + timedelta(days=7)
+            seven_days_from_now = datetime.now(pytz.utc) + timedelta(days=7)
             users_who_have_already_reviewed = [review.reviewer for review in self.reviews.all()]
             # Save this evidence  so that we can create ReviewInvitations with this instance
             super().save(*args, **kwargs)
