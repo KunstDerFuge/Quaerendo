@@ -121,27 +121,7 @@ class Evidence(models.Model):
             from users.models import User
             # Source of this recursive random query:
             # https://www.postgresql.org/message-id/CAL_0b1v-wu0NCuo96B_6BSBrRgWQS%2BYw3Ry5mUEAVtVVtuKx-w%40mail.gmail.com
-            invite_users = User.objects.raw(
-                '''WITH RECURSIVE r AS (
-                    WITH b AS (SELECT min(id), max(id) FROM users_user)
-                    (
-                        SELECT id, min, max, array[]::integer[] AS a, 0 AS n
-                        FROM users_user, b
-                        WHERE id > min + (max - min) * random()
-                        LIMIT 1
-                    ) UNION ALL (
-                        SELECT t.id, min, max, a || t.id, r.n + 1 AS n
-                        FROM users_user AS t, r
-                        WHERE
-                            t.id > min + (max - min) * random() AND
-                            t.id <> all(a) AND
-                            r.n + 1 < 10
-                        LIMIT 1
-                    )
-                )
-                SELECT t.id FROM users_user AS t, r WHERE r.id = t.id;
-                ''')
-            invite_users = set(invite_users)
+            invite_users = set(User.get_n_random_users(10))
             seven_days_from_now = datetime.utcnow() + timedelta(days=7)
             users_who_have_already_reviewed = [review.reviewer for review in self.reviews.all()]
             # Save this evidence  so that we can create ReviewInvitations with this instance
