@@ -144,13 +144,16 @@ class Evidence(models.Model):
             invite_users = set(invite_users)
             seven_days_from_now = datetime.now() + timedelta(days=7)
             users_who_have_already_reviewed = [review.reviewer for review in self.reviews.all()]
+            # Save this evidence  so that we can create ReviewInvitations with this instance
+            super().save(*args, **kwargs)
             for user in invite_users:
                 if self.submitted_by == user or user in users_who_have_already_reviewed:
                     continue
                 invitation = ReviewInvitation(evidence=self, user=user, expiration_date=seven_days_from_now)
                 invitation.save()
 
-        super().save(*args, **kwargs)
+        else:
+            super().save(*args, **kwargs)
 
     def get_consensus(self, expert: bool) -> EvidenceRelationship or None:
         if self.claim.topic is None:
