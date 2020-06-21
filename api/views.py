@@ -1,6 +1,5 @@
 from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
 from allauth.socialaccount.providers.twitter.views import TwitterOAuthAdapter
-from django.contrib.auth.decorators import login_required
 from django.contrib.postgres.search import TrigramSimilarity
 from drf_spectacular.utils import extend_schema
 from newspaper import Article
@@ -12,13 +11,13 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from api.models import Entity, Source, Claim, Evidence, EvidenceReview, Topic
+from api.models import Entity, Source, Claim, Evidence, EvidenceReview
 from api.serializers import EntitySerializer, SourceSerializer, ClaimSerializer, EvidenceSerializer, \
     ClaimWithEvidenceSerializer, EvidenceReviewSerializer, EvidenceWithReviewSerializer, ClaimCreateSerializer, \
     ReviewInvitationSerializer
 
 
-@extend_schema(operation_id='api_review_invitations', methods=['GET'])
+@extend_schema(operation_id='api_review_invitations', methods=['GET'], responses=ReviewInvitationSerializer(many=True))
 class ReviewInvitations(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -49,7 +48,7 @@ class ArticleInfo(APIView):
         })
 
 
-@extend_schema(operation_id='api_author_info', methods=['GET'], responses=EntitySerializer)
+@extend_schema(operation_id='api_author_info', methods=['GET'], responses=EntitySerializer(many=True))
 class AuthorMatch(APIView):
     """
     Takes a partial author name and returns a list of possibly matching entities
@@ -135,7 +134,7 @@ class ClaimsList(generics.ListCreateAPIView):
             queryset = Claim.objects.exclude(related_evidence__in=invited_to_review_evidence)
             serializer = ClaimSerializer(queryset, many=True)
             return Response(serializer.data)
-    
+
 
 @extend_schema(operation_id='api_claim_detail', methods=['GET', 'POST'])
 class ClaimDetail(generics.RetrieveUpdateAPIView):
