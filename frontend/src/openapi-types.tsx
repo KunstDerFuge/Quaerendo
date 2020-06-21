@@ -15,6 +15,14 @@ export interface Claim {
   community_truth_consensus: TruthJudgement;
 }
 
+export interface ClaimForReview {
+  id: number;
+  claim_text: string;
+  description?: string;
+  topic: Topic;
+  source_of_claim: Source;
+}
+
 export interface ClaimWithEvidence {
   id: number;
   claim_text: string;
@@ -40,6 +48,12 @@ export interface Evidence {
   num_expert_reviews: number;
   community_consensus_relationship: EvidenceRelationship;
   num_community_reviews: number;
+}
+
+export interface EvidenceAndClaimForReview {
+  source_of_evidence: Source;
+  description?: string;
+  claim: ClaimForReview;
 }
 
 export type EvidenceRelationship = "PROVES" | "SUPPORTS" | "UNRELATED" | "INCONCLUSIVE" | "DISPUTES" | "DISPROVES" | "SPLIT";
@@ -154,6 +168,13 @@ export interface Register {
 export interface ReviewInvitation {
   id: number;
   evidence: number;
+  expiration_date: string;
+  user: number;
+}
+
+export interface ReviewInvitationDetails {
+  id: number;
+  evidence: EvidenceAndClaimForReview;
   expiration_date: string;
   user: number;
 }
@@ -620,6 +641,34 @@ export const ApiReviewInvitations = (props: ApiReviewInvitationsProps) => (
 export type UseApiReviewInvitationsProps = Omit<UseGetProps<ReviewInvitation[], void>, "path">;
 
 export const useApiReviewInvitations = (props: UseApiReviewInvitationsProps) => useGet<ReviewInvitation[], unknown, void>(`/api/review/invitations/`, props);
+
+
+export type ApiReviewInvitationsDetailsProps = Omit<GetProps<ReviewInvitationDetails[], unknown, void>, "path">;
+
+export const ApiReviewInvitationsDetails = (props: ApiReviewInvitationsDetailsProps) => (
+  <Get<ReviewInvitationDetails[], unknown, void>
+    path={`/api/review/invitations/details/`}
+    {...props}
+  />
+);
+
+export type UseApiReviewInvitationsDetailsProps = Omit<UseGetProps<ReviewInvitationDetails[], void>, "path">;
+
+export const useApiReviewInvitationsDetails = (props: UseApiReviewInvitationsDetailsProps) => useGet<ReviewInvitationDetails[], unknown, void>(`/api/review/invitations/details/`, props);
+
+
+export type ApiReviewInvitationsDetailsSingleProps = Omit<GetProps<ReviewInvitationDetails, unknown, void>, "path"> & {id: string};
+
+export const ApiReviewInvitationsDetailsSingle = ({id, ...props}: ApiReviewInvitationsDetailsSingleProps) => (
+  <Get<ReviewInvitationDetails, unknown, void>
+    path={`/api/review/invitations/details/${id}`}
+    {...props}
+  />
+);
+
+export type UseApiReviewInvitationsDetailsSingleProps = Omit<UseGetProps<ReviewInvitationDetails, void>, "path"> & {id: string};
+
+export const useApiReviewInvitationsDetailsSingle = ({id, ...props}: UseApiReviewInvitationsDetailsSingleProps) => useGet<ReviewInvitationDetails, unknown, void>(`/api/review/invitations/details/${id}`, props);
 
 
 export type ApiSourcesListProps = Omit<GetProps<Source[], unknown, void>, "path">;

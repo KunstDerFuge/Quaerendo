@@ -172,8 +172,34 @@ class ClaimWithEvidenceSerializer(serializers.ModelSerializer):
         return obj.get_truth_consensus(expert=False)
 
 
+class ClaimForReviewSerializer(serializers.ModelSerializer):
+    topic = TopicSerializer(read_only=True)
+    source_of_claim = SourceSerializer(read_only=True)
+
+    class Meta:
+        model = Claim
+        fields = ['id', 'claim_text', 'description', 'topic', 'source_of_claim']
+
+
+class EvidenceAndClaimForReviewSerializer(serializers.ModelSerializer):
+    source_of_evidence = SourceSerializer(read_only=True)
+    claim = ClaimForReviewSerializer(read_only=True)
+
+    class Meta:
+        model = Evidence
+        fields = ['source_of_evidence', 'description', 'claim']
+
+
 class ReviewInvitationSerializer(serializers.ModelSerializer):
     evidence = serializers.PrimaryKeyRelatedField(queryset=Evidence.objects.all())
+
+    class Meta:
+        model = ReviewInvitation
+        fields = '__all__'
+
+
+class ReviewInvitationDetailsSerializer(serializers.ModelSerializer):
+    evidence = EvidenceAndClaimForReviewSerializer(read_only=True)
 
     class Meta:
         model = ReviewInvitation

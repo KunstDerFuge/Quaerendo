@@ -14,7 +14,7 @@ from rest_framework.views import APIView
 from api.models import Entity, Source, Claim, Evidence, EvidenceReview
 from api.serializers import EntitySerializer, SourceSerializer, ClaimSerializer, EvidenceSerializer, \
     ClaimWithEvidenceSerializer, EvidenceReviewSerializer, EvidenceWithReviewSerializer, ClaimCreateSerializer, \
-    ReviewInvitationSerializer
+    ReviewInvitationSerializer, ReviewInvitationDetailsSerializer
 
 
 @extend_schema(operation_id='api_review_invitations', methods=['GET'], responses=ReviewInvitationSerializer(many=True))
@@ -26,6 +26,30 @@ class ReviewInvitations(APIView):
         if user.is_authenticated:
             invitations = user.review_invitations.all()
             return Response(ReviewInvitationSerializer(invitations, many=True).data)
+
+
+@extend_schema(operation_id='api_review_invitations_details', methods=['GET'],
+               responses=ReviewInvitationDetailsSerializer(many=True))
+class ReviewInvitationsDetails(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request: Request, **kwargs):
+        user = request.user
+        if user.is_authenticated:
+            invitations = user.review_invitations.all()
+            return Response(ReviewInvitationDetailsSerializer(invitations, many=True).data)
+
+
+@extend_schema(operation_id='api_review_invitations_details_single', methods=['GET'],
+               responses=ReviewInvitationDetailsSerializer)
+class ReviewInvitationsDetailsSingle(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request: Request, **kwargs):
+        user = request.user
+        if user.is_authenticated:
+            invitation = user.review_invitations.get(id=kwargs.get('pk'))
+            return Response(ReviewInvitationDetailsSerializer(invitation).data)
 
 
 @extend_schema(operation_id='api_article_info', methods=['GET'])
