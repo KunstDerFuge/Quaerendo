@@ -1,12 +1,13 @@
 import * as React from 'react'
 import QuaerendoLogo from './QuaerendoLogo'
-import { Divider, Drawer, Fab, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
+import { Badge, Divider, Drawer, Fab, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
 import CommentRoundedIcon from '@material-ui/icons/CommentRounded'
 import RateReviewRoundedIcon from '@material-ui/icons/RateReviewRounded'
 import { useHistory } from 'react-router-dom'
 import AddCommentRoundedIcon from '@material-ui/icons/AddCommentRounded'
 import { makeStyles } from '@material-ui/core/styles'
 import AvatarPanel from './AvatarPanel'
+import { ReviewInvitation, useApiReviewInvitations } from '../openapi-types'
 
 const useStyles = makeStyles(theme => ({
   drawer: {
@@ -27,12 +28,23 @@ const useStyles = makeStyles(theme => ({
   mainNavigationContent: {
     display: 'flex',
     flexDirection: 'column'
+  },
+  badge: {
+    paddingRight: '0.1em'
   }
 }))
 
 const NavigationDrawer: React.FC<{}> = () => {
   const classes = useStyles()
   const history = useHistory()
+  const [reviewInvitations, setReviewInvitations] = React.useState<ReviewInvitation[]>(null)
+
+  const {data, loading} = useApiReviewInvitations({
+    resolve: (data) => {
+      setReviewInvitations(data)
+      return data
+    }
+  })
 
   return (
     <Drawer
@@ -57,7 +69,11 @@ const NavigationDrawer: React.FC<{}> = () => {
             <ListItemIcon>
               <RateReviewRoundedIcon color='primary' />
             </ListItemIcon>
-            <ListItemText primary='Review' />
+            <ListItemText>
+              <Badge color='primary' variant='dot' invisible={!reviewInvitations} className={classes.badge}>
+                Review
+              </Badge>
+            </ListItemText>
           </ListItem>
           <ListItem>
             <Fab size='medium' variant="extended" color="secondary" aria-label="add" className={classes.submitClaimFab}
