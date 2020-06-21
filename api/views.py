@@ -26,7 +26,7 @@ class ReviewInvitations(APIView):
         user = request.user
         if user.is_authenticated:
             invitations = user.review_invitations.all()
-            return Response(ReviewInvitationSerializer(invitations, many=True))
+            return Response(ReviewInvitationSerializer(invitations, many=True).data)
 
 
 @extend_schema(operation_id='api_article_info', methods=['GET'])
