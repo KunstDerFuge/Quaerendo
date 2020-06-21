@@ -63,6 +63,7 @@ class ClaimSerializer(serializers.ModelSerializer):
 
 
 class ClaimCreateSerializer(serializers.ModelSerializer):
+    # TODO: Change this to the correct related topic
     topic = Topic.objects.first()
     source_of_claim = SourceCreateSerializer()
 
