@@ -129,11 +129,8 @@ export interface PatchedSource {
   date_published?: string | null;
 }
 
-/**
- * User model w/o password
- */
-export interface PatchedUserDetails {
-  pk?: number;
+export interface PatchedUser {
+  id?: number;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_
    * only.
@@ -142,6 +139,7 @@ export interface PatchedUserDetails {
   email?: string;
   first_name?: string;
   last_name?: string;
+  bio?: string;
 }
 
 export type ProviderEnum = "facebook" | "twitter";
@@ -151,6 +149,13 @@ export interface Register {
   email?: string;
   password1: string;
   password2: string;
+}
+
+export interface ReviewInvitation {
+  id: number;
+  evidence: number;
+  expiration_date: string;
+  user: number;
 }
 
 /**
@@ -192,19 +197,17 @@ export interface TwitterConnect {
   token_secret: string;
 }
 
-/**
- * User model w/o password
- */
-export interface UserDetails {
-  pk: number;
+export interface User {
+  id: number;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_
    * only.
    */
   username: string;
-  email: string;
+  email?: string;
   first_name?: string;
   last_name?: string;
+  bio?: string;
 }
 
 export interface VerifyEmail {
@@ -251,18 +254,18 @@ export type UseApiAuthorsRetrieveProps = Omit<UseGetProps<ApiAuthorsRetrieveResp
 export const useApiAuthorsRetrieve = (props: UseApiAuthorsRetrieveProps) => useGet<ApiAuthorsRetrieveResponse, unknown, void>(`/api/authors/`, props);
 
 
-export type ApiAuthorInfoProps = Omit<GetProps<Entity, unknown, void>, "path">;
+export type ApiAuthorInfoProps = Omit<GetProps<Entity[], unknown, void>, "path">;
 
 export const ApiAuthorInfo = (props: ApiAuthorInfoProps) => (
-  <Get<Entity, unknown, void>
+  <Get<Entity[], unknown, void>
     path={`/api/authors/match/`}
     {...props}
   />
 );
 
-export type UseApiAuthorInfoProps = Omit<UseGetProps<Entity, void>, "path">;
+export type UseApiAuthorInfoProps = Omit<UseGetProps<Entity[], void>, "path">;
 
-export const useApiAuthorInfo = (props: UseApiAuthorInfoProps) => useGet<Entity, unknown, void>(`/api/authors/match/`, props);
+export const useApiAuthorInfo = (props: UseApiAuthorInfoProps) => useGet<Entity[], unknown, void>(`/api/authors/match/`, props);
 
 
 export type ApiClaimsListProps = Omit<GetProps<Claim[], unknown, void>, "path">;
@@ -605,6 +608,20 @@ export type UseApiEvidencePartialUpdateProps = Omit<UseMutateProps<Evidence, voi
 export const useApiEvidencePartialUpdate = ({id, ...props}: UseApiEvidencePartialUpdateProps) => useMutate<Evidence, unknown, void, PatchedEvidence>("PATCH", `/api/evidence/${id}`, props);
 
 
+export type ApiReviewInvitationsProps = Omit<GetProps<ReviewInvitation[], unknown, void>, "path">;
+
+export const ApiReviewInvitations = (props: ApiReviewInvitationsProps) => (
+  <Get<ReviewInvitation[], unknown, void>
+    path={`/api/review/invitations/`}
+    {...props}
+  />
+);
+
+export type UseApiReviewInvitationsProps = Omit<UseGetProps<ReviewInvitation[], void>, "path">;
+
+export const useApiReviewInvitations = (props: UseApiReviewInvitationsProps) => useGet<ReviewInvitation[], unknown, void>(`/api/review/invitations/`, props);
+
+
 export type ApiSourcesListProps = Omit<GetProps<Source[], unknown, void>, "path">;
 
 /**
@@ -927,7 +944,7 @@ export type UseRestAuthTwitterConnectCreateProps = Omit<UseMutateProps<TwitterCo
 export const useRestAuthTwitterConnectCreate = (props: UseRestAuthTwitterConnectCreateProps) => useMutate<TwitterConnect, unknown, void, TwitterConnect>("POST", `/rest-auth/twitter/connect/`, props);
 
 
-export type RestAuthUserRetrieveProps = Omit<GetProps<UserDetails, unknown, void>, "path">;
+export type RestAuthUserRetrieveProps = Omit<GetProps<User, unknown, void>, "path">;
 
 /**
  * Reads and updates UserModel fields
@@ -940,13 +957,13 @@ export type RestAuthUserRetrieveProps = Omit<GetProps<UserDetails, unknown, void
  * Returns UserModel fields.
  */
 export const RestAuthUserRetrieve = (props: RestAuthUserRetrieveProps) => (
-  <Get<UserDetails, unknown, void>
+  <Get<User, unknown, void>
     path={`/rest-auth/user/`}
     {...props}
   />
 );
 
-export type UseRestAuthUserRetrieveProps = Omit<UseGetProps<UserDetails, void>, "path">;
+export type UseRestAuthUserRetrieveProps = Omit<UseGetProps<User, void>, "path">;
 
 /**
  * Reads and updates UserModel fields
@@ -958,10 +975,10 @@ export type UseRestAuthUserRetrieveProps = Omit<UseGetProps<UserDetails, void>, 
  * 
  * Returns UserModel fields.
  */
-export const useRestAuthUserRetrieve = (props: UseRestAuthUserRetrieveProps) => useGet<UserDetails, unknown, void>(`/rest-auth/user/`, props);
+export const useRestAuthUserRetrieve = (props: UseRestAuthUserRetrieveProps) => useGet<User, unknown, void>(`/rest-auth/user/`, props);
 
 
-export type RestAuthUserUpdateProps = Omit<MutateProps<UserDetails, unknown, void, UserDetails>, "path" | "verb">;
+export type RestAuthUserUpdateProps = Omit<MutateProps<User, unknown, void, User>, "path" | "verb">;
 
 /**
  * Reads and updates UserModel fields
@@ -974,14 +991,14 @@ export type RestAuthUserUpdateProps = Omit<MutateProps<UserDetails, unknown, voi
  * Returns UserModel fields.
  */
 export const RestAuthUserUpdate = (props: RestAuthUserUpdateProps) => (
-  <Mutate<UserDetails, unknown, void, UserDetails>
+  <Mutate<User, unknown, void, User>
     verb="PUT"
     path={`/rest-auth/user/`}
     {...props}
   />
 );
 
-export type UseRestAuthUserUpdateProps = Omit<UseMutateProps<UserDetails, void, UserDetails>, "path" | "verb">;
+export type UseRestAuthUserUpdateProps = Omit<UseMutateProps<User, void, User>, "path" | "verb">;
 
 /**
  * Reads and updates UserModel fields
@@ -993,10 +1010,10 @@ export type UseRestAuthUserUpdateProps = Omit<UseMutateProps<UserDetails, void, 
  * 
  * Returns UserModel fields.
  */
-export const useRestAuthUserUpdate = (props: UseRestAuthUserUpdateProps) => useMutate<UserDetails, unknown, void, UserDetails>("PUT", `/rest-auth/user/`, props);
+export const useRestAuthUserUpdate = (props: UseRestAuthUserUpdateProps) => useMutate<User, unknown, void, User>("PUT", `/rest-auth/user/`, props);
 
 
-export type RestAuthUserPartialUpdateProps = Omit<MutateProps<UserDetails, unknown, void, PatchedUserDetails>, "path" | "verb">;
+export type RestAuthUserPartialUpdateProps = Omit<MutateProps<User, unknown, void, PatchedUser>, "path" | "verb">;
 
 /**
  * Reads and updates UserModel fields
@@ -1009,14 +1026,14 @@ export type RestAuthUserPartialUpdateProps = Omit<MutateProps<UserDetails, unkno
  * Returns UserModel fields.
  */
 export const RestAuthUserPartialUpdate = (props: RestAuthUserPartialUpdateProps) => (
-  <Mutate<UserDetails, unknown, void, PatchedUserDetails>
+  <Mutate<User, unknown, void, PatchedUser>
     verb="PATCH"
     path={`/rest-auth/user/`}
     {...props}
   />
 );
 
-export type UseRestAuthUserPartialUpdateProps = Omit<UseMutateProps<UserDetails, void, PatchedUserDetails>, "path" | "verb">;
+export type UseRestAuthUserPartialUpdateProps = Omit<UseMutateProps<User, void, PatchedUser>, "path" | "verb">;
 
 /**
  * Reads and updates UserModel fields
@@ -1028,7 +1045,7 @@ export type UseRestAuthUserPartialUpdateProps = Omit<UseMutateProps<UserDetails,
  * 
  * Returns UserModel fields.
  */
-export const useRestAuthUserPartialUpdate = (props: UseRestAuthUserPartialUpdateProps) => useMutate<UserDetails, unknown, void, PatchedUserDetails>("PATCH", `/rest-auth/user/`, props);
+export const useRestAuthUserPartialUpdate = (props: UseRestAuthUserPartialUpdateProps) => useMutate<User, unknown, void, PatchedUser>("PATCH", `/rest-auth/user/`, props);
 
 
 export type SocialaccountsListProps = Omit<GetProps<SocialAccount[], unknown, void>, "path">;
