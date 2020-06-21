@@ -589,6 +589,42 @@ paths:
                   $ref: '#/components/schemas/ReviewInvitation'
       security:
       - tokenAuth: []
+  /api/review/invitations/details/:
+    get:
+      tags:
+      - api
+      operationId: api_review_invitations_details
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ReviewInvitationDetails'
+      security:
+      - tokenAuth: []
+  /api/review/invitations/details/{id}:
+    get:
+      tags:
+      - api
+      operationId: api_review_invitations_details_single
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReviewInvitationDetails'
+      security:
+      - tokenAuth: []
   /api/sources/:
     get:
       tags:
@@ -1180,6 +1216,30 @@ components:
           readOnly: true
           allOf:
           - $ref: '#/components/schemas/TruthJudgement'
+    ClaimForReview:
+      required:
+      - claim_text
+      - id
+      - source_of_claim
+      - topic
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        claim_text:
+          maxLength: 200
+          type: string
+        description:
+          type: string
+        topic:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/Topic'
+        source_of_claim:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/Source'
     ClaimWithEvidence:
       required:
       - claim_text
@@ -1268,6 +1328,22 @@ components:
         num_community_reviews:
           type: integer
           readOnly: true
+    EvidenceAndClaimForReview:
+      required:
+      - claim
+      - source_of_evidence
+      type: object
+      properties:
+        source_of_evidence:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/Source'
+        description:
+          type: string
+        claim:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/ClaimForReview'
     EvidenceRelationship:
       type: string
       enum:
@@ -1532,6 +1608,26 @@ components:
           readOnly: true
         evidence:
           type: integer
+        expiration_date:
+          type: string
+          format: date-time
+        user:
+          type: integer
+    ReviewInvitationDetails:
+      required:
+      - evidence
+      - expiration_date
+      - id
+      - user
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        evidence:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/EvidenceAndClaimForReview'
         expiration_date:
           type: string
           format: date-time
