@@ -49,7 +49,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Entity'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Entity'
       security:
       - tokenAuth: []
       - {}
@@ -572,6 +574,21 @@ paths:
                 $ref: '#/components/schemas/Evidence'
       security:
       - tokenAuth: []
+  /api/review/invitations/:
+    get:
+      tags:
+      - api
+      operationId: api_review_invitations
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ReviewInvitation'
+      security:
+      - tokenAuth: []
   /api/sources/:
     get:
       tags:
@@ -1008,7 +1025,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserDetails'
+                $ref: '#/components/schemas/User'
       security:
       - tokenAuth: []
     put:
@@ -1028,20 +1045,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserDetails'
+              $ref: '#/components/schemas/User'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/UserDetails'
+              $ref: '#/components/schemas/User'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/UserDetails'
+              $ref: '#/components/schemas/User'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserDetails'
+                $ref: '#/components/schemas/User'
       security:
       - tokenAuth: []
     patch:
@@ -1061,19 +1078,19 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedUserDetails'
+              $ref: '#/components/schemas/PatchedUser'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedUserDetails'
+              $ref: '#/components/schemas/PatchedUser'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedUserDetails'
+              $ref: '#/components/schemas/PatchedUser'
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserDetails'
+                $ref: '#/components/schemas/User'
       security:
       - tokenAuth: []
   /socialaccounts/:
@@ -1453,10 +1470,10 @@ components:
           type: string
           format: date-time
           nullable: true
-    PatchedUserDetails:
+    PatchedUser:
       type: object
       properties:
-        pk:
+        id:
           type: integer
           readOnly: true
         username:
@@ -1465,16 +1482,18 @@ components:
           description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
             only.
         email:
+          maxLength: 254
           type: string
           format: email
-          readOnly: true
         first_name:
           maxLength: 30
           type: string
         last_name:
           maxLength: 150
           type: string
-      description: User model w/o password
+        bio:
+          maxLength: 400
+          type: string
     ProviderEnum:
       type: string
       enum:
@@ -1500,6 +1519,24 @@ components:
         password2:
           type: string
           writeOnly: true
+    ReviewInvitation:
+      required:
+      - evidence
+      - expiration_date
+      - id
+      - user
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        evidence:
+          type: integer
+        expiration_date:
+          type: string
+          format: date-time
+        user:
+          type: integer
     SocialAccount:
       required:
       - date_joined
@@ -1597,14 +1634,13 @@ components:
           type: string
         token_secret:
           type: string
-    UserDetails:
+    User:
       required:
-      - email
-      - pk
+      - id
       - username
       type: object
       properties:
-        pk:
+        id:
           type: integer
           readOnly: true
         username:
@@ -1613,16 +1649,18 @@ components:
           description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
             only.
         email:
+          maxLength: 254
           type: string
           format: email
-          readOnly: true
         first_name:
           maxLength: 30
           type: string
         last_name:
           maxLength: 150
           type: string
-      description: User model w/o password
+        bio:
+          maxLength: 400
+          type: string
     VerifyEmail:
       required:
       - key
