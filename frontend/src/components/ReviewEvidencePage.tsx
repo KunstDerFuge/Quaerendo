@@ -1,6 +1,11 @@
 import * as React from 'react'
 import { FormEvent } from 'react'
-import { ReviewInvitationDetails, useApiReviewInvitationsDetailsRetrieve } from '../openapi-types'
+import {
+  EvidenceReview,
+  ReviewInvitationDetails,
+  useApiEvidenceReviewsCreate,
+  useApiReviewInvitationsDetailsRetrieve
+} from '../openapi-types'
 import CardPageContainer from './CardPageContainer'
 import EvidenceReviewForm from './EvidenceReviewForm'
 import {
@@ -61,8 +66,15 @@ const ReviewEvidencePage: React.FC<ReviewEvidencePageProps> = (props) => {
     }
   })
 
-  const handleSubmitForm = (event: FormEvent) => {
+  const {mutate: submitReview, loading: submitLoading} = useApiEvidenceReviewsCreate({})
+
+  function handleSubmitForm(event: FormEvent, review: EvidenceReview) {
     event.preventDefault()
+    review.evidence = reviewInfo.evidence.id
+    submitReview(review).then((response: EvidenceReview) => {
+      console.log(response)
+      return response
+    })
   }
 
   return (
