@@ -21,24 +21,6 @@ paths:
       security:
       - tokenAuth: []
       - {}
-  /api/authors/:
-    get:
-      tags:
-      - api
-      description: Takes a list of author names, gets or creates a list of matching
-        Entities and returns them.
-      operationId: api_authors_retrieve
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: {}
-                description: Unspecified response body
-      security:
-      - tokenAuth: []
-      - {}
   /api/authors/match/:
     get:
       tags:
@@ -593,7 +575,7 @@ paths:
     get:
       tags:
       - api
-      operationId: api_review_invitations_details
+      operationId: api_review_invitations_details_list
       responses:
         "200":
           content:
@@ -608,7 +590,7 @@ paths:
     get:
       tags:
       - api
-      operationId: api_review_invitations_details_single
+      operationId: api_review_invitations_details_retrieve
       parameters:
       - name: id
         in: path
@@ -623,6 +605,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ReviewInvitationDetails'
+      security:
+      - tokenAuth: []
+    delete:
+      tags:
+      - api
+      operationId: api_review_invitations_details_destroy
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "204":
+          description: No response body
       security:
       - tokenAuth: []
   /api/sources/:
