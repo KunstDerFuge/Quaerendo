@@ -22,6 +22,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import SourceInfo from './SourceInfo'
 import { makeStyles } from '@material-ui/styles'
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded'
+import { useHistory } from 'react-router'
 
 interface ReviewEvidencePageProps {
   id: number
@@ -54,6 +55,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const ReviewEvidencePage: React.FC<ReviewEvidencePageProps> = (props) => {
   const classes = useStyles()
+  const history = useHistory()
   const [reviewInfo, setReviewInfo] = React.useState<ReviewInvitationDetails>(null)
   const [showSource, setShowSource] = React.useState(true)
   const [showClaim, setShowClaim] = React.useState(true)
@@ -73,6 +75,7 @@ const ReviewEvidencePage: React.FC<ReviewEvidencePageProps> = (props) => {
     review.evidence = reviewInfo.evidence.id
     submitReview(review).then((response: EvidenceReview) => {
       console.log(response)
+      history.goBack()
       return response
     })
   }
