@@ -42,17 +42,27 @@ const ReviewInvitationPage: React.FC<{}> = (props) => {
 
   return (
     <CardPageContainer>
-      <CardPage title='Invitations to Review'>
-        {
-          invitationData.map((invitation, index) => {
-            return (
-              <Grid item key={index}>
-                <InvitationDetails {...invitation} />
-              </Grid>
-            )
-          })
-        }
-      </CardPage>
+      {
+        invitationData.length > 0 ?
+          <CardPage title='Invitations to Review Evidence'>
+            {
+              invitationData.map((invitation, index) => {
+                return (
+                  <Grid item key={index}>
+                    <InvitationDetails {...invitation} />
+                  </Grid>
+                )
+              })
+            }
+          </CardPage>
+          :
+          <>
+            <Typography>
+              Nothing to review.
+              Check back later!
+            </Typography>
+          </>
+      }
     </CardPageContainer>
   )
 }
