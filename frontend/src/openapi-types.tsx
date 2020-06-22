@@ -51,6 +51,7 @@ export interface Evidence {
 }
 
 export interface EvidenceAndClaimForReview {
+  id: number;
   source_of_evidence: Source;
   description?: string;
   claim: ClaimForReview;
@@ -63,6 +64,7 @@ export interface EvidenceReview {
   deduced_source_degree: SourceDegree;
   is_reliable: boolean;
   additional_comments?: string;
+  evidence: number;
 }
 
 export interface EvidenceWithReview {
@@ -131,6 +133,7 @@ export interface PatchedEvidenceReview {
   deduced_source_degree?: SourceDegree;
   is_reliable?: boolean;
   additional_comments?: string;
+  evidence?: number;
 }
 
 export interface PatchedSource {
