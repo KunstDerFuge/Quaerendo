@@ -215,7 +215,7 @@ class EvidenceReviewList(generics.ListCreateAPIView):
             if user_was_invited_to_review:
                 serializer.save(reviewer=request.user, evidence=evidence)
                 relevant_invitation.delete()
-                return Response(serializer.data)
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
             else:
                 return Response(status=status.HTTP_403_FORBIDDEN)
         else:
