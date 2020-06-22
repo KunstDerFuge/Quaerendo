@@ -1,7 +1,19 @@
 import * as React from 'react'
 import { FormEvent } from 'react'
 import { EvidenceRelationship, PatchedEvidenceReview, SourceDegree } from '../openapi-types'
-import { Button, CardActions, Link, MenuItem, Select, TextField, Theme, Typography } from '@material-ui/core'
+import {
+  Button,
+  CardActions,
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+  Link,
+  MenuItem,
+  Select,
+  TextField,
+  Theme,
+  Typography
+} from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import CardPage from './CardPage'
 import CardFormField from './CardFormField'
@@ -35,6 +47,7 @@ const EvidenceReviewForm: React.FC<EvidenceReviewFormProps> = (props) => {
   const [trustworthiness, setTrustworthiness] = React.useState<'trustworthy' | 'untrustworthy' | 'placeholder'>('placeholder')
   const [sourceDegree, setSourceDegree] = React.useState<SourceDegree | 'placeholder'>('placeholder')
   const [comments, setComments] = React.useState<string>('')
+  const [notBiased, setNotBiased] = React.useState<boolean>(false)
 
   function handleSubmit(event: FormEvent) {
     props.submitForm(event, {
@@ -139,6 +152,19 @@ const EvidenceReviewForm: React.FC<EvidenceReviewFormProps> = (props) => {
                   id='additional-comments' fullWidth label='Additional Comments' multiline variant='outlined'
                   rows={4} rowsMax={8} aria-label='additional comments' value={comments}
                   onChange={(e) => setComments(e.target.value)} />
+              </CardFormField>
+              <CardFormField fieldName='Statement of Integrity' required={true}
+                             description='If you are not able to honestly review this evidence for any reason, you must recuse yourself by clicking "Skip Review".'>
+                <FormControl>
+                  <FormControlLabel
+                    value='non-bias-statement'
+                    control={
+                      <Checkbox checked={notBiased} onChange={() => setNotBiased(!notBiased)} />
+                    }
+                    label='I hereby certify that I have reviewed and fully understand this piece of evidence and that my review consists only of my own honest, unbiased opinion.'
+                    labelPlacement='start'
+                  />
+                </FormControl>
               </CardFormField>
             </CardPage>
           </form>
