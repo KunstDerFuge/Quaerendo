@@ -8,7 +8,7 @@ import CardFormField from './CardFormField'
 
 interface EvidenceReviewFormProps {
   visible: boolean
-  showPreviousForm: () => void
+  showPreviousForm?: () => void
   submitForm: (event: FormEvent, review: PatchedEvidenceReview) => void
 }
 
@@ -23,6 +23,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   leftMarginButton: {
     marginLeft: 'auto'
+  },
+  cardActions: {
+    justifyContent: 'end'
   }
 }))
 
@@ -43,10 +46,13 @@ const EvidenceReviewForm: React.FC<EvidenceReviewFormProps> = (props) => {
   }
 
   const cardActions = (
-    <CardActions>
-      <Button id='back' className={classes.leftMarginButton} onClick={() => props.showPreviousForm()}>
-        Back
-      </Button>
+    <CardActions className={classes.cardActions}>
+      {
+        props.showPreviousForm &&
+        <Button id='back' onClick={() => props.showPreviousForm()}>
+          Back
+        </Button>
+      }
       <Button id='submit' type='submit' onClick={handleSubmit} color='primary'>
         Submit
       </Button>
