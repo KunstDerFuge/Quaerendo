@@ -58,7 +58,7 @@ export function HeaderAppBar() {
           <Route path='/review'>
             <BackButton />
             <Typography variant='h6' className={classes.roboto}>
-              Review
+              Review Evidence
             </Typography>
           </Route>
           <Route path='/register'>

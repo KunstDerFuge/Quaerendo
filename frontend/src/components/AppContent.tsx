@@ -7,7 +7,7 @@ import ClaimDetails from './ClaimDetails'
 import EvidenceDetails from './EvidenceDetails'
 import SubmitClaim from './SubmitClaim'
 import SubmitEvidence from './SubmitEvidence'
-import ReviewPage from './ReviewPage'
+import ReviewInvitationPage from './ReviewInvitationPage'
 import RegistrationPage from './RegistrationPage'
 import LoginPage from './LoginPage'
 import ClaimList from './ClaimsList'
@@ -15,6 +15,7 @@ import Footer from './Footer'
 import { makeStyles } from '@material-ui/core/styles'
 import { RestfulProvider } from 'restful-react'
 import { useAuth } from './auth'
+import ReviewEvidencePage from './ReviewEvidencePage'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -58,8 +59,10 @@ const AppContent: React.FC<{}> = () => {
                        component={SubmitClaim} />
                 <Route path='/submit/evidence/for/:id'
                        component={(routerProps: any) => <SubmitEvidence id={routerProps.match.params.id} />} />
+                <Route path='/review/:id'
+                       component={(routerProps: any) => <ReviewEvidencePage id={routerProps.match.params.id} />} />
                 <Route path='/review'
-                       component={ReviewPage} />
+                       component={ReviewInvitationPage} />
                 <Route path='/register'
                        component={RegistrationPage} />
                 <Route path='/login'
