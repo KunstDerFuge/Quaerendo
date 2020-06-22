@@ -196,7 +196,7 @@ class EvidenceAndClaimForReviewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Evidence
-        fields = ['source_of_evidence', 'description', 'claim']
+        fields = ['id', 'source_of_evidence', 'description', 'claim']
 
 
 class ReviewInvitationSerializer(serializers.ModelSerializer):
