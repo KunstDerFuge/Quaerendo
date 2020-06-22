@@ -113,10 +113,19 @@ class EvidenceSerializer(serializers.ModelSerializer):
 
 
 class EvidenceReviewSerializer(serializers.ModelSerializer):
+    evidence = PrimaryKeyRelatedField(write_only=True, queryset=Evidence.objects.all())
+
     class Meta:
         model = EvidenceReview
         fields = ['deduced_evidence_relationship', 'deduced_source_degree', 'is_reliable',
-                  'additional_comments']
+                  'additional_comments', 'evidence']
+
+    def create(self, validated_data):
+        evidence_instance = validated_data.get('evidence')
+        review = EvidenceReview.objects.create(**validated_data)
+        evidence_instance.reviews.add(review)
+        evidence_instance.save()
+        return review
 
 
 class EvidenceWithReviewSerializer(serializers.ModelSerializer):

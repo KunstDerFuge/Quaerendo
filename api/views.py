@@ -5,13 +5,13 @@ from drf_spectacular.utils import extend_schema
 from newspaper import Article
 from rest_auth.registration.views import SocialConnectView
 from rest_auth.social_serializers import TwitterConnectSerializer
-from rest_framework import generics
+from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from api.models import Entity, Source, Claim, Evidence, EvidenceReview
+from api.models import Entity, Source, Claim, Evidence, EvidenceReview, ReviewInvitation
 from api.serializers import EntitySerializer, SourceSerializer, ClaimSerializer, EvidenceSerializer, \
     ClaimWithEvidenceSerializer, EvidenceReviewSerializer, EvidenceWithReviewSerializer, ClaimCreateSerializer, \
     ReviewInvitationSerializer, ReviewInvitationDetailsSerializer
@@ -202,9 +202,24 @@ class EvidenceReviewList(generics.ListCreateAPIView):
     """
     REST endpoints for viewing and submitting evidence reviews
     """
-
     queryset = EvidenceReview.objects.all()
     serializer_class = EvidenceReviewSerializer
+
+    def post(self, request: Request, **kwargs):
+        serializer = EvidenceReviewSerializer(data=request.data)
+        if serializer.is_valid():
+            user_invitations = ReviewInvitation.objects.filter(user=request.user)
+            evidence = Evidence.objects.get(id=request.data['evidence'])
+            relevant_invitation = user_invitations.filter(evidence=evidence).first()
+            user_was_invited_to_review = relevant_invitation is not None
+            if user_was_invited_to_review:
+                serializer.save(reviewer=request.user, evidence=evidence)
+                relevant_invitation.delete()
+                return Response(serializer.data)
+            else:
+                return Response(status=status.HTTP_403_FORBIDDEN)
+        else:
+            return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @extend_schema(operation_id='api_evidence_review_detail', methods=['GET'])
