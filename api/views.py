@@ -28,28 +28,36 @@ class ReviewInvitations(APIView):
             return Response(ReviewInvitationSerializer(invitations, many=True).data)
 
 
-@extend_schema(operation_id='api_review_invitations_details', methods=['GET'],
-               responses=ReviewInvitationDetailsSerializer(many=True))
-class ReviewInvitationsDetails(APIView):
+@extend_schema(responses=ReviewInvitationDetailsSerializer(many=True))
+class ReviewInvitationsDetails(generics.ListAPIView):
+    """
+    List user's ReviewInvitation objects.
+    """
     permission_classes = [IsAuthenticated]
 
-    def get(self, request: Request, **kwargs):
-        user = request.user
-        if user.is_authenticated:
-            invitations = user.review_invitations.all()
-            return Response(ReviewInvitationDetailsSerializer(invitations, many=True).data)
+    def list(self, request, **kwargs):
+        queryset = request.user.review_invitations.all()
+        serializer = ReviewInvitationDetailsSerializer(queryset, many=True)
+        return Response(serializer.data)
 
 
-@extend_schema(operation_id='api_review_invitations_details_single', methods=['GET'],
-               responses=ReviewInvitationDetailsSerializer)
-class ReviewInvitationsDetailsSingle(APIView):
+@extend_schema(responses=ReviewInvitationDetailsSerializer)
+class ReviewInvitationsDetailsSingle(generics.RetrieveDestroyAPIView):
+    """
+    Retrieve or delete a Review Invitation object.
+    """
     permission_classes = [IsAuthenticated]
 
-    def get(self, request: Request, **kwargs):
-        user = request.user
-        if user.is_authenticated:
-            invitation = user.review_invitations.get(id=kwargs.get('pk'))
-            return Response(ReviewInvitationDetailsSerializer(invitation).data)
+    def get(self, request, **kwargs):
+        queryset = request.user.review_invitations.get(id=kwargs.get('pk'))
+        serializer = ReviewInvitationDetailsSerializer(queryset)
+        return Response(serializer.data)
+
+    def delete(self, request, **kwargs):
+        instance = request.user.review_invitations.get(id=kwargs.get('pk'))
+        cached_data = ReviewInvitationDetailsSerializer(instance).data
+        instance.delete()
+        return Response(cached_data)
 
 
 @extend_schema(operation_id='api_article_info', methods=['GET'])
@@ -86,16 +94,6 @@ class AuthorMatch(APIView):
             .all()
 
         return Response(EntitySerializer(matches, many=True).data)
-
-
-class AuthorNegotiation(APIView):
-    """
-    Takes a list of author names, gets or creates a list of matching Entities and returns them.
-    """
-
-    def get(self, request: Request):
-        authors = request.query_params.getlist('authors')
-        print(authors)
 
 
 class EntitiesList(generics.ListCreateAPIView):

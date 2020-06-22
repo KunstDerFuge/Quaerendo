@@ -251,30 +251,6 @@ export type UseApiArticleInfoProps = Omit<UseGetProps<ApiArticleInfoResponse, vo
 export const useApiArticleInfo = (props: UseApiArticleInfoProps) => useGet<ApiArticleInfoResponse, unknown, void>(`/api/article/`, props);
 
 
-export interface ApiAuthorsRetrieveResponse {[key: string]: any}
-
-export type ApiAuthorsRetrieveProps = Omit<GetProps<ApiAuthorsRetrieveResponse, unknown, void>, "path">;
-
-/**
- * Takes a list of author names, gets or creates a list of matching
- * Entities and returns them.
- */
-export const ApiAuthorsRetrieve = (props: ApiAuthorsRetrieveProps) => (
-  <Get<ApiAuthorsRetrieveResponse, unknown, void>
-    path={`/api/authors/`}
-    {...props}
-  />
-);
-
-export type UseApiAuthorsRetrieveProps = Omit<UseGetProps<ApiAuthorsRetrieveResponse, void>, "path">;
-
-/**
- * Takes a list of author names, gets or creates a list of matching
- * Entities and returns them.
- */
-export const useApiAuthorsRetrieve = (props: UseApiAuthorsRetrieveProps) => useGet<ApiAuthorsRetrieveResponse, unknown, void>(`/api/authors/`, props);
-
-
 export type ApiAuthorInfoProps = Omit<GetProps<Entity[], unknown, void>, "path">;
 
 export const ApiAuthorInfo = (props: ApiAuthorInfoProps) => (
@@ -643,32 +619,47 @@ export type UseApiReviewInvitationsProps = Omit<UseGetProps<ReviewInvitation[], 
 export const useApiReviewInvitations = (props: UseApiReviewInvitationsProps) => useGet<ReviewInvitation[], unknown, void>(`/api/review/invitations/`, props);
 
 
-export type ApiReviewInvitationsDetailsProps = Omit<GetProps<ReviewInvitationDetails[], unknown, void>, "path">;
+export type ApiReviewInvitationsDetailsListProps = Omit<GetProps<ReviewInvitationDetails[], unknown, void>, "path">;
 
-export const ApiReviewInvitationsDetails = (props: ApiReviewInvitationsDetailsProps) => (
+export const ApiReviewInvitationsDetailsList = (props: ApiReviewInvitationsDetailsListProps) => (
   <Get<ReviewInvitationDetails[], unknown, void>
     path={`/api/review/invitations/details/`}
     {...props}
   />
 );
 
-export type UseApiReviewInvitationsDetailsProps = Omit<UseGetProps<ReviewInvitationDetails[], void>, "path">;
+export type UseApiReviewInvitationsDetailsListProps = Omit<UseGetProps<ReviewInvitationDetails[], void>, "path">;
 
-export const useApiReviewInvitationsDetails = (props: UseApiReviewInvitationsDetailsProps) => useGet<ReviewInvitationDetails[], unknown, void>(`/api/review/invitations/details/`, props);
+export const useApiReviewInvitationsDetailsList = (props: UseApiReviewInvitationsDetailsListProps) => useGet<ReviewInvitationDetails[], unknown, void>(`/api/review/invitations/details/`, props);
 
 
-export type ApiReviewInvitationsDetailsSingleProps = Omit<GetProps<ReviewInvitationDetails, unknown, void>, "path"> & {id: string};
+export type ApiReviewInvitationsDetailsRetrieveProps = Omit<GetProps<ReviewInvitationDetails, unknown, void>, "path"> & {id: string};
 
-export const ApiReviewInvitationsDetailsSingle = ({id, ...props}: ApiReviewInvitationsDetailsSingleProps) => (
+export const ApiReviewInvitationsDetailsRetrieve = ({id, ...props}: ApiReviewInvitationsDetailsRetrieveProps) => (
   <Get<ReviewInvitationDetails, unknown, void>
     path={`/api/review/invitations/details/${id}`}
     {...props}
   />
 );
 
-export type UseApiReviewInvitationsDetailsSingleProps = Omit<UseGetProps<ReviewInvitationDetails, void>, "path"> & {id: string};
+export type UseApiReviewInvitationsDetailsRetrieveProps = Omit<UseGetProps<ReviewInvitationDetails, void>, "path"> & {id: string};
 
-export const useApiReviewInvitationsDetailsSingle = ({id, ...props}: UseApiReviewInvitationsDetailsSingleProps) => useGet<ReviewInvitationDetails, unknown, void>(`/api/review/invitations/details/${id}`, props);
+export const useApiReviewInvitationsDetailsRetrieve = ({id, ...props}: UseApiReviewInvitationsDetailsRetrieveProps) => useGet<ReviewInvitationDetails, unknown, void>(`/api/review/invitations/details/${id}`, props);
+
+
+export type ApiReviewInvitationsDetailsDestroyProps = Omit<MutateProps<void, unknown, void, string>, "path" | "verb">;
+
+export const ApiReviewInvitationsDetailsDestroy = (props: ApiReviewInvitationsDetailsDestroyProps) => (
+  <Mutate<void, unknown, void, string>
+    verb="DELETE"
+    path={`/api/review/invitations/details`}
+    {...props}
+  />
+);
+
+export type UseApiReviewInvitationsDetailsDestroyProps = Omit<UseMutateProps<void, void, string>, "path" | "verb">;
+
+export const useApiReviewInvitationsDetailsDestroy = (props: UseApiReviewInvitationsDetailsDestroyProps) => useMutate<void, unknown, void, string>("DELETE", `/api/review/invitations/details`, props);
 
 
 export type ApiSourcesListProps = Omit<GetProps<Source[], unknown, void>, "path">;
