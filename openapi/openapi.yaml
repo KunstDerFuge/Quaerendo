@@ -1330,9 +1330,13 @@ components:
     EvidenceAndClaimForReview:
       required:
       - claim
+      - id
       - source_of_evidence
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         source_of_evidence:
           readOnly: true
           allOf:
@@ -1357,6 +1361,7 @@ components:
       required:
       - deduced_evidence_relationship
       - deduced_source_degree
+      - evidence
       - is_reliable
       type: object
       properties:
@@ -1369,6 +1374,9 @@ components:
         additional_comments:
           maxLength: 500
           type: string
+        evidence:
+          type: integer
+          writeOnly: true
     EvidenceWithReview:
       required:
       - claim
@@ -1518,6 +1526,9 @@ components:
         additional_comments:
           maxLength: 500
           type: string
+        evidence:
+          type: integer
+          writeOnly: true
     PatchedSource:
       type: object
       properties:
