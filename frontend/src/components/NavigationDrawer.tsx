@@ -70,7 +70,8 @@ const NavigationDrawer: React.FC<{}> = () => {
               <RateReviewRoundedIcon color='primary' />
             </ListItemIcon>
             <ListItemText>
-              <Badge color='primary' variant='dot' invisible={!reviewInvitations} className={classes.badge}>
+              <Badge color='primary' variant='dot' invisible={!reviewInvitations || reviewInvitations.length === 0}
+                     className={classes.badge}>
                 Review
               </Badge>
             </ListItemText>
