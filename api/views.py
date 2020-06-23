@@ -176,8 +176,8 @@ class ClaimDetail(generics.RetrieveUpdateAPIView):
             # Filter out claims for which the user is invited to review evidence
             invited_to_review_evidence = [invitation.evidence for invitation in request.user.review_invitations.all()]
             queryset = Claim.objects.exclude(related_evidence__in=invited_to_review_evidence)
-            object = queryset.get(id=kwargs.get('pk'))
-            serializer = ClaimWithEvidenceSerializer(object)
+            instance = queryset.get(id=kwargs.get('pk'))
+            serializer = ClaimWithEvidenceSerializer(instance)
             return Response(serializer.data)
 
 
