@@ -42,6 +42,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 const SubmitSourceForm: React.FC<SubmitSourceFormProps> = (props) => {
   const classes = useStyles()
   const [sourceUrl, setSourceUrl] = React.useState<string>('')
+  const [invalidUrl, setInvalidUrl] = React.useState<boolean>(false)
   const [sourceTitle, setSourceTitle] = React.useState<string>('')
   const [unconfirmedAuthors, setUnconfirmedAuthors] = React.useState<string[]>([])
   const [sourceAuthors, setSourceAuthors] = React.useState<Entity[]>([])
@@ -50,10 +51,11 @@ const SubmitSourceForm: React.FC<SubmitSourceFormProps> = (props) => {
   const [publishDateUnknown, setPublishDateUnknown] = React.useState<boolean>(true)
   const [showOtherFields, setShowOtherFields] = React.useState<boolean>(false)
 
-  const {data, loading} = useGet({
+  const {data, loading, refetch: fetchArticleInfo} = useGet({
     path: 'api/article/',
     debounce: 500,
     queryParams: {url: sourceUrl},
+    lazy: !isValidUrl(sourceUrl),
     resolve: data => {
       setSourceTitle(data.title)
       setSourceSummary(data.summary)
@@ -88,6 +90,18 @@ const SubmitSourceForm: React.FC<SubmitSourceFormProps> = (props) => {
     })
   }
 
+  function handleChangeUrl(newValue: string) {
+    setInvalidUrl(false)
+    setSourceUrl(newValue)
+    if (newValue === '') {
+      setInvalidUrl(false)
+      return
+    }
+    if (!isValidUrl(newValue)) {
+      setInvalidUrl(true)
+    }
+  }
+
   const cardActions = (
     <CardActions>
       <Button id='next' className={classes.leftMarginButton} onClick={handleClickNext}>
@@ -103,7 +117,8 @@ const SubmitSourceForm: React.FC<SubmitSourceFormProps> = (props) => {
         <CardFormField fieldName='Source URL' required={false}
                        description='If this source has a URL, like an article or Tweet, paste it here. Some source data may be auto-filled from the URL. Try to eliminate unnecessary parameters (the portion after the question mark) if applicable, making sure that the URL remains valid. Must begin with https:// or http://'>
           <TextField fullWidth label="Source URL" variant="outlined" value={sourceUrl}
-                     onChange={e => setSourceUrl(e.target.value)} />
+                     onChange={e => handleChangeUrl(e.target.value)} error={invalidUrl}
+                     helperText={invalidUrl && 'URL is not valid. Must include http:// or https://.'} />
           {
             !showOtherFields &&
             <Link onClick={() => setShowOtherFields(true)} color='secondary'>
