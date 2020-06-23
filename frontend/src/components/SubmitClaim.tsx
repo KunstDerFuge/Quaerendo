@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { FormEvent } from 'react'
-import { Button, CardActions, Grid, TextField, Theme } from '@material-ui/core'
+import { Button, CardActions, Grid, TextField, Theme, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import { useMutate } from 'restful-react'
 import * as assert from 'assert'
@@ -44,6 +44,12 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }))
 
+interface claimErrors {
+  claim_text?: string
+  description?: string
+  non_field_errors?: string
+}
+
 const SubmitClaim: React.FC<{}> = () => {
   const classes = useStyles()
   const history = useHistory()
@@ -52,6 +58,7 @@ const SubmitClaim: React.FC<{}> = () => {
   const [showClaimForm, setShowClaimForm] = React.useState(false)
   const [claimText, setClaimText] = React.useState('')
   const [claimDescription, setClaimDescription] = React.useState('')
+  const [formErrors, setFormErrors] = React.useState<claimErrors>({})
 
   const {mutate: post, loading} = useMutate({
     verb: 'POST',
@@ -82,6 +89,9 @@ const SubmitClaim: React.FC<{}> = () => {
     }).then((claim) => {
       console.log(claim)
       history.push('/claim/' + claim.id)
+    }).catch((error) => {
+      console.log(error)
+      setFormErrors(error.data)
     })
   }
 
@@ -115,14 +125,24 @@ const SubmitClaim: React.FC<{}> = () => {
                   </>
                 }>
                   <TextField fullWidth label="Claim Text" variant="outlined" value={claimText}
-                             onChange={e => setClaimText(e.target.value)} />
+                             onChange={e => setClaimText(e.target.value)} error={formErrors.hasOwnProperty('claim_text')}
+                             helperText={formErrors['claim_text']} />
                 </CardFormField>
                 <CardFormField fieldName='Claim Description' required={false}
                                description='Provide some context for the claim.'>
                   <TextField fullWidth label="Claim Description" variant="outlined" value={claimDescription}
-                             multiline
-                             rows={4} rowsMax={12} onChange={e => setClaimDescription(e.target.value)} />
+                             multiline rows={4} rowsMax={12} onChange={e => setClaimDescription(e.target.value)}
+                             error={formErrors.hasOwnProperty('description')}
+                             helperText={formErrors['description']} />
                 </CardFormField>
+                {
+                  formErrors.hasOwnProperty('non_field_errors') &&
+                  <Grid item>
+                    <Typography variant='caption' color='error'>
+                      {formErrors.non_field_errors}
+                    </Typography>
+                  </Grid>
+                }
               </CardPage>
             </form>
         }
