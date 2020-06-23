@@ -4,11 +4,18 @@ import {
   EvidenceReview,
   ReviewInvitationDetails,
   useApiEvidenceReviewsCreate,
+  useApiReviewInvitationsDetailsDestroy,
   useApiReviewInvitationsDetailsRetrieve
 } from '../openapi-types'
 import CardPageContainer from './CardPageContainer'
 import EvidenceReviewForm from './EvidenceReviewForm'
 import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   ExpansionPanel,
   ExpansionPanelDetails,
   ExpansionPanelSummary,
@@ -59,6 +66,7 @@ const ReviewEvidencePage: React.FC<ReviewEvidencePageProps> = (props) => {
   const [reviewInfo, setReviewInfo] = React.useState<ReviewInvitationDetails>(null)
   const [showSource, setShowSource] = React.useState(true)
   const [showClaim, setShowClaim] = React.useState(true)
+  const [showSkipDialog, setShowSkipDialog] = React.useState(false)
 
   const {data, loading} = useApiReviewInvitationsDetailsRetrieve({
     id: props.id.toString(),
@@ -67,6 +75,8 @@ const ReviewEvidencePage: React.FC<ReviewEvidencePageProps> = (props) => {
       return data
     }
   })
+
+  const {mutate: skipReview, loading: loadingSkipReview} = useApiReviewInvitationsDetailsDestroy({})
 
   const {mutate: submitReview, loading: submitLoading} = useApiEvidenceReviewsCreate({})
 
@@ -77,6 +87,12 @@ const ReviewEvidencePage: React.FC<ReviewEvidencePageProps> = (props) => {
       console.log(response)
       history.goBack()
       return response
+    })
+  }
+
+  function handleCancelReview() {
+    skipReview(props.id.toString()).then(() => {
+      history.goBack()
     })
   }
 
@@ -131,10 +147,32 @@ const ReviewEvidencePage: React.FC<ReviewEvidencePageProps> = (props) => {
         </div>
       </Grid>
       <EvidenceReviewForm visible submitForm={handleSubmitForm} />
-      <Fab variant='extended' color='secondary' className={classes.fab}>
+      <Fab variant='extended' color='secondary' className={classes.fab} onClick={() => setShowSkipDialog(true)}>
         <CloseRoundedIcon className={classes.extendedFabIcon} />
         Skip Review
       </Fab>
+      <Dialog
+        open={showSkipDialog}
+        onClose={() => setShowSkipDialog(false)}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Really skip this review?</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Skip this review if you can't answer objectively due to bias, or you don't fully understand the evidence.
+            You won't be asked to review this evidence again.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setShowSkipDialog(false)} color="secondary" autoFocus>
+            Go back
+          </Button>
+          <Button onClick={handleCancelReview} color="primary">
+            Confirm Skip Review
+          </Button>
+        </DialogActions>
+      </Dialog>
     </CardPageContainer>
   )
 }
