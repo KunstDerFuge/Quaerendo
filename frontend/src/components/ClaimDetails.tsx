@@ -179,12 +179,14 @@ const EvidencePanel: React.FC<EvidencePanelProps> = (props) => {
         negativeRels.includes(evidence.expert_consensus_relationship)) ||
       evidence.num_community_reviews >= 3 && (
         negativeRels.includes(evidence.community_consensus_relationship)))
+  const supportingAndDisputingEvidenceIds = supportingEvidence.map((evidence) => evidence.id)
+    .concat(disputingEvidence.map((evidence) => evidence.id))
   const otherEvidence = props.evidence.filter(
     (evidence) => evidence.num_expert_reviews >= 1 && (
         otherRels.includes(evidence.expert_consensus_relationship)) ||
       evidence.num_community_reviews >= 3 && (
         otherRels.includes(evidence.community_consensus_relationship)) ||
-      evidence.num_expert_reviews == 0 && evidence.num_community_reviews == 0)
+      !supportingAndDisputingEvidenceIds.includes(evidence.id))
 
 
   return (
