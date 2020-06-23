@@ -183,9 +183,8 @@ class ClaimDetail(generics.RetrieveUpdateAPIView):
 
 class EvidenceList(generics.ListCreateAPIView):
     """
-    REST endpoints for viewing and submitting claims
+    REST endpoints for viewing and submitting evidence
     """
-
     queryset = Evidence.objects.all()
     serializer_class = EvidenceWithReviewSerializer
 
