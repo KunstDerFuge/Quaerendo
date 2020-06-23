@@ -144,6 +144,7 @@ class ClaimsList(generics.ListCreateAPIView):
             return Response(serializer.data)
         else:
             print(serializer.errors)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
