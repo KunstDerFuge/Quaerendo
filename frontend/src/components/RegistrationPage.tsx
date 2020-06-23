@@ -104,7 +104,7 @@ const RegistrationPage: React.FC<{}> = () => {
             {
               formErrors.hasOwnProperty('non_field_errors') &&
               <Grid item>
-                <Typography variant='caption'>
+                <Typography variant='caption' color='error'>
                   {formErrors.non_field_errors}
                 </Typography>
               </Grid>
