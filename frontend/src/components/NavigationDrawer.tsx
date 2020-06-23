@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useEffect } from 'react'
 import QuaerendoLogo from './QuaerendoLogo'
 import { Badge, Divider, Drawer, Fab, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
 import CommentRoundedIcon from '@material-ui/icons/CommentRounded'
@@ -39,12 +40,17 @@ const NavigationDrawer: React.FC<{}> = () => {
   const history = useHistory()
   const [reviewInvitations, setReviewInvitations] = React.useState<ReviewInvitation[]>(null)
 
-  const {data, loading} = useApiReviewInvitations({
+  const {data, loading, refetch: refetchInvitations} = useApiReviewInvitations({
     resolve: (data) => {
       setReviewInvitations(data)
       return data
     }
   })
+
+  useEffect(() => {
+    const timer = setInterval(refetchInvitations, 15000)
+    return () => clearInterval(timer)
+  }, [])
 
   return (
     <Drawer
