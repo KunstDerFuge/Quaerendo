@@ -160,7 +160,7 @@ const ReviewEvidencePage: React.FC<ReviewEvidencePageProps> = (props) => {
         <DialogTitle id="alert-dialog-title">Really skip this review?</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Skip this review if you can't answer objectively due to bias, or you don't fully understand the evidence.
+            Skip this review if you can't answer objectively due to bias, or if you don't fully understand the evidence.
             You won't be asked to review this evidence again.
           </DialogContentText>
         </DialogContent>
