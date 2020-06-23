@@ -12,6 +12,7 @@ interface AuthorsSelectInputProps {
   setUnconfirmedAuthors: (authors: string[]) => void
   confirmedAuthors: Entity[]
   setConfirmedAuthors: (authors: Entity[]) => void
+  error: boolean
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -101,7 +102,8 @@ const AuthorsSelectInput: React.FC<AuthorsSelectInputProps> = (props) => {
             <ChooseOrCreateAuthorPopper unconfirmedAuthors={props.unconfirmedAuthors}
                                         setUnconfirmedAuthors={props.setUnconfirmedAuthors}
                                         confirmAuthor={confirmAuthor}
-                                        handleDelete={handleDelete} />
+                                        handleDelete={handleDelete}
+                                        error={props.error} />
           </>
           :
           ''

@@ -22,6 +22,7 @@ interface ChooseOrCreateAuthorPopperProps {
   setUnconfirmedAuthors: (authors: string[]) => void
   confirmAuthor: (author: Entity) => void
   handleDelete: (name: string) => void
+  error: boolean
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -30,7 +31,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: 'start',
     flexWrap: 'wrap',
     listStyle: 'none',
-    padding: theme.spacing(0.5)
+    padding: theme.spacing(0.5),
+    margin: theme.spacing(0.5)
   },
   chip: {
     margin: theme.spacing(0.5)
@@ -159,6 +161,12 @@ const ChooseOrCreateAuthorPopper: React.FC<ChooseOrCreateAuthorPopperProps> = (p
           })
         }
       </ul>
+      {
+        props.error &&
+        <Typography variant='caption' color='error'>
+          Confirm or delete all unconfirmed authors to continue. Click on an author name to see options.
+        </Typography>
+      }
     </>
   )
 }

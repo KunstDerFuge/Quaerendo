@@ -17,6 +17,7 @@ import { useGet } from 'restful-react'
 import AuthorsSelectInput from './AuthorsSelectInput'
 import CardPage from './CardPage'
 import CardFormField from './CardFormField'
+import { useEffect } from 'react'
 
 interface SubmitSourceFormProps {
   setSource: (source: PatchedSource) => void
@@ -46,6 +47,7 @@ const SubmitSourceForm: React.FC<SubmitSourceFormProps> = (props) => {
   const [sourceTitle, setSourceTitle] = React.useState<string>('')
   const [unconfirmedAuthors, setUnconfirmedAuthors] = React.useState<string[]>([])
   const [sourceAuthors, setSourceAuthors] = React.useState<Entity[]>([])
+  const [authorError, setAuthorError] = React.useState<boolean>(false)
   const [sourceSummary, setSourceSummary] = React.useState<string>('')
   const [sourceDatePublished, setSourceDatePublished] = React.useState<Date>(new Date())
   const [publishDateUnknown, setPublishDateUnknown] = React.useState<boolean>(true)
@@ -69,6 +71,8 @@ const SubmitSourceForm: React.FC<SubmitSourceFormProps> = (props) => {
     }
   })
 
+  useEffect(() => setAuthorError(false), [unconfirmedAuthors])
+
   function isValidUrl(url: string) {
     try {
       new URL(url)
@@ -78,7 +82,18 @@ const SubmitSourceForm: React.FC<SubmitSourceFormProps> = (props) => {
     return true
   }
 
+  function formIsValid() {
+    if (unconfirmedAuthors.length > 0) {
+      setAuthorError(true)
+      return false
+    }
+    return true
+  }
+
   function handleClickNext() {
+    if (!formIsValid()) {
+      return
+    }
     props.setShowNextPage(true)
     props.setSource({
       // @ts-ignore
@@ -145,7 +160,8 @@ const SubmitSourceForm: React.FC<SubmitSourceFormProps> = (props) => {
                   unconfirmedAuthors={unconfirmedAuthors}
                   setUnconfirmedAuthors={(authors) => setUnconfirmedAuthors(authors)}
                   confirmedAuthors={sourceAuthors}
-                  setConfirmedAuthors={(authors) => setSourceAuthors(authors)} />
+                  setConfirmedAuthors={(authors) => setSourceAuthors(authors)}
+                  error={authorError} />
               </CardFormField>
               <CardFormField fieldName='Source Summary' required={false}
                              description={'Summary of the info in the source. This may be auto-generated in the case of an article. If so, please proofread and edit as needed. If this source is original research (i.e. mathematical deduction), include all necessary information here.'}>
