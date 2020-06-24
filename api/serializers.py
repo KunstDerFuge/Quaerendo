@@ -156,12 +156,13 @@ class EvidenceWithReviewSerializer(serializers.ModelSerializer):
         claim = validated_data.pop('claim')
         user = self.context['request'].user
         review = EvidenceReviewByEvidenceSubmitterSerializer(data=validated_data.pop('reviews')[0])
-        evidence_instance = Evidence.objects.create(**validated_data, source_of_evidence=source_instance, claim=claim,
-                                                    submitted_by=user)
         if review.is_valid():
+            evidence_instance = Evidence.objects.create(**validated_data, source_of_evidence=source_instance,
+                                                        claim=claim,
+                                                        submitted_by=user)
             review_instance = review.save(evidence=evidence_instance, reviewer=user)
         else:
-            print(review.errors)
+            return review.errors
         return evidence_instance
 
 
