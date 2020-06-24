@@ -159,7 +159,7 @@ class ClaimsList(generics.ListCreateAPIView):
             return Response(serializer.data)
 
 
-@extend_schema(operation_id='api_claim_detail', methods=['GET', 'POST'])
+@extend_schema(operation_id='api_claim_detail', methods=['GET'])
 class ClaimDetail(generics.RetrieveUpdateAPIView):
     """
     REST endpoints for viewing and modifying individual claims
