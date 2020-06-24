@@ -170,7 +170,8 @@ class ClaimDetail(generics.RetrieveUpdateAPIView):
     def get(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             queryset = self.get_queryset()
-            serializer = ClaimWithEvidenceSerializer(queryset, many=True)
+            instance = queryset.get(id=kwargs.get('pk'))
+            serializer = ClaimWithEvidenceSerializer(instance)
             return Response(serializer.data)
         else:
             # Filter out claims for which the user is invited to review evidence
