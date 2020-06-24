@@ -160,7 +160,10 @@ class Evidence(models.Model):
         return EvidenceRelationship.SPLIT
 
     def get_num_reviews(self, expert: bool) -> int:
-        topic_experts = self.claim.topic.experts.all()
+        if self.claim.topic is None:
+            topic_experts = []
+        else:
+            topic_experts = self.claim.topic.experts.all()
         if expert:
             reviews = self.reviews.filter(reviewer__in=topic_experts)
         else:
