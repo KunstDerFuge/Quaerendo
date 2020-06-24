@@ -57,7 +57,7 @@ const SubmitEvidence: React.FC<SubmitEvidenceProps> = (props) => {
     return <Redirect to='/login' />
   }
 
-  function submitForm(event: FormEvent, review: PatchedEvidenceReview) {
+  async function submitForm(event: FormEvent, review: PatchedEvidenceReview) {
     event.preventDefault()
     let evidence: EvidenceWithReview = {
       // @ts-ignore
@@ -65,14 +65,14 @@ const SubmitEvidence: React.FC<SubmitEvidenceProps> = (props) => {
       claim: props.id,
       reviews: [review as EvidenceReview]
     }
-    console.log(evidence)
-    post(evidence).then((response: EvidenceWithReview) => {
+    const response = post(evidence).then((response: EvidenceWithReview) => {
       history.push('/claim/' + props.id)
       console.log(response)
       return 'success'
     }).catch((errors) => {
       return errors.data
     })
+    return await response
   }
 
   return (

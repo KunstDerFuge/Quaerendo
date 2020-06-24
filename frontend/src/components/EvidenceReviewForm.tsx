@@ -70,11 +70,14 @@ const EvidenceReviewForm: React.FC<EvidenceReviewFormProps> = (props) => {
       deduced_source_degree: sourceDegree as SourceDegree,
       is_reliable: trustworthiness === 'trustworthy',
       additional_comments: comments
+    }).then((response: any) => {
+      console.log('response: ')
+      console.log(response)
+      if (response !== 'success' && response.hasOwnProperty('reviews')) {
+        console.log(response['reviews'][0])
+        setFormErrors(response['reviews'][0])
+      }
     })
-    if (response !== 'success' && response && response.hasOwnProperty('reviews')) {
-      console.log(response['reviews'])
-      setFormErrors(response['reviews'])
-    }
   }
 
   function formIsValid() {
