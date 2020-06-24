@@ -21,7 +21,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles'
 import { useAuth } from './auth'
 import { useGet, useMutate } from 'restful-react'
-import { UserDetails } from '../openapi-types'
+import { User } from '../openapi-types'
 import CardFormField from './CardFormField'
 
 interface LoginFormErrors {
@@ -66,7 +66,7 @@ const useStyles = makeStyles(theme => ({
 const AvatarPanel: React.FC<{}> = () => {
   const classes = useStyles()
 
-  const [user, setUser] = React.useState<UserDetails>(null)
+  const [user, setUser] = React.useState<User>(null)
   const [anchorEl, setAnchorEl] = React.useState(null)
   const [loginUsername, setLoginUsername] = React.useState('')
   const [loginPassword, setLoginPassword] = React.useState('')
