@@ -9,6 +9,7 @@ import AddCommentRoundedIcon from '@material-ui/icons/AddCommentRounded'
 import { makeStyles } from '@material-ui/core/styles'
 import AvatarPanel from './AvatarPanel'
 import { ReviewInvitation, useApiReviewInvitations } from '../openapi-types'
+import { useAuth } from './auth'
 
 const useStyles = makeStyles(theme => ({
   drawer: {
@@ -47,10 +48,18 @@ const NavigationDrawer: React.FC<{}> = () => {
     }
   })
 
+  // @ts-ignore
+  const {authToken, setAuthToken} = useAuth()
+
+  function updateInvitations() {
+    console.log('Token is ' + authToken)
+    authToken && refetchInvitations()
+  }
+
   useEffect(() => {
-    const timer = setInterval(refetchInvitations, 15000)
+    const timer = setInterval(updateInvitations, 15000)
     return () => clearInterval(timer)
-  }, [])
+  }, [authToken])
 
   return (
     <Drawer
