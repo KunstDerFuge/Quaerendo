@@ -7,6 +7,7 @@ import {
   Checkbox,
   FormControl,
   FormControlLabel,
+  FormHelperText,
   Link,
   MenuItem,
   Select,
@@ -21,7 +22,7 @@ import CardFormField from './CardFormField'
 interface EvidenceReviewFormProps {
   visible: boolean
   showPreviousForm?: () => void
-  submitForm: (event: FormEvent, review: PatchedEvidenceReview) => void
+  submitForm: (event: FormEvent, review: PatchedEvidenceReview) => any
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -41,6 +42,15 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }))
 
+interface reviewErrors {
+  deduced_evidence_relationship?: string
+  deduced_source_degree?: string
+  is_reliable?: string
+  additional_comments?: string
+  not_biased?: string
+  non_field_errors?: string
+}
+
 const EvidenceReviewForm: React.FC<EvidenceReviewFormProps> = (props) => {
   const classes = useStyles()
   const [evidenceRelationship, setEvidenceRelationship] = React.useState<EvidenceRelationship | 'placeholder'>('placeholder')
@@ -48,14 +58,49 @@ const EvidenceReviewForm: React.FC<EvidenceReviewFormProps> = (props) => {
   const [sourceDegree, setSourceDegree] = React.useState<SourceDegree | 'placeholder'>('placeholder')
   const [comments, setComments] = React.useState<string>('')
   const [notBiased, setNotBiased] = React.useState<boolean>(false)
+  const [formErrors, setFormErrors] = React.useState<reviewErrors>({})
 
   function handleSubmit(event: FormEvent) {
-    props.submitForm(event, {
+    event.preventDefault()
+    if (!formIsValid()) {
+      return
+    }
+    const response = props.submitForm(event, {
       deduced_evidence_relationship: evidenceRelationship as EvidenceRelationship,
       deduced_source_degree: sourceDegree as SourceDegree,
       is_reliable: trustworthiness === 'trustworthy',
       additional_comments: comments
     })
+    if (response !== 'success' && response && response.hasOwnProperty('reviews')) {
+      console.log(response['reviews'])
+      setFormErrors(response['reviews'])
+    }
+  }
+
+  function formIsValid() {
+    let not_biased = undefined
+    let is_reliable = undefined
+    let deduced_evidence_relationship = undefined
+    let deduced_source_degree = undefined
+    if (!notBiased) {
+      not_biased = 'You must agree to continue.'
+    }
+    if (trustworthiness === 'placeholder') {
+      is_reliable = 'This cannot be blank.'
+    }
+    if (evidenceRelationship === 'placeholder') {
+      deduced_evidence_relationship = 'This cannot be blank.'
+    }
+    if (sourceDegree === 'placeholder') {
+      deduced_source_degree = 'This cannot be blank.'
+    }
+    let newFormErrors = JSON.parse(JSON.stringify(formErrors))
+    newFormErrors['not_biased'] = not_biased
+    newFormErrors['is_reliable'] = is_reliable
+    newFormErrors['deduced_evidence_relationship'] = deduced_evidence_relationship
+    newFormErrors['deduced_source_degree'] = deduced_source_degree
+    setFormErrors(newFormErrors)
+    return !(not_biased || is_reliable || deduced_evidence_relationship || deduced_source_degree)
   }
 
   const cardActions = (
@@ -98,6 +143,12 @@ const EvidenceReviewForm: React.FC<EvidenceReviewFormProps> = (props) => {
                     <MenuItem value='INCONCLUSIVE'>is&nbsp;<strong>inconclusive</strong>.</MenuItem>
                   </Select>
                 </Typography>
+                {
+                  formErrors.hasOwnProperty('deduced_evidence_relationship') &&
+                  <Typography variant='caption' color='error'>
+                    {formErrors['deduced_evidence_relationship']}
+                  </Typography>
+                }
               </CardFormField>
               <CardFormField fieldName='Source Degree' required={false} description={
                 <>
@@ -129,6 +180,12 @@ const EvidenceReviewForm: React.FC<EvidenceReviewFormProps> = (props) => {
                       it.</MenuItem>
                   </Select>
                 </Typography>
+                {
+                  formErrors.hasOwnProperty('deduced_source_degree') &&
+                  <Typography variant='caption' color='error'>
+                    {formErrors['deduced_source_degree']}
+                  </Typography>
+                }
               </CardFormField>
               <CardFormField fieldName='Trustworthiness' required={true}
                              description={'Do you believe this source is factual? Be as objective as possible.'}>
@@ -145,17 +202,24 @@ const EvidenceReviewForm: React.FC<EvidenceReviewFormProps> = (props) => {
                       <strong>misleading</strong>,&nbsp;or an&nbsp;<strong>invalid source</strong>.</MenuItem>
                   </Select>
                 </Typography>
+                {
+                  formErrors.hasOwnProperty('is_reliable') &&
+                  <Typography variant='caption' color='error'>
+                    {formErrors['is_reliable']}
+                  </Typography>
+                }
               </CardFormField>
               <CardFormField fieldName='Additional Comments' required={false}
                              description={'Any additional comments you have on this piece of evidence. These will be public and may not be anonymous.'}>
                 <TextField
                   id='additional-comments' fullWidth label='Additional Comments' multiline variant='outlined'
                   rows={4} rowsMax={8} aria-label='additional comments' value={comments}
-                  onChange={(e) => setComments(e.target.value)} />
+                  onChange={(e) => setComments(e.target.value)} error={formErrors.hasOwnProperty('additional_comments')}
+                  helperText={formErrors['additional_comments']} />
               </CardFormField>
               <CardFormField fieldName='Statement of Integrity' required={true}
                              description='If you are not able to honestly review this evidence for any reason, you must recuse yourself by clicking "Skip Review".'>
-                <FormControl>
+                <FormControl error={formErrors.hasOwnProperty('not_biased')}>
                   <FormControlLabel
                     value='non-bias-statement'
                     control={
@@ -164,8 +228,20 @@ const EvidenceReviewForm: React.FC<EvidenceReviewFormProps> = (props) => {
                     label='I hereby certify that I have reviewed and fully understand this piece of evidence and that my review consists only of my own honest, unbiased opinion.'
                     labelPlacement='start'
                   />
+                  {
+                    formErrors.hasOwnProperty('not_biased') &&
+                    <FormHelperText error>
+                      {formErrors['not_biased']}
+                    </FormHelperText>
+                  }
                 </FormControl>
               </CardFormField>
+              {
+                formErrors.hasOwnProperty('non_field_errors') &&
+                <Typography variant='caption' color='error'>
+                  {formErrors['non_field_errors']}
+                </Typography>
+              }
             </CardPage>
           </form>
       }

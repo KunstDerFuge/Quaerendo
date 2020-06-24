@@ -69,7 +69,9 @@ const SubmitEvidence: React.FC<SubmitEvidenceProps> = (props) => {
     post(evidence).then((response: EvidenceWithReview) => {
       history.push('/claim/' + props.id)
       console.log(response)
-      return response
+      return 'success'
+    }).catch((errors) => {
+      return errors.data
     })
   }
 
