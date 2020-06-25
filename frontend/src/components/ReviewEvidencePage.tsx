@@ -68,7 +68,7 @@ const ReviewEvidencePage: React.FC<ReviewEvidencePageProps> = (props) => {
   const [showClaim, setShowClaim] = React.useState(true)
   const [showSkipDialog, setShowSkipDialog] = React.useState(false)
 
-  const {data, loading} = useApiReviewInvitationsDetailsRetrieve({
+  const {loading} = useApiReviewInvitationsDetailsRetrieve({
     id: props.id.toString(),
     resolve: (data) => {
       setReviewInfo(data)
@@ -76,9 +76,9 @@ const ReviewEvidencePage: React.FC<ReviewEvidencePageProps> = (props) => {
     }
   })
 
-  const {mutate: skipReview, loading: loadingSkipReview} = useApiReviewInvitationsDetailsDestroy({})
+  const {mutate: skipReview} = useApiReviewInvitationsDetailsDestroy({})
 
-  const {mutate: submitReview, loading: submitLoading} = useApiEvidenceReviewsCreate({})
+  const {mutate: submitReview} = useApiEvidenceReviewsCreate({})
 
   function handleSubmitForm(event: FormEvent, review: EvidenceReview) {
     event.preventDefault()

@@ -38,7 +38,7 @@ const RegistrationPage: React.FC<{}> = () => {
   const [password2, setPassword2] = React.useState('')
   const [formErrors, setFormErrors] = React.useState<RegistrationFormErrors>({})
 
-  const {mutate: post, loading} = useMutate({
+  const {mutate: post} = useMutate({
     verb: 'POST',
     path: '/rest-auth/registration/'
   })

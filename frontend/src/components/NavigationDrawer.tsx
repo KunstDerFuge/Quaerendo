@@ -41,7 +41,7 @@ const NavigationDrawer: React.FC<{}> = () => {
   const history = useHistory()
   const [reviewInvitations, setReviewInvitations] = React.useState<ReviewInvitation[]>(null)
 
-  const {data, loading, refetch: refetchInvitations} = useApiReviewInvitations({
+  const {refetch: refetchInvitations} = useApiReviewInvitations({
     resolve: (data) => {
       setReviewInvitations(data)
       return data
@@ -49,7 +49,7 @@ const NavigationDrawer: React.FC<{}> = () => {
   })
 
   // @ts-ignore
-  const {authToken, setAuthToken} = useAuth()
+  const {authToken} = useAuth()
 
   function updateInvitations() {
     console.log('Token is ' + authToken)

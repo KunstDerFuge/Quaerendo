@@ -54,7 +54,7 @@ const ChooseOrCreateAuthorPopper: React.FC<ChooseOrCreateAuthorPopperProps> = (p
   const [open, setOpen] = React.useState(false)
   const [options, setOptions] = React.useState([])
 
-  const {data, loading} = useGet({
+  const {loading} = useGet({
     path: 'api/authors/match/',
     queryParams: {name: name},
     resolve: data => {

@@ -53,7 +53,7 @@ const SubmitSourceForm: React.FC<SubmitSourceFormProps> = (props) => {
   const [publishDateUnknown, setPublishDateUnknown] = React.useState<boolean>(true)
   const [showOtherFields, setShowOtherFields] = React.useState<boolean>(false)
 
-  const {data, loading, refetch: fetchArticleInfo} = useGet({
+  const {loading} = useGet({
     path: 'api/article/',
     debounce: 500,
     queryParams: {url: sourceUrl},

@@ -60,7 +60,7 @@ const SubmitClaim: React.FC<{}> = () => {
   const [claimDescription, setClaimDescription] = React.useState('')
   const [formErrors, setFormErrors] = React.useState<claimErrors>({})
 
-  const {mutate: post, loading} = useMutate({
+  const {mutate: post} = useMutate({
     verb: 'POST',
     path: '/api/claims/'
   })
@@ -69,15 +69,6 @@ const SubmitClaim: React.FC<{}> = () => {
   const {authToken} = useAuth()
   if (!authToken) {
     return <Redirect to='/login' />
-  }
-
-  function validateForm() {
-    try {
-      assert(claimText)
-    } catch (_) {
-      return false
-    }
-    return true
   }
 
   function submitForm(event: FormEvent) {

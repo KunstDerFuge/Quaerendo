@@ -65,7 +65,7 @@ const EvidenceReviewForm: React.FC<EvidenceReviewFormProps> = (props) => {
     if (!formIsValid()) {
       return
     }
-    const response = props.submitForm(event, {
+    props.submitForm(event, {
       deduced_evidence_relationship: evidenceRelationship as EvidenceRelationship,
       deduced_source_degree: sourceDegree as SourceDegree,
       is_reliable: trustworthiness === 'trustworthy',

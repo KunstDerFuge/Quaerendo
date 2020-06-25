@@ -33,7 +33,7 @@ const ReviewInvitationPage: React.FC<{}> = (props) => {
     return <Redirect to='/login' />
   }
 
-  const {data, loading} = useApiReviewInvitationsDetailsList({
+  useApiReviewInvitationsDetailsList({
     resolve: (data) => {
       setInvitationData(data)
       return data

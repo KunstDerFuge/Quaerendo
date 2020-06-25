@@ -28,7 +28,7 @@ const AuthorsSelectInput: React.FC<AuthorsSelectInputProps> = (props) => {
   const [authorOptions, setAuthorOptions] = React.useState<Entity[]>([])
   const [textValue, setTextValue] = React.useState<string>('')
 
-  const {data, loading} = useGet({
+  useGet({
     path: 'api/authors/match/',
     debounce: 200,
     queryParams: {name: textValue},

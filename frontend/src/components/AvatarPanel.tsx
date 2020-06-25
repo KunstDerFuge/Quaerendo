@@ -75,19 +75,19 @@ const AvatarPanel: React.FC<{}> = () => {
   // @ts-ignore
   const {authToken, setAuthToken} = useAuth()
 
-  const {data, loading, refetch: refetchUser} = useGet({
+  const {refetch: refetchUser} = useGet({
     path: '/rest-auth/user/',
     resolve: data => {
       setUser(data)
     }
   })
 
-  const {mutate: postLogOut, loading: logOutLoading} = useMutate({
+  const {mutate: postLogOut} = useMutate({
     verb: 'POST',
     path: '/rest-auth/logout/'
   })
 
-  const {mutate: postLogin, loading: loginLoading} = useMutate({
+  const {mutate: postLogin} = useMutate({
     verb: 'POST',
     path: '/rest-auth/login/'
   })

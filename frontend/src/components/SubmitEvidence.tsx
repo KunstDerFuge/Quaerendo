@@ -46,7 +46,7 @@ const SubmitEvidence: React.FC<SubmitEvidenceProps> = (props) => {
   const [source, setSource] = React.useState<PatchedSource>(null)
   const [showReviewForm, setShowReviewForm] = React.useState(false)
 
-  const {mutate: post, loading} = useMutate({
+  const {mutate: post} = useMutate({
     verb: 'POST',
     path: '/api/evidence/'
   })

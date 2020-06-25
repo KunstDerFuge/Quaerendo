@@ -34,7 +34,7 @@ const LoginPage: React.FC<{}> = () => {
   const [password, setPassword] = React.useState('')
   const [formErrors, setFormErrors] = React.useState<LoginFormErrors>({})
 
-  const {mutate: post, loading} = useMutate({
+  const {mutate: post} = useMutate({
     verb: 'POST',
     path: '/rest-auth/login/'
   })
