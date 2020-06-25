@@ -47,15 +47,18 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const TruthChip: React.FC<TruthChipProps> = (props) => {
   const classes = useStyles(props)
+
   if (!props.consensus) {
     return (
       <div />
     )
   }
+
   const consensus = props.consensus.toLowerCase()
   let summary = props.expert ? 'Our experts ' : 'Our community contributors '
   let icon = props.expert ? <VerifiedUserRoundedIcon className={classes.icon} /> :
     <GroupIcon className={classes.icon} />
+
   switch (props.consensus) {
     case 'TRUE':
       summary += 'have deemed this claim true.'
@@ -73,6 +76,7 @@ const TruthChip: React.FC<TruthChipProps> = (props) => {
       summary += 'have deemed this claim false.'
       break
   }
+
   return (
     <Tooltip title={summary}>
       <Chip
