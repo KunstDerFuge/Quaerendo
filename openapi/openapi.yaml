@@ -301,7 +301,7 @@ paths:
     get:
       tags:
       - api
-      description: REST endpoints for viewing and submitting claims
+      description: REST endpoints for viewing and submitting evidence
       operationId: api_evidence_list
       responses:
         "200":
@@ -317,7 +317,7 @@ paths:
     post:
       tags:
       - api
-      description: REST endpoints for viewing and submitting claims
+      description: REST endpoints for viewing and submitting evidence
       operationId: api_evidence_create
       requestBody:
         content:
@@ -752,6 +752,46 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Source'
+      security:
+      - tokenAuth: []
+  /api/topics/:
+    get:
+      tags:
+      - api
+      operationId: api_topics_list
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Topic'
+      security:
+      - tokenAuth: []
+      - {}
+    post:
+      tags:
+      - api
+      operationId: api_topics_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Topic'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Topic'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Topic'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Topic'
       security:
       - tokenAuth: []
   /rest-auth/facebook/connect/:
@@ -1377,6 +1417,22 @@ components:
         evidence:
           type: integer
           writeOnly: true
+    EvidenceReviewByEvidenceSubmitter:
+      required:
+      - deduced_evidence_relationship
+      - deduced_source_degree
+      - is_reliable
+      type: object
+      properties:
+        deduced_evidence_relationship:
+          $ref: '#/components/schemas/EvidenceRelationship'
+        deduced_source_degree:
+          $ref: '#/components/schemas/SourceDegree'
+        is_reliable:
+          type: boolean
+        additional_comments:
+          maxLength: 500
+          type: string
     EvidenceWithReview:
       required:
       - claim
@@ -1385,11 +1441,12 @@ components:
       type: object
       properties:
         source_of_evidence:
-          $ref: '#/components/schemas/Source'
+          $ref: '#/components/schemas/SourceCreate'
         reviews:
           type: array
+          writeOnly: true
           items:
-            $ref: '#/components/schemas/EvidenceReview'
+            $ref: '#/components/schemas/EvidenceReviewByEvidenceSubmitter'
         claim:
           type: integer
     Login:
@@ -1690,6 +1747,39 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Entity'
+        url:
+          maxLength: 200
+          type: string
+          format: uri
+        title:
+          maxLength: 250
+          type: string
+        summary:
+          type: string
+        date_retrieved:
+          type: string
+          format: date-time
+          readOnly: true
+        date_published:
+          type: string
+          format: date-time
+          nullable: true
+    SourceCreate:
+      required:
+      - authors
+      - date_retrieved
+      - id
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        authors:
+          type: array
+          writeOnly: true
+          items:
+            type: integer
+            writeOnly: true
         url:
           maxLength: 200
           type: string
