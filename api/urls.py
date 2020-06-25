@@ -16,6 +16,7 @@ urlpatterns = [
     path('review/invitations/', views.ReviewInvitations.as_view()),
     path('review/invitations/details/', views.ReviewInvitationsDetails.as_view()),
     path('review/invitations/details/<int:pk>', views.ReviewInvitationsDetailsSingle.as_view()),
+    path('topics/', views.TopicList.as_view()),
     re_path(r'^article/$', views.ArticleInfo.as_view()),
     re_path(r'^authors/match/$', views.AuthorMatch.as_view())
 ]

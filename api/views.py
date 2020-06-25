@@ -11,10 +11,10 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from api.models import Entity, Source, Claim, Evidence, EvidenceReview, ReviewInvitation
+from api.models import Entity, Source, Claim, Evidence, EvidenceReview, ReviewInvitation, Topic
 from api.serializers import EntitySerializer, SourceSerializer, ClaimSerializer, EvidenceSerializer, \
     ClaimWithEvidenceSerializer, EvidenceReviewSerializer, EvidenceWithReviewSerializer, ClaimCreateSerializer, \
-    ReviewInvitationSerializer, ReviewInvitationDetailsSerializer
+    ReviewInvitationSerializer, ReviewInvitationDetailsSerializer, TopicSerializer
 
 
 @extend_schema(operation_id='api_review_invitations', methods=['GET'], responses=ReviewInvitationSerializer(many=True))
@@ -232,6 +232,11 @@ class EvidenceReviewDetail(generics.RetrieveUpdateAPIView):
     # TODO: Add permission only allowing view/modify of own reviews
     queryset = EvidenceReview.objects.all()
     serializer_class = EvidenceReviewSerializer
+
+
+class TopicList(generics.ListCreateAPIView):
+    queryset = Topic.objects.all()
+    serializer_class = TopicSerializer
 
 
 class FacebookConnect(SocialConnectView):
