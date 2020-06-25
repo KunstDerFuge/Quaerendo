@@ -69,6 +69,9 @@ class Claim(models.Model):
     submitted_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, null=True, blank=True,
                                      related_name='claims_submitted')
 
+    class Meta:
+        ordering = ['-id']
+
     def __str__(self):
         truncated_claim = self.claim_text[:30].rstrip(' ')
         if len(self.claim_text) > 30:
