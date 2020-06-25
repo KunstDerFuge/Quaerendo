@@ -143,7 +143,7 @@ const ClaimDetails: React.FC<ClaimDetailsProps> = (props) => {
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
                   {
-                    loading || !claim!.source_of_claim ?
+                    !claim!.source_of_claim ?
                       ''
                       :
                       <SourceInfo source={claim!.source_of_claim} />
@@ -151,7 +151,7 @@ const ClaimDetails: React.FC<ClaimDetailsProps> = (props) => {
                 </ExpansionPanelDetails>
               </ExpansionPanel>
             </div>
-            <EvidencePanel evidence={loading ? undefined : claim!.related_evidence} claimId={props.id} />
+            <EvidencePanel evidence={claim!.related_evidence} claimId={props.id} />
           </>
           :
           ''
