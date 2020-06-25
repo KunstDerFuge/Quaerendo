@@ -6,9 +6,9 @@ import {
   useApiEvidenceReviewsCreate,
   useApiReviewInvitationsDetailsDestroy,
   useApiReviewInvitationsDetailsRetrieve
-} from '../openapi-types'
-import CardPageContainer from './CardPageContainer'
-import EvidenceReviewForm from './EvidenceReviewForm'
+} from '../../openapi-types'
+import CardPageContainer from '../layout/CardPageContainer'
+import EvidenceReviewForm from '../forms/EvidenceReviewForm'
 import {
   Button,
   Dialog,
@@ -26,7 +26,7 @@ import {
 } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import SourceInfo from './SourceInfo'
+import SourceInfo from '../SourceInfo'
 import { makeStyles } from '@material-ui/styles'
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded'
 import { useHistory } from 'react-router'

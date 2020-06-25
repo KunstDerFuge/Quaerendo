@@ -5,11 +5,11 @@ import { makeStyles } from '@material-ui/styles'
 import { useMutate } from 'restful-react'
 import * as assert from 'assert'
 import { Redirect, useHistory } from 'react-router'
-import SubmitSourceForm from './SubmitSourceForm'
+import SubmitSourceForm from './forms/SubmitSourceForm'
 import { PatchedSource } from '../openapi-types'
-import CardPage from './CardPage'
-import CardFormField from './CardFormField'
-import { useAuth } from './auth'
+import CardPage from './layout/CardPage'
+import CardFormField from './layout/CardFormField'
+import { useAuth } from './utilities/auth'
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {

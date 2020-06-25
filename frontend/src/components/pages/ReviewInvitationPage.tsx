@@ -1,10 +1,10 @@
 import * as React from 'react'
-import { useAuth } from './auth'
+import { useAuth } from '../utilities/auth'
 import { Redirect, useHistory } from 'react-router'
-import { ReviewInvitationDetails, useApiReviewInvitationsDetailsList } from '../openapi-types'
-import CardPage from './CardPage'
+import { ReviewInvitationDetails, useApiReviewInvitationsDetailsList } from '../../openapi-types'
+import CardPage from '../layout/CardPage'
 import { Card, CardActionArea, CardContent, Grid, Typography } from '@material-ui/core'
-import CardPageContainer from './CardPageContainer'
+import CardPageContainer from '../layout/CardPageContainer'
 
 const InvitationDetails: React.FC<ReviewInvitationDetails> = (props) => {
   const history = useHistory()

@@ -8,8 +8,8 @@ import { useHistory } from 'react-router-dom'
 import AddCommentRoundedIcon from '@material-ui/icons/AddCommentRounded'
 import { makeStyles } from '@material-ui/core/styles'
 import AvatarPanel from './AvatarPanel'
-import { ReviewInvitation, useApiReviewInvitations } from '../openapi-types'
-import { useAuth } from './auth'
+import { ReviewInvitation, useApiReviewInvitations } from '../../openapi-types'
+import { useAuth } from '../utilities/auth'
 
 const useStyles = makeStyles(theme => ({
   drawer: {

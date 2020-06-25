@@ -19,9 +19,9 @@ import {
   Typography
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import { useAuth } from './auth'
+import { useAuth } from '../utilities/auth'
 import { useGet, useMutate } from 'restful-react'
-import { User } from '../openapi-types'
+import { User } from '../../openapi-types'
 import CardFormField from './CardFormField'
 
 interface LoginFormErrors {

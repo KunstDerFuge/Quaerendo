@@ -1,12 +1,12 @@
 import * as React from 'react'
 import { FormEvent } from 'react'
 import { Button, CardActions, Grid, TextField, Theme, Typography } from '@material-ui/core'
-import CardPage from './CardPage'
-import CardFormField from './CardFormField'
+import CardPage from '../layout/CardPage'
+import CardFormField from '../layout/CardFormField'
 import { useMutate } from 'restful-react'
 import { makeStyles } from '@material-ui/styles'
 import { Redirect, useHistory } from 'react-router'
-import { useAuth } from './auth'
+import { useAuth } from '../utilities/auth'
 
 const useStyles = makeStyles((theme: Theme) => ({
   leftMarginButton: {

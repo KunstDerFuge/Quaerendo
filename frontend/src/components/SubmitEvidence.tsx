@@ -2,12 +2,12 @@ import * as React from 'react'
 import { FormEvent } from 'react'
 import { makeStyles } from '@material-ui/styles'
 import { Grid, Theme } from '@material-ui/core'
-import SubmitSourceForm from './SubmitSourceForm'
+import SubmitSourceForm from './forms/SubmitSourceForm'
 import { EvidenceReview, EvidenceWithReview, PatchedEvidenceReview, PatchedSource } from '../openapi-types'
-import EvidenceReviewForm from './EvidenceReviewForm'
+import EvidenceReviewForm from './forms/EvidenceReviewForm'
 import { useMutate } from 'restful-react'
 import { Redirect, useHistory } from 'react-router'
-import { useAuth } from './auth'
+import { useAuth } from './utilities/auth'
 
 interface SubmitEvidenceProps {
   id: number

@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { useEffect } from 'react'
 import ThemeProvider from '@material-ui/styles/ThemeProvider'
-import MainTheme from './MainTheme'
+import MainTheme from './themes/MainTheme'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
-import { AuthContext } from './auth'
+import { AuthContext } from './utilities/auth'
 import AppContent from './AppContent'
 
 const App: React.FC<{}> = () => {

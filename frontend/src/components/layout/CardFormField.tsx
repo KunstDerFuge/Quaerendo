@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Grid, Theme } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
-import InfoTooltip from './InfoTooltip'
+import InfoTooltip from '../InfoTooltip'
 import { ReactElement } from 'react'
 
 interface CardFormFieldProps {

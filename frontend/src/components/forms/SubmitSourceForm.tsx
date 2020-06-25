@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Entity, PatchedSource } from '../openapi-types'
+import { Entity, PatchedSource } from '../../openapi-types'
 import {
   Button,
   CardActions,
@@ -14,9 +14,9 @@ import {
 import { DatePicker } from '@material-ui/pickers'
 import { makeStyles } from '@material-ui/styles'
 import { useGet } from 'restful-react'
-import AuthorsSelectInput from './AuthorsSelectInput'
-import CardPage from './CardPage'
-import CardFormField from './CardFormField'
+import AuthorsSelectInput from '../inputs/AuthorsSelectInput'
+import CardPage from '../layout/CardPage'
+import CardFormField from '../layout/CardFormField'
 import { useEffect } from 'react'
 
 interface SubmitSourceFormProps {

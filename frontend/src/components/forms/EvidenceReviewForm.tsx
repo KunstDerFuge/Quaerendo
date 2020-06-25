@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { FormEvent } from 'react'
-import { EvidenceRelationship, PatchedEvidenceReview, SourceDegree } from '../openapi-types'
+import { EvidenceRelationship, PatchedEvidenceReview, SourceDegree } from '../../openapi-types'
 import {
   Button,
   CardActions,
@@ -16,8 +16,8 @@ import {
   Typography
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
-import CardPage from './CardPage'
-import CardFormField from './CardFormField'
+import CardPage from '../layout/CardPage'
+import CardFormField from '../layout/CardFormField'
 
 interface EvidenceReviewFormProps {
   visible: boolean

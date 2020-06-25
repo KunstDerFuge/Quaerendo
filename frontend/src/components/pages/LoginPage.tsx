@@ -1,12 +1,12 @@
 import * as React from 'react'
 import { FormEvent } from 'react'
 import { Button, CardActions, Grid, TextField, Theme, Typography } from '@material-ui/core'
-import CardPage from './CardPage'
+import CardPage from '../layout/CardPage'
 import { makeStyles } from '@material-ui/styles'
-import CardFormField from './CardFormField'
+import CardFormField from '../layout/CardFormField'
 import { useMutate } from 'restful-react'
 import { Redirect, useHistory } from 'react-router'
-import { useAuth } from './auth'
+import { useAuth } from '../utilities/auth'
 
 interface LoginFormErrors {
   username?: string

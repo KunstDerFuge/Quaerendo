@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Entity } from '../openapi-types'
+import { Entity } from '../../openapi-types'
 import { Chip, TextField, Theme, Typography } from '@material-ui/core'
 import { Autocomplete } from '@material-ui/lab'
 import { useGet } from 'restful-react'

@@ -12,7 +12,7 @@ import {
   Theme,
   Typography
 } from '@material-ui/core'
-import { Entity } from '../openapi-types'
+import { Entity } from '../../openapi-types'
 import { makeStyles } from '@material-ui/styles'
 import { useGet, useMutate } from 'restful-react'
 import { Skeleton } from '@material-ui/lab'
