@@ -1,5 +1,8 @@
 ![Demo](demo.gif)
 
+[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/KunstDerFuge/Quaerendo.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/KunstDerFuge/Quaerendo/context:javascript)
+[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/KunstDerFuge/Quaerendo.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/KunstDerFuge/Quaerendo/context:python)
+
 ## What is this?
 This is an attempt at creating a democratized, open-source website that does fact checking.
 
