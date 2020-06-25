@@ -77,7 +77,7 @@ const TruthChip: React.FC<TruthChipProps> = (props) => {
     <Tooltip title={summary}>
       <Chip
         className={classes.chip}
-        label={consensus}
+        label={consensus.replace('_', ' ')}
         aria-label={summary}
         icon={icon}
         size={props.size ? props.size : 'small'}
