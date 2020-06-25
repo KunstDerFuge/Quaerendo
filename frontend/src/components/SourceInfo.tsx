@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ExpansionPanelDetails, Grid, Link, Theme, Typography } from '@material-ui/core'
+import { Grid, Link, Theme, Typography } from '@material-ui/core'
 import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded'
 import AuthorsLinksList from './AuthorsLinksList'
 import { Source } from '../openapi-types'

@@ -3,16 +3,14 @@ import { Evidence } from '../openapi-types'
 import { useGet } from 'restful-react'
 import {
   Card,
-  CardContent, ExpansionPanel,
+  CardContent,
+  ExpansionPanel,
   ExpansionPanelDetails,
   ExpansionPanelSummary,
-  Grid,
   Theme,
   Typography
 } from '@material-ui/core'
-import AuthorsLinksList from './AuthorsLinksList'
 import { makeStyles } from '@material-ui/styles'
-import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import SourceInfo from './SourceInfo'
 import { Skeleton } from '@material-ui/lab'
