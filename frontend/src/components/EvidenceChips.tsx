@@ -3,7 +3,7 @@ import { Evidence, EvidenceRelationship } from '../openapi-types'
 import { Chip, Theme, Tooltip } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import VerifiedUserRoundedIcon from '@material-ui/icons/VerifiedUserRounded'
-import DoneRoundedIcon from '@material-ui/icons/DoneRounded'
+import GroupIcon from '@material-ui/icons/Group'
 
 interface EvidenceRelationshipChipProps {
   relationship: EvidenceRelationship | 'UNDER REVIEW'
@@ -51,7 +51,7 @@ const EvidenceRelationshipChip: React.FC<EvidenceRelationshipChipProps> = (props
   if (props.expert) {
     icon = <VerifiedUserRoundedIcon className={classes.icon} />
   } else if (props.community) {
-    icon = <DoneRoundedIcon className={classes.icon} />
+    icon = <GroupIcon className={classes.icon} />
   }
   switch (props.relationship) {
     case 'UNRELATED':

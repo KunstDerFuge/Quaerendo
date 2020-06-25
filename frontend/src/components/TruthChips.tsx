@@ -3,7 +3,7 @@ import { TruthJudgement } from '../openapi-types'
 import { Chip, Theme, Tooltip } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import VerifiedUserRoundedIcon from '@material-ui/icons/VerifiedUserRounded'
-import DoneRoundedIcon from '@material-ui/icons/DoneRounded'
+import GroupIcon from '@material-ui/icons/Group'
 
 interface TruthChipsProps {
   community_consensus: TruthJudgement
@@ -55,7 +55,7 @@ const TruthChip: React.FC<TruthChipProps> = (props) => {
   const consensus = props.consensus.toLowerCase()
   let summary = props.expert ? 'Our experts ' : 'Our community contributors '
   let icon = props.expert ? <VerifiedUserRoundedIcon className={classes.icon} /> :
-    <DoneRoundedIcon className={classes.icon} />
+    <GroupIcon className={classes.icon} />
   switch (props.consensus) {
     case 'TRUE':
       summary += 'have deemed this claim true.'
