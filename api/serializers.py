@@ -160,7 +160,7 @@ class EvidenceWithReviewSerializer(serializers.ModelSerializer):
             evidence_instance = Evidence.objects.create(**validated_data, source_of_evidence=source_instance,
                                                         claim=claim,
                                                         submitted_by=user)
-            review_instance = review.save(evidence=evidence_instance, reviewer=user)
+            review.save(evidence=evidence_instance, reviewer=user)
         else:
             return review.errors
         return evidence_instance
