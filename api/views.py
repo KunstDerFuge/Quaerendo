@@ -203,6 +203,7 @@ class EvidenceReviewList(generics.ListCreateAPIView):
     """
     REST endpoints for viewing and submitting evidence reviews
     """
+    # TODO: Add permission only allowing viewing own reviews
     queryset = EvidenceReview.objects.all()
     serializer_class = EvidenceReviewSerializer
 
@@ -228,6 +229,7 @@ class EvidenceReviewDetail(generics.RetrieveUpdateAPIView):
     """
     REST endpoints for viewing and modifying individual evidence reviews
     """
+    # TODO: Add permission only allowing view/modify of own reviews
     queryset = EvidenceReview.objects.all()
     serializer_class = EvidenceReviewSerializer
 
