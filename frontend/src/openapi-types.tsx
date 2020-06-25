@@ -67,9 +67,16 @@ export interface EvidenceReview {
   evidence: number;
 }
 
+export interface EvidenceReviewByEvidenceSubmitter {
+  deduced_evidence_relationship: EvidenceRelationship;
+  deduced_source_degree: SourceDegree;
+  is_reliable: boolean;
+  additional_comments?: string;
+}
+
 export interface EvidenceWithReview {
-  source_of_evidence: Source;
-  reviews: EvidenceReview[];
+  source_of_evidence: SourceCreate;
+  reviews: EvidenceReviewByEvidenceSubmitter[];
   claim: number;
 }
 
@@ -201,6 +208,16 @@ export interface SocialConnect {
 export interface Source {
   id: number;
   authors: Entity[];
+  url?: string;
+  title?: string;
+  summary?: string;
+  date_retrieved: string;
+  date_published?: string | null;
+}
+
+export interface SourceCreate {
+  id: number;
+  authors: number[];
   url?: string;
   title?: string;
   summary?: string;
@@ -441,7 +458,7 @@ export const useApiEntitiesPartialUpdate = ({id, ...props}: UseApiEntitiesPartia
 export type ApiEvidenceListProps = Omit<GetProps<EvidenceWithReview[], unknown, void>, "path">;
 
 /**
- * REST endpoints for viewing and submitting claims
+ * REST endpoints for viewing and submitting evidence
  */
 export const ApiEvidenceList = (props: ApiEvidenceListProps) => (
   <Get<EvidenceWithReview[], unknown, void>
@@ -453,7 +470,7 @@ export const ApiEvidenceList = (props: ApiEvidenceListProps) => (
 export type UseApiEvidenceListProps = Omit<UseGetProps<EvidenceWithReview[], void>, "path">;
 
 /**
- * REST endpoints for viewing and submitting claims
+ * REST endpoints for viewing and submitting evidence
  */
 export const useApiEvidenceList = (props: UseApiEvidenceListProps) => useGet<EvidenceWithReview[], unknown, void>(`/api/evidence/`, props);
 
@@ -461,7 +478,7 @@ export const useApiEvidenceList = (props: UseApiEvidenceListProps) => useGet<Evi
 export type ApiEvidenceCreateProps = Omit<MutateProps<EvidenceWithReview, unknown, void, EvidenceWithReview>, "path" | "verb">;
 
 /**
- * REST endpoints for viewing and submitting claims
+ * REST endpoints for viewing and submitting evidence
  */
 export const ApiEvidenceCreate = (props: ApiEvidenceCreateProps) => (
   <Mutate<EvidenceWithReview, unknown, void, EvidenceWithReview>
@@ -474,7 +491,7 @@ export const ApiEvidenceCreate = (props: ApiEvidenceCreateProps) => (
 export type UseApiEvidenceCreateProps = Omit<UseMutateProps<EvidenceWithReview, void, EvidenceWithReview>, "path" | "verb">;
 
 /**
- * REST endpoints for viewing and submitting claims
+ * REST endpoints for viewing and submitting evidence
  */
 export const useApiEvidenceCreate = (props: UseApiEvidenceCreateProps) => useMutate<EvidenceWithReview, unknown, void, EvidenceWithReview>("POST", `/api/evidence/`, props);
 
@@ -748,6 +765,35 @@ export const ApiSourcesPartialUpdate = ({id, ...props}: ApiSourcesPartialUpdateP
 export type UseApiSourcesPartialUpdateProps = Omit<UseMutateProps<Source, void, PatchedSource>, "path" | "verb"> & {id: number};
 
 export const useApiSourcesPartialUpdate = ({id, ...props}: UseApiSourcesPartialUpdateProps) => useMutate<Source, unknown, void, PatchedSource>("PATCH", `/api/sources/${id}`, props);
+
+
+export type ApiTopicsListProps = Omit<GetProps<Topic[], unknown, void>, "path">;
+
+export const ApiTopicsList = (props: ApiTopicsListProps) => (
+  <Get<Topic[], unknown, void>
+    path={`/api/topics/`}
+    {...props}
+  />
+);
+
+export type UseApiTopicsListProps = Omit<UseGetProps<Topic[], void>, "path">;
+
+export const useApiTopicsList = (props: UseApiTopicsListProps) => useGet<Topic[], unknown, void>(`/api/topics/`, props);
+
+
+export type ApiTopicsCreateProps = Omit<MutateProps<Topic, unknown, void, Topic>, "path" | "verb">;
+
+export const ApiTopicsCreate = (props: ApiTopicsCreateProps) => (
+  <Mutate<Topic, unknown, void, Topic>
+    verb="POST"
+    path={`/api/topics/`}
+    {...props}
+  />
+);
+
+export type UseApiTopicsCreateProps = Omit<UseMutateProps<Topic, void, Topic>, "path" | "verb">;
+
+export const useApiTopicsCreate = (props: UseApiTopicsCreateProps) => useMutate<Topic, unknown, void, Topic>("POST", `/api/topics/`, props);
 
 
 export type RestAuthFacebookConnectCreateProps = Omit<MutateProps<SocialConnect, unknown, void, SocialConnect>, "path" | "verb">;
