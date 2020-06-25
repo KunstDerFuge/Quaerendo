@@ -145,8 +145,8 @@ class Evidence(models.Model):
 
         # If 80% of reviewers agree on an evidence relationship, return that. Otherwise, return 'SPLIT'.
         deduced_relationships_by_count = dict()
-        num_expert_reviews = len(reviews)
-        num_required_for_80_pct_consensus = math.ceil(num_expert_reviews * 0.8)
+        num_reviews = len(reviews)
+        num_required_for_80_pct_consensus = math.ceil(num_reviews * 0.8)
         if not reviews:
             return None
         for review in reviews:
