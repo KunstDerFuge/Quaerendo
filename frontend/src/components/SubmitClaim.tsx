@@ -3,10 +3,9 @@ import { FormEvent } from 'react'
 import { Button, CardActions, Grid, TextField, Theme, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import { useMutate } from 'restful-react'
-import * as assert from 'assert'
 import { Redirect, useHistory } from 'react-router'
 import SubmitSourceForm from './forms/SubmitSourceForm'
-import { PatchedSource } from '../openapi-types'
+import { PatchedSource, Topic } from '../openapi-types'
 import CardPage from './layout/CardPage'
 import CardFormField from './layout/CardFormField'
 import { useAuth } from './utilities/auth'
@@ -59,6 +58,7 @@ const SubmitClaim: React.FC<{}> = () => {
   const [showClaimForm, setShowClaimForm] = React.useState(false)
   const [claimText, setClaimText] = React.useState('')
   const [claimDescription, setClaimDescription] = React.useState('')
+  const [topics, setTopics] = React.useState<Topic[]>([])
   const [formErrors, setFormErrors] = React.useState<claimErrors>({})
 
   const {mutate: post} = useMutate({
@@ -77,7 +77,8 @@ const SubmitClaim: React.FC<{}> = () => {
     post({
       claim_text: claimText,
       description: claimDescription,
-      source_of_claim: source
+      source_of_claim: source,
+      topics: topics.map((topic: Topic) => topic.id)
     }).then((claim) => {
       console.log(claim)
       history.push('/claim/' + claim.id)
@@ -117,7 +118,8 @@ const SubmitClaim: React.FC<{}> = () => {
                   </>
                 }>
                   <TextField fullWidth label="Claim Text" variant="outlined" value={claimText}
-                             onChange={e => setClaimText(e.target.value)} error={formErrors.hasOwnProperty('claim_text')}
+                             onChange={e => setClaimText(e.target.value)}
+                             error={formErrors.hasOwnProperty('claim_text')}
                              helperText={formErrors['claim_text']} />
                 </CardFormField>
                 <CardFormField fieldName='Claim Description' required={false}
@@ -129,7 +131,7 @@ const SubmitClaim: React.FC<{}> = () => {
                 </CardFormField>
                 <CardFormField fieldName='Claim Description' required={false}
                                description='Provide some context for the claim.'>
-                  <TopicSelectionInput />
+                  <TopicSelectionInput selectedTopics={topics} setSelectedTopics={setTopics} />
                 </CardFormField>
                 {
                   formErrors.hasOwnProperty('non_field_errors') &&

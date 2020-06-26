@@ -6,6 +6,8 @@ import PlaylistAddRoundedIcon from '@material-ui/icons/PlaylistAddRounded'
 import { makeStyles } from '@material-ui/styles'
 
 interface TopicSelectionInputProps {
+  selectedTopics: Topic[]
+  setSelectedTopics: (topics: Topic[]) => void
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -19,7 +21,6 @@ const TopicSelectionInput: React.FC<TopicSelectionInputProps> = (props) => {
   const {data: topics, loading, refetch: reloadTopics} = useApiTopicsList({})
   const {mutate: createTopic} = useApiTopicsCreate({})
   const [textValue, setTextValue] = React.useState<string>('')
-  const [selectedTopics, setSelectedTopics] = React.useState<Topic[]>([])
 
   function handleAddTopic() {
     createTopic({
@@ -28,9 +29,9 @@ const TopicSelectionInput: React.FC<TopicSelectionInputProps> = (props) => {
       console.log('Created topic ' + newTopic.name)
       reloadTopics().then(() => {
         setTextValue('')
-        let newSelectedTopics: Topic[] = JSON.parse(JSON.stringify(selectedTopics))
+        let newSelectedTopics: Topic[] = JSON.parse(JSON.stringify(props.selectedTopics))
         newSelectedTopics.push(newTopic)
-        setSelectedTopics(newSelectedTopics)
+        props.setSelectedTopics(newSelectedTopics)
       })
     })
   }
@@ -52,25 +53,25 @@ const TopicSelectionInput: React.FC<TopicSelectionInputProps> = (props) => {
       <Autocomplete
         id='topics'
         options={loading ? [] : topics}
-        filterOptions={options => options.filter((option) => !selectedTopics.includes(option))}
+        filterOptions={options => options.filter((option) => !props.selectedTopics.includes(option))}
         getOptionLabel={(option: Topic) => option.name}
-        value={selectedTopics}
+        value={props.selectedTopics}
         loading={loading}
-        getOptionSelected={(checkTopic: Topic) => selectedTopics.map((selectedTopic) => selectedTopic.name).includes(checkTopic.name)}
+        getOptionSelected={(checkTopic: Topic) => props.selectedTopics.map((selectedTopic) => selectedTopic.name).includes(checkTopic.name)}
         onChange={(e, newValues, reason) => {
           switch (reason) {
             case 'select-option':
-              setSelectedTopics(newValues as Topic[])
+              props.setSelectedTopics(newValues as Topic[])
               setTextValue('')
               break
 
             case 'clear':
-              setSelectedTopics([])
+              props.setSelectedTopics([])
               setTextValue('')
               break
 
             case 'remove-option':
-              setSelectedTopics(newValues as Topic[])
+              props.setSelectedTopics(newValues as Topic[])
               setTextValue('')
               break
 

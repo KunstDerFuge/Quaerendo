@@ -63,7 +63,7 @@ class ClaimSerializer(serializers.ModelSerializer):
 
 
 class ClaimCreateSerializer(serializers.ModelSerializer):
-    topics = PrimaryKeyRelatedField(queryset=Topic.objects.all())
+    topics = PrimaryKeyRelatedField(many=True, queryset=Topic.objects.all())
     source_of_claim = SourceCreateSerializer()
 
     class Meta:
@@ -76,8 +76,11 @@ class ClaimCreateSerializer(serializers.ModelSerializer):
         source_instance = Source.objects.create(**source_data)
         source_instance.authors.set(authors)
         user = validated_data.pop('user')
+        topics = validated_data.pop('topics')
         claim_instance = Claim.objects.create(**validated_data, source_of_claim=source_instance,
-                                              topics=validated_data.pop('topics'), submitted_by=user)
+                                              submitted_by=user)
+        claim_instance.topics.set(topics)
+        claim_instance.save()
         return claim_instance
 
 
