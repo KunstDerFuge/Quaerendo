@@ -65,7 +65,7 @@ class Claim(models.Model):
     claim_text = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     evidence = models.ManyToManyField(Source, through='Evidence', blank=True)
-    topic = models.ForeignKey(Topic, related_name='claims', on_delete=models.CASCADE, null=True, blank=True)
+    topics = models.ManyToManyField(Topic, related_name='claims', blank=True)
     submitted_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, null=True, blank=True,
                                      related_name='claims_submitted')
 
