@@ -75,7 +75,6 @@ const TopicSelectionInput: React.FC<TopicSelectionInputProps> = (props) => {
               break
 
           }
-          console.log(reason)
         }}
         multiple
         renderInput={(params) => (
