@@ -130,7 +130,7 @@ const SubmitClaim: React.FC<{}> = () => {
                              helperText={formErrors['description']} />
                 </CardFormField>
                 <CardFormField fieldName='Claim Topics' required={false}
-                               description='Select relevant topics from the list. If your expected topic is not listed, you can create a new entry by typing it out.'>
+                               description='Select relevant topics from the list. If your expected topic is not listed, you can create a new entry by typing it out. Experts in the selected topics will be given special privileges on this claim, so choose sparingly and wisely.'>
                   <TopicSelectionInput selectedTopics={topics} setSelectedTopics={setTopics} />
                 </CardFormField>
                 {
