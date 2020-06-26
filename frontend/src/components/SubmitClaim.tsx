@@ -10,6 +10,7 @@ import { PatchedSource } from '../openapi-types'
 import CardPage from './layout/CardPage'
 import CardFormField from './layout/CardFormField'
 import { useAuth } from './utilities/auth'
+import TopicSelectionInput from './inputs/TopicSelectionInput'
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -125,6 +126,10 @@ const SubmitClaim: React.FC<{}> = () => {
                              multiline rows={4} rowsMax={12} onChange={e => setClaimDescription(e.target.value)}
                              error={formErrors.hasOwnProperty('description')}
                              helperText={formErrors['description']} />
+                </CardFormField>
+                <CardFormField fieldName='Claim Description' required={false}
+                               description='Provide some context for the claim.'>
+                  <TopicSelectionInput />
                 </CardFormField>
                 {
                   formErrors.hasOwnProperty('non_field_errors') &&
