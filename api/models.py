@@ -148,6 +148,9 @@ class Evidence(models.Model):
         else:
             reviews = self.reviews.exclude(reviewer__in=topic_experts).all()
 
+        # If this is a community consensus, require at least 3 reviews
+        if not expert and reviews.count() < 3:
+            return None
         # If 80% of reviewers agree on an evidence relationship, return that. Otherwise, return 'SPLIT'.
         deduced_relationships_by_count = dict()
         num_reviews = len(reviews)
