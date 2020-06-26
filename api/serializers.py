@@ -43,14 +43,14 @@ class TopicSerializer(serializers.ModelSerializer):
 
 
 class ClaimSerializer(serializers.ModelSerializer):
-    topic = TopicSerializer(read_only=True)
+    topics = TopicSerializer(read_only=True, many=True)
     source_of_claim = SourceSerializer(read_only=True)
     expert_truth_consensus = serializers.SerializerMethodField(read_only=True)
     community_truth_consensus = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Claim
-        fields = ['id', 'claim_text', 'description', 'topic', 'source_of_claim', 'expert_truth_consensus',
+        fields = ['id', 'claim_text', 'description', 'topics', 'source_of_claim', 'expert_truth_consensus',
                   'community_truth_consensus']
 
     @extend_schema_field(serializers.ChoiceField(choices=TruthJudgement.choices) or None)
@@ -63,13 +63,12 @@ class ClaimSerializer(serializers.ModelSerializer):
 
 
 class ClaimCreateSerializer(serializers.ModelSerializer):
-    # TODO: Change this to the correct related topic
-    topic = Topic.objects.first()
+    topics = PrimaryKeyRelatedField(queryset=Topic.objects.all())
     source_of_claim = SourceCreateSerializer()
 
     class Meta:
         model = Claim
-        fields = ['id', 'claim_text', 'description', 'topic', 'source_of_claim']
+        fields = ['id', 'claim_text', 'description', 'topics', 'source_of_claim']
 
     def create(self, validated_data):
         source_data = validated_data.pop('source_of_claim')
@@ -77,9 +76,8 @@ class ClaimCreateSerializer(serializers.ModelSerializer):
         source_instance = Source.objects.create(**source_data)
         source_instance.authors.set(authors)
         user = validated_data.pop('user')
-        # TODO: Remove this Topic.objects.first()
         claim_instance = Claim.objects.create(**validated_data, source_of_claim=source_instance,
-                                              topic=Topic.objects.first(), submitted_by=user)
+                                              topics=validated_data.pop('topics'), submitted_by=user)
         return claim_instance
 
 
@@ -173,7 +171,7 @@ class EvidenceReviewPartialSerializer(serializers.ModelSerializer):
 
 
 class ClaimWithEvidenceSerializer(serializers.ModelSerializer):
-    topic = TopicSerializer(read_only=True)
+    topics = TopicSerializer(read_only=True, many=True)
     source_of_claim = SourceSerializer(read_only=True)
     related_evidence = EvidenceSerializer(many=True, read_only=True)
     expert_truth_consensus = serializers.SerializerMethodField(read_only=True)
@@ -181,7 +179,7 @@ class ClaimWithEvidenceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Claim
-        fields = ['id', 'claim_text', 'description', 'topic', 'source_of_claim', 'related_evidence',
+        fields = ['id', 'claim_text', 'description', 'topics', 'source_of_claim', 'related_evidence',
                   'expert_truth_consensus', 'community_truth_consensus']
 
     @extend_schema_field(serializers.ChoiceField(choices=TruthJudgement.choices) or None)
@@ -194,12 +192,12 @@ class ClaimWithEvidenceSerializer(serializers.ModelSerializer):
 
 
 class ClaimForReviewSerializer(serializers.ModelSerializer):
-    topic = TopicSerializer(read_only=True)
+    topics = TopicSerializer(read_only=True, many=True)
     source_of_claim = SourceSerializer(read_only=True)
 
     class Meta:
         model = Claim
-        fields = ['id', 'claim_text', 'description', 'topic', 'source_of_claim']
+        fields = ['id', 'claim_text', 'description', 'topics', 'source_of_claim']
 
 
 class EvidenceAndClaimForReviewSerializer(serializers.ModelSerializer):
