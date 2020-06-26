@@ -65,6 +65,7 @@ const AuthorsSelectInput: React.FC<AuthorsSelectInputProps> = (props) => {
           switch (reason) {
             case 'select-option':
               props.setConfirmedAuthors(newValues as Entity[])
+              setTextValue('')
               break
 
             case 'create-option':
@@ -72,12 +73,18 @@ const AuthorsSelectInput: React.FC<AuthorsSelectInputProps> = (props) => {
               // @ts-ignore (newValues can be string[] or string)
               const newUnconfirmedAuthors: string[] = props.unconfirmedAuthors.concat(newAuthor)
               props.setUnconfirmedAuthors(newUnconfirmedAuthors)
+              setTextValue('')
               break
 
             case 'remove-option':
               // @ts-ignore (newValues can be string[] or string)
               props.setConfirmedAuthors(newValues as Entity[])
+              setTextValue('')
               break
+
+            case 'clear':
+              props.setConfirmedAuthors([])
+              setTextValue('')
           }
         }}
         freeSolo
