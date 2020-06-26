@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 
 import pytz
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.db import models
 
 
@@ -107,6 +108,9 @@ class Claim(models.Model):
 
         return TruthJudgement.SPLIT
 
+    def get_experts(self) -> [get_user_model()]:
+        return get_user_model().objects.filter(expertise_topics__in=self.topics.all()).distinct()
+
 
 class Evidence(models.Model):
     claim = models.ForeignKey(Claim, related_name='related_evidence', on_delete=models.CASCADE)
@@ -138,9 +142,9 @@ class Evidence(models.Model):
             super().save(*args, **kwargs)
 
     def get_consensus(self, expert: bool) -> EvidenceRelationship or None:
-        if self.claim.topic is None:
+        if self.claim.topics.count() == 0:
             return None
-        topic_experts = self.claim.topic.experts.all()
+        topic_experts = self.claim.get_experts()
         if expert:
             reviews = self.reviews.filter(reviewer__in=topic_experts).all()
         else:
@@ -163,10 +167,10 @@ class Evidence(models.Model):
         return EvidenceRelationship.SPLIT
 
     def get_num_reviews(self, expert: bool) -> int:
-        if self.claim.topic is None:
+        if self.claim.topics.count() == 0:
             topic_experts = []
         else:
-            topic_experts = self.claim.topic.experts.all()
+            topic_experts = self.claim.get_experts()
         if expert:
             reviews = self.reviews.filter(reviewer__in=topic_experts)
         else:
