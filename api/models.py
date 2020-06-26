@@ -142,8 +142,6 @@ class Evidence(models.Model):
             super().save(*args, **kwargs)
 
     def get_consensus(self, expert: bool) -> EvidenceRelationship or None:
-        if self.claim.topics.count() == 0:
-            return None
         topic_experts = self.claim.get_experts()
         if expert:
             reviews = self.reviews.filter(reviewer__in=topic_experts).all()
