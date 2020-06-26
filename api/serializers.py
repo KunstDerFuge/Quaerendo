@@ -39,7 +39,7 @@ class SourceLinkSerializer(serializers.ModelSerializer):
 class TopicSerializer(serializers.ModelSerializer):
     class Meta:
         model = Topic
-        fields = ['name']
+        fields = ['id', 'name']
 
 
 class ClaimSerializer(serializers.ModelSerializer):
