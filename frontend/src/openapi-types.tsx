@@ -9,7 +9,7 @@ export interface Claim {
   id: number;
   claim_text: string;
   description?: string;
-  topic: Topic;
+  topics: Topic[];
   source_of_claim: Source;
   expert_truth_consensus: TruthJudgement;
   community_truth_consensus: TruthJudgement;
@@ -19,7 +19,7 @@ export interface ClaimForReview {
   id: number;
   claim_text: string;
   description?: string;
-  topic: Topic;
+  topics: Topic[];
   source_of_claim: Source;
 }
 
@@ -27,7 +27,7 @@ export interface ClaimWithEvidence {
   id: number;
   claim_text: string;
   description?: string;
-  topic: Topic;
+  topics: Topic[];
   source_of_claim: Source;
   related_evidence: Evidence[];
   expert_truth_consensus: TruthJudgement;
@@ -112,7 +112,7 @@ export interface PatchedClaimWithEvidence {
   id?: number;
   claim_text?: string;
   description?: string;
-  topic?: Topic;
+  topics?: Topic[];
   source_of_claim?: Source;
   related_evidence?: Evidence[];
   expert_truth_consensus?: TruthJudgement;
@@ -228,6 +228,7 @@ export interface SourceCreate {
 export type SourceDegree = "ORIGINAL" | "PRIMARY" | "SECONDARY" | "TERTIARY";
 
 export interface Topic {
+  id: number;
   name: string;
 }
 
