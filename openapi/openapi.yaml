@@ -1228,7 +1228,7 @@ components:
       - expert_truth_consensus
       - id
       - source_of_claim
-      - topic
+      - topics
       type: object
       properties:
         id:
@@ -1239,10 +1239,11 @@ components:
           type: string
         description:
           type: string
-        topic:
+        topics:
+          type: array
           readOnly: true
-          allOf:
-          - $ref: '#/components/schemas/Topic'
+          items:
+            $ref: '#/components/schemas/Topic'
         source_of_claim:
           readOnly: true
           allOf:
@@ -1260,7 +1261,7 @@ components:
       - claim_text
       - id
       - source_of_claim
-      - topic
+      - topics
       type: object
       properties:
         id:
@@ -1271,10 +1272,11 @@ components:
           type: string
         description:
           type: string
-        topic:
+        topics:
+          type: array
           readOnly: true
-          allOf:
-          - $ref: '#/components/schemas/Topic'
+          items:
+            $ref: '#/components/schemas/Topic'
         source_of_claim:
           readOnly: true
           allOf:
@@ -1287,7 +1289,7 @@ components:
       - id
       - related_evidence
       - source_of_claim
-      - topic
+      - topics
       type: object
       properties:
         id:
@@ -1298,10 +1300,11 @@ components:
           type: string
         description:
           type: string
-        topic:
+        topics:
+          type: array
           readOnly: true
-          allOf:
-          - $ref: '#/components/schemas/Topic'
+          items:
+            $ref: '#/components/schemas/Topic'
         source_of_claim:
           readOnly: true
           allOf:
@@ -1512,10 +1515,11 @@ components:
           type: string
         description:
           type: string
-        topic:
+        topics:
+          type: array
           readOnly: true
-          allOf:
-          - $ref: '#/components/schemas/Topic'
+          items:
+            $ref: '#/components/schemas/Topic'
         source_of_claim:
           readOnly: true
           allOf:
@@ -1806,9 +1810,13 @@ components:
       - TERTIARY
     Topic:
       required:
+      - id
       - name
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         name:
           maxLength: 100
           type: string
