@@ -16,7 +16,9 @@ import {
   Paper,
   Popper,
   TextField,
-  Typography
+  Typography,
+  useMediaQuery,
+  useTheme
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { useAuth } from '../utilities/auth'
@@ -60,11 +62,17 @@ const useStyles = makeStyles(theme => ({
   },
   signUp: {
     padding: theme.spacing(1)
+  },
+  mobileAvatar: {
+    alignSelf: 'center',
+    margin: theme.spacing(2)
   }
 }))
 
 const AvatarPanel: React.FC<{}> = () => {
   const classes = useStyles()
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
   const [user, setUser] = React.useState<User>(null)
   const [anchorEl, setAnchorEl] = React.useState(null)
@@ -123,7 +131,7 @@ const AvatarPanel: React.FC<{}> = () => {
   return (
     <>
       {
-        !authToken ?
+        !authToken && !isMobile ?
           <Card variant='outlined' className={classes.loginCard}>
             <Grid container direction='column'>
               <Grid item>
@@ -169,55 +177,66 @@ const AvatarPanel: React.FC<{}> = () => {
             </Grid>
           </Card>
           :
-          <Card className={classes.card} variant='outlined'>
-            <CardActionArea>
-              <CardContent className={classes.cardContent}
-                           onClick={(event) => anchorEl ? setAnchorEl(null) : setAnchorEl(event.currentTarget)}>
-                <Avatar>
-                  {
-                    user && user.first_name && user.last_name &&
-                    user.first_name[0] + user.last_name[0]
-                  }
-                </Avatar>
-                <div className={classes.nameContainer}>
-                  <Typography>
+          isMobile ?
+            authToken &&
+            <Avatar
+              onClick={(event) => anchorEl ? setAnchorEl(null) : setAnchorEl(event.currentTarget)}
+              className={classes.mobileAvatar}>
+              {
+                user && user.first_name && user.last_name &&
+                user.first_name[0] + user.last_name[0]
+              }
+            </Avatar>
+            :
+            <Card className={classes.card} variant='outlined'>
+              <CardActionArea>
+                <CardContent className={classes.cardContent}
+                             onClick={(event) => anchorEl ? setAnchorEl(null) : setAnchorEl(event.currentTarget)}>
+                  <Avatar>
                     {
-                      user &&
-                      user.first_name + ' ' + user.last_name
+                      user && user.first_name && user.last_name &&
+                      user.first_name[0] + user.last_name[0]
                     }
-                  </Typography>
-                  <Typography variant='body2' color='textSecondary'>
-                    {
-                      user &&
-                      user.username
-                    }
-                  </Typography>
-                  {
-                    user &&
-                    <Popper open={Boolean(anchorEl)} anchorEl={anchorEl} className={classes.popper} transition>
-                      {({TransitionProps}) => (
-                        <Fade {...TransitionProps}>
-                          <Paper className={classes.popperPaper}>
-                            <List component='nav' subheader={
-                              <ListSubheader component='div'>
-                                Logged in as {user.username}
-                              </ListSubheader>
-                            }>
-                              <ListItem button onClick={logOut}>
-                                <ListItemText>
-                                  Log Out
-                                </ListItemText>
-                              </ListItem>
-                            </List>
-                          </Paper>
-                        </Fade>
-                      )}
-                    </Popper>
-                  }
-                </div>
-              </CardContent>
-            </CardActionArea>
-          </Card>
+                  </Avatar>
+                  <div className={classes.nameContainer}>
+                    <Typography>
+                      {
+                        user &&
+                        user.first_name + ' ' + user.last_name
+                      }
+                    </Typography>
+                    <Typography variant='body2' color='textSecondary'>
+                      {
+                        user &&
+                        user.username
+                      }
+                    </Typography>
+                  </div>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+      }
+      {
+        user &&
+        <Popper open={Boolean(anchorEl)} anchorEl={anchorEl} className={classes.popper} transition>
+          {({TransitionProps}) => (
+            <Fade {...TransitionProps}>
+              <Paper className={classes.popperPaper}>
+                <List component='nav' subheader={
+                  <ListSubheader component='div'>
+                    Logged in as {user.username}
+                  </ListSubheader>
+                }>
+                  <ListItem button onClick={logOut}>
+                    <ListItemText>
+                      Log Out
+                    </ListItemText>
+                  </ListItem>
+                </List>
+              </Paper>
+            </Fade>
+          )}
+        </Popper>
       }
     </>
   )

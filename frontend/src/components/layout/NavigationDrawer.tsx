@@ -1,24 +1,48 @@
 import * as React from 'react'
-import { useEffect } from 'react'
+import { ReactElement, useEffect } from 'react'
 import QuaerendoLogo from './QuaerendoLogo'
-import { Badge, Divider, Drawer, Fab, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
+import {
+  Badge,
+  Divider,
+  Drawer,
+  Fab,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  useMediaQuery,
+  useTheme
+} from '@material-ui/core'
 import CommentRoundedIcon from '@material-ui/icons/CommentRounded'
 import RateReviewRoundedIcon from '@material-ui/icons/RateReviewRounded'
 import { useHistory } from 'react-router-dom'
 import AddCommentRoundedIcon from '@material-ui/icons/AddCommentRounded'
 import { makeStyles } from '@material-ui/core/styles'
-import AvatarPanel from './AvatarPanel'
 import { ReviewInvitation, useApiReviewInvitations } from '../../openapi-types'
 import { useAuth } from '../utilities/auth'
+import AvatarPanel from './AvatarPanel'
 
 const useStyles = makeStyles(theme => ({
   drawer: {
-    width: 260,
+    [theme.breakpoints.down('md')]: {
+      width: 80
+    },
+    [theme.breakpoints.up('lg')]: {
+      width: 260
+    },
     flexShrink: 0
   },
   drawerPaper: {
-    width: 260,
-    justifyContent: 'space-between'
+    [theme.breakpoints.down('md')]: {
+      width: 80
+    },
+    [theme.breakpoints.up('lg')]: {
+      width: 260
+    },
+    justifyContent: 'space-between',
+    left: 'unset',
+    right: 'unset',
+    border: '1px solid rgba(0, 0, 0, 0.12)'
   },
   extendedIcon: {
     marginRight: theme.spacing(1)
@@ -33,11 +57,64 @@ const useStyles = makeStyles(theme => ({
   },
   badge: {
     paddingRight: '0.1em'
+  },
+  listItem: {
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2)
+  },
+  mobileListItem: {
+    justifyContent: 'center',
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2)
+  },
+  mobileCenteredIcon: {
+    justifyContent: 'center'
   }
 }))
 
+interface NavigationItemProps {
+  onClick: () => void
+  icon: ReactElement
+  text: string
+  hasBadge?: boolean
+}
+
+const NavigationItem: React.FC<NavigationItemProps> = (props) => {
+  const classes = useStyles()
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+
+  return (
+    <ListItem button onClick={props.onClick} className={isMobile ? classes.mobileListItem : classes.listItem}>
+      {
+        isMobile ?
+          <Badge color='primary' variant='dot'
+                 invisible={!props.hasBadge}
+                 className={classes.badge}>
+            <ListItemIcon className={classes.mobileCenteredIcon}>
+              {props.icon}
+            </ListItemIcon>
+          </Badge>
+          :
+          <>
+            <ListItemIcon>
+              {props.icon}
+            </ListItemIcon>
+            <Badge color='primary' variant='dot'
+                   invisible={!props.hasBadge}
+                   className={classes.badge}>
+              <ListItemText primary={props.text} />
+            </Badge>
+          </>
+      }
+    </ListItem>
+  )
+}
+
 const NavigationDrawer: React.FC<{}> = () => {
   const classes = useStyles()
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
   const history = useHistory()
   const [reviewInvitations, setReviewInvitations] = React.useState<ReviewInvitation[]>(null)
 
@@ -52,7 +129,6 @@ const NavigationDrawer: React.FC<{}> = () => {
   const {authToken} = useAuth()
 
   function updateInvitations() {
-    console.log('Token is ' + authToken)
     authToken && refetchInvitations()
   }
 
@@ -68,34 +144,28 @@ const NavigationDrawer: React.FC<{}> = () => {
       classes={{
         paper: classes.drawerPaper
       }}
-      anchor="left"
     >
       <div className={classes.mainNavigationContent}>
         <QuaerendoLogo />
         <Divider />
         <List>
-          <ListItem button onClick={() => history.push('/')}>
-            <ListItemIcon>
-              <CommentRoundedIcon color='primary' />
-            </ListItemIcon>
-            <ListItemText primary='Popular Claims' />
-          </ListItem>
-          <ListItem button onClick={() => history.push('/review')}>
-            <ListItemIcon>
-              <RateReviewRoundedIcon color='primary' />
-            </ListItemIcon>
-            <ListItemText>
-              <Badge color='primary' variant='dot' invisible={!reviewInvitations || reviewInvitations.length === 0}
-                     className={classes.badge}>
-                Review
-              </Badge>
-            </ListItemText>
-          </ListItem>
+          <NavigationItem
+            onClick={() => history.push('/')}
+            icon={<CommentRoundedIcon color='primary' />}
+            text='Popular Claims'
+          />
+          <NavigationItem
+            onClick={() => history.push('/review')}
+            icon={<RateReviewRoundedIcon color='primary' />}
+            text='Review'
+            hasBadge={!!reviewInvitations && reviewInvitations.length > 0}
+          />
           <ListItem>
-            <Fab size='medium' variant="extended" color="secondary" aria-label="add" className={classes.submitClaimFab}
+            <Fab size='medium' variant={isMobile ? 'round' : 'extended'} color='secondary' aria-label='submit claim'
+                 className={classes.submitClaimFab}
                  onClick={() => history.push('/submit/claim')}>
-              <AddCommentRoundedIcon className={classes.extendedIcon} />
-              Submit Claim
+              <AddCommentRoundedIcon className={!isMobile ? classes.extendedIcon : ''} />
+              {!isMobile && 'Submit Claim'}
             </Fab>
           </ListItem>
         </List>

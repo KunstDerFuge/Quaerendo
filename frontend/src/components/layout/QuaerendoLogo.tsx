@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Typography } from '@material-ui/core'
+import { Typography, useMediaQuery, useTheme } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
@@ -14,10 +14,17 @@ const useStyles = makeStyles(theme => ({
 
 const QuaerendoLogo: React.FC<{}> = () => {
   const classes = useStyles()
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
   return (
     <Typography color='primary' variant='h4' className={classes.logo}>
-      Quærendo
+      {
+        isMobile ?
+          'Q'
+          :
+          'Quærendo'
+      }
     </Typography>
   )
 }

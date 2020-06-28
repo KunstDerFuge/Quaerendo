@@ -20,16 +20,21 @@ import ReviewEvidencePage from './pages/ReviewEvidencePage'
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
-    minHeight: '100vh'
+    minHeight: '100vh',
+    justifyContent: 'center'
   },
   fullWidth: {
     width: '100%'
   },
   content: {
-    flex: 1
+    flex: 1,
   },
   mainWindow: {
-    flex: 1
+    flex: 1,
+    maxWidth: '55em',
+    border: '1px solid rgba(0, 0, 0, 0.12)',
+    borderBottom: 0,
+    backgroundColor: '#f3f3f3'
   }
 }))
 
