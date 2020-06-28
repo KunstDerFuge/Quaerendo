@@ -34,6 +34,7 @@ const useStyles = makeStyles(theme => ({
     maxWidth: '55em',
     border: '1px solid rgba(0, 0, 0, 0.12)',
     borderBottom: 0,
+    borderTop: 0,
     backgroundColor: '#f3f3f3'
   }
 }))
