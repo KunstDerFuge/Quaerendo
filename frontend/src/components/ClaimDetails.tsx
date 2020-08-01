@@ -76,6 +76,7 @@ const ClaimDetails: React.FC<ClaimDetailsProps> = (props) => {
   if (data) {
     claim = data
     loading = false
+    document.title = '“' + claim!.claim_text + '” - Quaerendo - Democratized Fact-Checking for the 21st Century'
   }
   return (
     <>
