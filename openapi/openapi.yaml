@@ -1224,6 +1224,7 @@ components:
     Claim:
       required:
       - claim_text
+      - claimants
       - community_truth_consensus
       - expert_truth_consensus
       - id
@@ -1248,6 +1249,11 @@ components:
           readOnly: true
           allOf:
           - $ref: '#/components/schemas/Source'
+        claimants:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Entity'
         expert_truth_consensus:
           readOnly: true
           allOf:
@@ -1259,6 +1265,7 @@ components:
     ClaimForReview:
       required:
       - claim_text
+      - claimants
       - id
       - source_of_claim
       - topics
@@ -1270,6 +1277,11 @@ components:
         claim_text:
           maxLength: 200
           type: string
+        claimants:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Entity'
         description:
           type: string
         topics:
@@ -1284,6 +1296,7 @@ components:
     ClaimWithEvidence:
       required:
       - claim_text
+      - claimants
       - community_truth_consensus
       - expert_truth_consensus
       - id
@@ -1309,6 +1322,11 @@ components:
           readOnly: true
           allOf:
           - $ref: '#/components/schemas/Source'
+        claimants:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Entity'
         related_evidence:
           type: array
           readOnly: true
@@ -1524,6 +1542,11 @@ components:
           readOnly: true
           allOf:
           - $ref: '#/components/schemas/Source'
+        claimants:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Entity'
         related_evidence:
           type: array
           readOnly: true
