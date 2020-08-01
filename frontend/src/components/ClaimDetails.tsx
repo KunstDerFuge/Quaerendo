@@ -97,7 +97,7 @@ const ClaimDetails: React.FC<ClaimDetailsProps> = (props) => {
                   loading ?
                     <Skeleton />
                     :
-                    claim!.claimants.length >= 0 ?
+                    claim!.claimants.length > 0 ?
                       <span>
                       ― <AuthorsLinksList authors={claim!.claimants} />
                       </span>
