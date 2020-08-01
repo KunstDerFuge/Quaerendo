@@ -65,10 +65,11 @@ class ClaimSerializer(serializers.ModelSerializer):
 class ClaimCreateSerializer(serializers.ModelSerializer):
     topics = PrimaryKeyRelatedField(many=True, queryset=Topic.objects.all())
     source_of_claim = SourceCreateSerializer()
+    claimants = PrimaryKeyRelatedField(many=True, write_only=True, queryset=Entity.objects.all())
 
     class Meta:
         model = Claim
-        fields = ['id', 'claim_text', 'description', 'topics', 'source_of_claim']
+        fields = ['id', 'claim_text', 'description', 'topics', 'source_of_claim', 'claimants']
 
     def create(self, validated_data):
         source_data = validated_data.pop('source_of_claim')
@@ -176,13 +177,14 @@ class EvidenceReviewPartialSerializer(serializers.ModelSerializer):
 class ClaimWithEvidenceSerializer(serializers.ModelSerializer):
     topics = TopicSerializer(read_only=True, many=True)
     source_of_claim = SourceSerializer(read_only=True)
+    claimants = EntitySerializer(many=True, read_only=True)
     related_evidence = EvidenceSerializer(many=True, read_only=True)
     expert_truth_consensus = serializers.SerializerMethodField(read_only=True)
     community_truth_consensus = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Claim
-        fields = ['id', 'claim_text', 'description', 'topics', 'source_of_claim', 'related_evidence',
+        fields = ['id', 'claim_text', 'description', 'topics', 'source_of_claim', 'claimants', 'related_evidence',
                   'expert_truth_consensus', 'community_truth_consensus']
 
     @extend_schema_field(serializers.ChoiceField(choices=TruthJudgement.choices) or None)
@@ -197,10 +199,11 @@ class ClaimWithEvidenceSerializer(serializers.ModelSerializer):
 class ClaimForReviewSerializer(serializers.ModelSerializer):
     topics = TopicSerializer(read_only=True, many=True)
     source_of_claim = SourceSerializer(read_only=True)
+    claimants = EntitySerializer(many=True, read_only=True)
 
     class Meta:
         model = Claim
-        fields = ['id', 'claim_text', 'description', 'topics', 'source_of_claim']
+        fields = ['id', 'claim_text', 'claimants', 'description', 'topics', 'source_of_claim']
 
 
 class EvidenceAndClaimForReviewSerializer(serializers.ModelSerializer):
