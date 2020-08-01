@@ -51,7 +51,7 @@ class ClaimSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Claim
-        fields = ['id', 'claim_text', 'description', 'topics', 'source_of_claim', 'expert_truth_consensus',
+        fields = ['id', 'claim_text', 'description', 'topics', 'source_of_claim', 'claimants', 'expert_truth_consensus',
                   'community_truth_consensus']
 
     @extend_schema_field(serializers.ChoiceField(choices=TruthJudgement.choices) or None)
