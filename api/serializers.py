@@ -45,6 +45,7 @@ class TopicSerializer(serializers.ModelSerializer):
 class ClaimSerializer(serializers.ModelSerializer):
     topics = TopicSerializer(read_only=True, many=True)
     source_of_claim = SourceSerializer(read_only=True)
+    claimants = EntitySerializer(many=True, read_only=True)
     expert_truth_consensus = serializers.SerializerMethodField(read_only=True)
     community_truth_consensus = serializers.SerializerMethodField(read_only=True)
 
