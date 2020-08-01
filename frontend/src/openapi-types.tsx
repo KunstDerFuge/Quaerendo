@@ -11,6 +11,7 @@ export interface Claim {
   description?: string;
   topics: Topic[];
   source_of_claim: Source;
+  claimants: Entity[];
   expert_truth_consensus: TruthJudgement;
   community_truth_consensus: TruthJudgement;
 }
@@ -18,6 +19,7 @@ export interface Claim {
 export interface ClaimForReview {
   id: number;
   claim_text: string;
+  claimants: Entity[];
   description?: string;
   topics: Topic[];
   source_of_claim: Source;
@@ -29,6 +31,7 @@ export interface ClaimWithEvidence {
   description?: string;
   topics: Topic[];
   source_of_claim: Source;
+  claimants: Entity[];
   related_evidence: Evidence[];
   expert_truth_consensus: TruthJudgement;
   community_truth_consensus: TruthJudgement;
@@ -114,6 +117,7 @@ export interface PatchedClaimWithEvidence {
   description?: string;
   topics?: Topic[];
   source_of_claim?: Source;
+  claimants?: Entity[];
   related_evidence?: Evidence[];
   expert_truth_consensus?: TruthJudgement;
   community_truth_consensus?: TruthJudgement;
