@@ -32,8 +32,8 @@ const ClaimPreview: React.FC<ClaimPreviewProps> = (props: ClaimPreviewProps) => 
                 </Typography>
                 <Typography>
                   {
-                    claim.source_of_claim ?
-                      <AuthorsLinksList authors={claim.source_of_claim.authors} />
+                    claim.claimants.length > 0 ?
+                      <AuthorsLinksList authors={claim.claimants} />
                       :
                       'Claimant unknown'
                   }
