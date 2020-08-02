@@ -1,15 +1,16 @@
 import * as React from 'react'
 import { FormEvent } from 'react'
-import { Button, CardActions, Grid, TextField, Theme, Typography } from '@material-ui/core'
+import { Button, CardActions, Checkbox, FormControlLabel, Grid, TextField, Theme, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import { useMutate } from 'restful-react'
 import { Redirect, useHistory } from 'react-router'
 import SubmitSourceForm from './forms/SubmitSourceForm'
-import { PatchedSource, Topic } from '../openapi-types'
+import { Entity, PatchedSource, Source, Topic } from '../openapi-types'
 import CardPage from './layout/CardPage'
 import CardFormField from './layout/CardFormField'
 import { useAuth } from './utilities/auth'
 import TopicSelectionInput from './inputs/TopicSelectionInput'
+import AuthorsSelectInput from './inputs/AuthorsSelectInput'
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -54,10 +55,14 @@ const SubmitClaim: React.FC<{}> = () => {
   const classes = useStyles()
   const history = useHistory()
 
-  const [source, setSource] = React.useState(null)
+  const [source, setSource] = React.useState<Source>(null)
   const [showClaimForm, setShowClaimForm] = React.useState(false)
   const [claimText, setClaimText] = React.useState('')
   const [claimDescription, setClaimDescription] = React.useState('')
+  const [unconfirmedClaimants, setUnconfirmedClaimants] = React.useState<string[]>([])
+  const [confirmedClaimants, setConfirmedClaimants] = React.useState<Entity[]>([])
+  const [claimantsAreAuthors, setClaimantsAreAuthors] = React.useState<boolean>(true)
+  const [claimantsError, setClaimantsError] = React.useState<boolean>(false)
   const [topics, setTopics] = React.useState<Topic[]>([])
   const [formErrors, setFormErrors] = React.useState<claimErrors>({})
 
@@ -74,9 +79,14 @@ const SubmitClaim: React.FC<{}> = () => {
 
   function submitForm(event: FormEvent) {
     event.preventDefault()
+    if (unconfirmedClaimants.length > 0) {
+      setClaimantsError(true)
+      return
+    }
     post({
       claim_text: claimText,
       description: claimDescription,
+      claimants: claimantsAreAuthors ? source.authors : confirmedClaimants.map((claimant) => claimant.id),
       source_of_claim: source,
       topics: topics.map((topic: Topic) => topic.id)
     }).then((claim) => {
@@ -110,6 +120,10 @@ const SubmitClaim: React.FC<{}> = () => {
             :
             // Claim form
             <form onSubmit={submitForm}>
+              {
+                claimantsAreAuthors && source && confirmedClaimants.length > 0 &&
+                  setConfirmedClaimants([])
+              }
               <CardPage title='Claim Details' actions={cardActions} width='40em'>
                 <CardFormField fieldName='Claim Text' required={true} description={
                   <>
@@ -128,6 +142,29 @@ const SubmitClaim: React.FC<{}> = () => {
                              multiline rows={4} rowsMax={12} onChange={e => setClaimDescription(e.target.value)}
                              error={formErrors.hasOwnProperty('description')}
                              helperText={formErrors['description']} />
+                </CardFormField>
+                <CardFormField fieldName='Who made this claim?' required={false}
+                               description={'A list of people who made this claim. Only include claimants from the source you provided.'}>
+                  <AuthorsSelectInput
+                    isForClaimants={true}
+                    sameAsAuthors={claimantsAreAuthors}
+                    unconfirmedAuthors={unconfirmedClaimants}
+                    setUnconfirmedAuthors={(claimants) => setUnconfirmedClaimants(claimants)}
+                    confirmedAuthors={confirmedClaimants}
+                    setConfirmedAuthors={(claimants) => setConfirmedClaimants(claimants)}
+                    error={claimantsError} />
+                  <div className={classes.alignItemsRight}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={claimantsAreAuthors}
+                          onChange={() => setClaimantsAreAuthors(!claimantsAreAuthors)}
+                        />
+                      }
+                      label="Same as source authors"
+                      labelPlacement='start'
+                    />
+                  </div>
                 </CardFormField>
                 <CardFormField fieldName='Claim Topics' required={false}
                                description='Select relevant topics from the list. If your expected topic is not listed, you can create a new entry by typing it out. Experts in the selected topics will be given special privileges on this claim, so choose sparingly and wisely.'>
