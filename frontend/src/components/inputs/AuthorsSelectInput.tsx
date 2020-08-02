@@ -13,6 +13,8 @@ interface AuthorsSelectInputProps {
   confirmedAuthors: Entity[]
   setConfirmedAuthors: (authors: Entity[]) => void
   error: boolean
+  isForClaimants?: boolean
+  sameAsAuthors?: boolean
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -55,7 +57,8 @@ const AuthorsSelectInput: React.FC<AuthorsSelectInputProps> = (props) => {
     <>
       <Autocomplete
         multiple
-        id='authors'
+        disabled={props.sameAsAuthors}
+        id={props.isForClaimants ? 'claimants' : 'authors'}
         filterOptions={options => options}
         options={authorOptions}
         getOptionLabel={(option: Entity) => option.name + (option.short_bio ? ' - ' + option.short_bio : '')}
@@ -97,7 +100,9 @@ const AuthorsSelectInput: React.FC<AuthorsSelectInputProps> = (props) => {
         }
         renderInput={(params) => (
           <TextField {...params} value={textValue} onChange={(event) => setTextValue(event.target.value)}
-                     variant='outlined' label='Authors' placeholder='Add Authors...' />
+                     variant='outlined' label={props.isForClaimants ? 'Who made this claim?' : 'Authors'}
+                     placeholder={props.isForClaimants ? 'Add Claimants...' : 'Add Authors...'}
+                     disabled={props.sameAsAuthors} />
         )}
       />
       {
