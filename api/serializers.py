@@ -79,9 +79,11 @@ class ClaimCreateSerializer(serializers.ModelSerializer):
         source_instance.authors.set(authors)
         user = validated_data.pop('user')
         topics = validated_data.pop('topics')
+        claimants = validated_data.pop('claimants')
         claim_instance = Claim.objects.create(**validated_data, source_of_claim=source_instance,
                                               submitted_by=user)
         claim_instance.topics.set(topics)
+        claim_instance.claimants.set(claimants)
         claim_instance.save()
         return claim_instance
 
