@@ -45,7 +45,7 @@ const SourceInfo: React.FC<SourceDetailsProps> = (props) => {
                 title
           }
         </Typography>
-        <Typography variant='body2'>
+        <Typography variant='subtitle1'>
           {
             props.loading ?
               <Skeleton />

@@ -92,7 +92,7 @@ const ClaimDetails: React.FC<ClaimDetailsProps> = (props) => {
                     '“' + claim!.claim_text + '”'
                 }
               </Typography>
-              <Typography variant='caption'>
+              <Typography variant='subtitle1'>
                 {
                   loading ?
                     <Skeleton />

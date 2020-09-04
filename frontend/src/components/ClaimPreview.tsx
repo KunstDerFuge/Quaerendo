@@ -30,7 +30,7 @@ const ClaimPreview: React.FC<ClaimPreviewProps> = (props: ClaimPreviewProps) => 
                 <Typography variant='h5'>
                   {claim.claim_text}
                 </Typography>
-                <Typography>
+                <Typography variant='subtitle1'>
                   {
                     claim.claimants.length > 0 ?
                       <AuthorsLinksList authors={claim.claimants} />
@@ -44,7 +44,7 @@ const ClaimPreview: React.FC<ClaimPreviewProps> = (props: ClaimPreviewProps) => 
                             expert_consensus={claim.expert_truth_consensus} />
               </Grid>
               <Grid item>
-                <Typography variant='subtitle2' color='textSecondary'>
+                <Typography variant='body2' color='textSecondary'>
                   {claim.description}
                 </Typography>
               </Grid>
