@@ -29,7 +29,8 @@ const MainTheme = createMuiTheme({
     },
     overline: {
       fontSize: '0.8rem',
-      fontWeight: 600
+      fontWeight: 600,
+      letterSpacing: '0.08333em'
     },
     body1: {
       fontFamily: 'quadraat',
@@ -49,7 +50,8 @@ const MainTheme = createMuiTheme({
     },
     button: {
       fontFamily: 'gill-sans-roman',
-      fontSize: '0.9rem'
+      fontSize: '0.9rem',
+      letterSpacing: '0.02857em'
     }
   }
 })
