@@ -10,6 +10,7 @@ const MainTheme = createMuiTheme({
     }
   },
   typography: {
+    fontFamily: 'gill-sans-roman',
     h4: {
       fontFamily: 'quadraat',
       fontSize: '2rem',
