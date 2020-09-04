@@ -6,8 +6,8 @@ import { makeStyles } from '@material-ui/styles'
 
 const useStyles = makeStyles((theme: Theme) => ({
   roboto: {
-    fontFamily: 'Roboto, sans-serif',
-    fontSize: '1.25rem'
+    fontFamily: 'gill-sans-roman',
+    fontSize: '1.4rem'
   },
   contrastButton: {
     color: theme.palette.primary.contrastText,
