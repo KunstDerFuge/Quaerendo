@@ -60,7 +60,9 @@ const useStyles = makeStyles(theme => ({
   },
   listItem: {
     paddingTop: theme.spacing(2),
-    paddingBottom: theme.spacing(2)
+    paddingBottom: theme.spacing(2),
+    fontFamily: 'gill-sans-roman',
+    fontSize: '1.1em'
   },
   mobileListItem: {
     justifyContent: 'center',
@@ -103,7 +105,7 @@ const NavigationItem: React.FC<NavigationItemProps> = (props) => {
             <Badge color='primary' variant='dot'
                    invisible={!props.hasBadge}
                    className={classes.badge}>
-              <ListItemText primary={props.text} />
+              <ListItemText disableTypography primary={props.text} />
             </Badge>
           </>
       }
