@@ -30,13 +30,22 @@ const MainTheme = createMuiTheme({
     body1: {
       fontFamily: 'quadraat',
       fontSize: '1.1rem',
+      color: '#4D4D4D',
       fontVariantNumeric: 'lining-nums',
       textRendering: 'optimizeLegibility'
     },
     body2: {
       fontFamily: 'gill-sans-roman',
       fontSize: '1.1rem',
+      color: '#5D5D5D',
       textRendering: 'optimizeLegibility'
+    },
+    subtitle1: {
+      color: '#6D6D6D'
+    },
+    button: {
+      fontFamily: 'gill-sans-roman',
+      fontSize: '0.9rem'
     }
   }
 })
