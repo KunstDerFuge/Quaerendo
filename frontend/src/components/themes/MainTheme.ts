@@ -27,6 +27,10 @@ const MainTheme = createMuiTheme({
       fontSize: '1.35rem',
       fontVariantNumeric: 'lining-nums'
     },
+    overline: {
+      fontSize: '0.8rem',
+      fontWeight: 600
+    },
     body1: {
       fontFamily: 'quadraat',
       fontSize: '1.1rem',
