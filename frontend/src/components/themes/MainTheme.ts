@@ -11,17 +11,21 @@ const MainTheme = createMuiTheme({
   },
   typography: {
     h4: {
-      fontFamily: 'garamond-premier-pro',
-      letterSpacing: '-0.5px'
+      fontFamily: 'quadraat',
+      letterSpacing: 'unset'
     },
     h5: {
-      fontFamily: 'garamond-premier-pro',
-      fontSize: '1.75rem',
-      letterSpacing: '-0.3px'
+      fontFamily: 'quadraat',
+      fontSize: '1.75rem'
     },
     h6: {
-      fontFamily: 'garamond-premier-pro',
+      fontFamily: 'quadraat',
       fontSize: '1.5rem'
+    },
+    body1: {
+      fontFamily: 'quadraat',
+      fontSize: '1.1rem',
+      textRendering: 'optimizeLegibility'
     }
   }
 })
