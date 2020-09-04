@@ -12,15 +12,16 @@ const MainTheme = createMuiTheme({
   typography: {
     h4: {
       fontFamily: 'quadraat',
+      fontSize: '2rem',
       letterSpacing: 'unset'
     },
     h5: {
       fontFamily: 'quadraat',
-      fontSize: '1.75rem'
+      fontSize: '1.6rem'
     },
     h6: {
       fontFamily: 'quadraat',
-      fontSize: '1.5rem'
+      fontSize: '1.35rem'
     },
     body1: {
       fontFamily: 'quadraat',
