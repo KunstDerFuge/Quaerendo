@@ -40,7 +40,7 @@ const MainTheme = createMuiTheme({
       textRendering: 'optimizeLegibility'
     },
     body2: {
-      fontFamily: 'gill-sans-roman',
+      fontFamily: 'quadraat',
       fontSize: '1.1rem',
       color: '#5D5D5D',
       textRendering: 'optimizeLegibility'
