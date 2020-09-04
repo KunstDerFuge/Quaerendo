@@ -206,8 +206,8 @@ const EvidencePanel: React.FC<EvidencePanelProps> = (props) => {
             </Grid>
             <Grid item container spacing={2} xs={12}>
               <Grid item container direction='column' xs={6}>
-                <Typography>
-                  <b>Supporting:</b>
+                <Typography variant='overline'>
+                  Supporting
                 </Typography>
                 <Grid item>
                   {
@@ -223,8 +223,8 @@ const EvidencePanel: React.FC<EvidencePanelProps> = (props) => {
                 </Grid>
               </Grid>
               <Grid item container direction='column' xs={6}>
-                <Typography>
-                  <b>Disputing:</b>
+                <Typography variant='overline'>
+                  Disputing
                 </Typography>
                 <Grid item>
                   {
