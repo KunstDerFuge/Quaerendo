@@ -200,7 +200,7 @@ const EvidencePanel: React.FC<EvidencePanelProps> = (props) => {
         <ExpansionPanelDetails>
           <Grid container spacing={2}>
             <Grid item>
-              <Typography variant='body1'>
+              <Typography variant='body1' gutterBottom>
                 {evidenceSummary}
               </Typography>
             </Grid>
