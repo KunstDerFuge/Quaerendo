@@ -33,7 +33,7 @@ const MainTheme = createMuiTheme({
     },
     h5: {
       fontFamily: 'gill-sans-roman',
-      fontSize: '1rem',
+      fontSize: '1.1rem',
     },
     overline: {
       fontSize: '0.8rem',
