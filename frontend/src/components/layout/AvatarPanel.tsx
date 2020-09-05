@@ -205,7 +205,7 @@ const AvatarPanel: React.FC<{}> = () => {
                         user.first_name + ' ' + user.last_name
                       }
                     </Typography>
-                    <Typography variant='body2' color='textSecondary'>
+                    <Typography variant='subtitle1' color='textSecondary'>
                       {
                         user &&
                         user.username
