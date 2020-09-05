@@ -33,7 +33,9 @@ const ClaimPreview: React.FC<ClaimPreviewProps> = (props: ClaimPreviewProps) => 
                 <Typography variant='subtitle1'>
                   {
                     claim.claimants.length > 0 ?
-                      <AuthorsLinksList authors={claim.claimants} />
+                      <>
+                        ― <AuthorsLinksList authors={claim.claimants} />
+                      </>
                       :
                       'Claimant unknown'
                   }
