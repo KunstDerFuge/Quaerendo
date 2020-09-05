@@ -28,7 +28,7 @@ const ClaimPreview: React.FC<ClaimPreviewProps> = (props: ClaimPreviewProps) => 
             <Grid container direction='column' spacing={1}>
               <Grid item>
                 <Typography variant='h5'>
-                  {claim.claim_text}
+                  {'“' + claim.claim_text + '”'}
                 </Typography>
                 <Typography variant='subtitle1'>
                   {
