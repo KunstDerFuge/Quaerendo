@@ -7,6 +7,7 @@ const ClaimList: React.FC<{}> = () => {
   const {data} = useGet({
     path: '/api/claims/'
   })
+  document.title = 'Quaerendo - Democratized Fact-Checking for the 21st Century'
   return (
     <>
       {
