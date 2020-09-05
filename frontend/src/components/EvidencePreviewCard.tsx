@@ -27,7 +27,7 @@ const EvidencePreviewCard: React.FC<EvidenceProps> = (props) => {
         <CardContent>
           <Grid container direction='column' spacing={1}>
             <Grid item>
-              <Typography variant='h6'>
+              <Typography variant='h3'>
                 {
                   props.evidence.source_of_evidence.title !== '' ?
                     props.evidence.source_of_evidence.title

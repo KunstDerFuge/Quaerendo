@@ -11,18 +11,18 @@ const MainTheme = createMuiTheme({
   },
   typography: {
     fontFamily: 'gill-sans-roman',
-    h4: {
+    h1: {
       fontFamily: 'quadraat',
       fontSize: '1.75rem',
       letterSpacing: 'unset',
       fontVariantNumeric: 'lining-nums'
     },
-    h5: {
+    h2: {
       fontFamily: 'quadraat',
       fontSize: '1.5rem',
       fontVariantNumeric: 'lining-nums'
     },
-    h6: {
+    h3: {
       fontFamily: 'quadraat',
       fontSize: '1.35rem',
       fontVariantNumeric: 'lining-nums'

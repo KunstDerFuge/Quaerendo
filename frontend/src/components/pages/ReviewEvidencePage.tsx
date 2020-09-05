@@ -104,12 +104,12 @@ const ReviewEvidencePage: React.FC<ReviewEvidencePageProps> = (props) => {
             <ExpansionPanelSummary
               expandIcon={<ExpandMoreIcon />}
             >
-              <Typography variant='h5'>Claim</Typography>
+              <Typography variant='h2'>Claim</Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
               <Grid container direction='column'>
                 <Grid item>
-                  <Typography variant='h5'>
+                  <Typography variant='h2'>
                     {
                       loading ?
                         <Skeleton />
@@ -137,7 +137,7 @@ const ReviewEvidencePage: React.FC<ReviewEvidencePageProps> = (props) => {
             <ExpansionPanelSummary
               expandIcon={<ExpandMoreIcon />}
             >
-              <Typography variant='h5'>Source</Typography>
+              <Typography variant='h2'>Source</Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
               <SourceInfo source={!reviewInfo ? undefined : reviewInfo.evidence.source_of_evidence}

@@ -18,7 +18,7 @@ const QuaerendoLogo: React.FC<{}> = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
   return (
-    <Typography color='primary' variant='h4' className={classes.logo}>
+    <Typography color='primary' variant='h1' className={classes.logo}>
       {
         isMobile ?
           'Q'

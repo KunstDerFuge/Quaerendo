@@ -84,7 +84,7 @@ const ClaimDetails: React.FC<ClaimDetailsProps> = (props) => {
         <CardContent>
           <Grid container direction='column' spacing={2}>
             <Grid item>
-              <Typography variant='h4'>
+              <Typography variant='h1'>
                 {
                   loading ?
                     <Skeleton />
@@ -140,7 +140,7 @@ const ClaimDetails: React.FC<ClaimDetailsProps> = (props) => {
               <ExpansionPanel expanded={showSource} onChange={() => setShowSource(!showSource)}>
                 <ExpansionPanelSummary
                   expandIcon={<ExpandMoreIcon />}>
-                  <Typography variant='h5'>Source</Typography>
+                  <Typography variant='h2'>Source</Typography>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
                   {
@@ -195,7 +195,7 @@ const EvidencePanel: React.FC<EvidencePanelProps> = (props) => {
       <ExpansionPanel expanded={showEvidence} onChange={() => setShowEvidence(!showEvidence)}>
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}>
-          <Typography variant='h5'>Evidence</Typography>
+          <Typography variant='h2'>Evidence</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
           <Grid container spacing={2}>
@@ -248,7 +248,7 @@ const EvidencePanel: React.FC<EvidencePanelProps> = (props) => {
               <ExpansionPanelSummary
                 expandIcon={<ExpandMoreIcon />}
               >
-                <Typography variant='h6'>Other Evidence</Typography>
+                <Typography variant='h3'>Other Evidence</Typography>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
                 <Grid container spacing={1}>

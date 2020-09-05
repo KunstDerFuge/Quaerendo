@@ -30,7 +30,7 @@ const CardPage: React.FC<CardPageProps> = (props) => {
               {
                 props.title &&
                 <Grid item>
-                  <Typography variant='h5' gutterBottom>{props.title}</Typography>
+                  <Typography variant='h2' gutterBottom>{props.title}</Typography>
                 </Grid>
               }
               {props.children}

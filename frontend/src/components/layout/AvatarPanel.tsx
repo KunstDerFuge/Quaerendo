@@ -138,7 +138,7 @@ const AvatarPanel: React.FC<{}> = () => {
                 <form onSubmit={login} className={classes.loginForm}>
                   <Grid container spacing={1} direction='column' className={classes.loginFormGrid}>
                     <Grid item>
-                      <Typography variant='h5'>
+                      <Typography variant='h2'>
                         Log in
                       </Typography>
                     </Grid>

@@ -33,48 +33,48 @@ export function HeaderAppBar() {
         <Switch>
           <Route path='/claim/'>
             <BackButton />
-            <Typography variant='h6' className={classes.roboto}>
+            <Typography variant='h3' className={classes.roboto}>
               Claim
             </Typography>
           </Route>
           <Route path='/evidence/'>
             <BackButton />
-            <Typography variant='h6' className={classes.roboto}>
+            <Typography variant='h3' className={classes.roboto}>
               Evidence
             </Typography>
           </Route>
           <Route path='/submit/claim'>
             <BackButton />
-            <Typography variant='h6' className={classes.roboto}>
+            <Typography variant='h3' className={classes.roboto}>
               Submit Claim
             </Typography>
           </Route>
           <Route path='/submit/evidence/'>
             <BackButton />
-            <Typography variant='h6' className={classes.roboto}>
+            <Typography variant='h3' className={classes.roboto}>
               Submit Evidence
             </Typography>
           </Route>
           <Route path='/review'>
             <BackButton />
-            <Typography variant='h6' className={classes.roboto}>
+            <Typography variant='h3' className={classes.roboto}>
               Review Evidence
             </Typography>
           </Route>
           <Route path='/register'>
             <BackButton />
-            <Typography variant='h6' className={classes.roboto}>
+            <Typography variant='h3' className={classes.roboto}>
               Register an Account
             </Typography>
           </Route>
           <Route path='/login'>
             <BackButton />
-            <Typography variant='h6' className={classes.roboto}>
+            <Typography variant='h3' className={classes.roboto}>
               Log in
             </Typography>
           </Route>
           <Route path='/'>
-            <Typography variant='h6' className={classes.roboto}>
+            <Typography variant='h3' className={classes.roboto}>
               Claims
             </Typography>
           </Route>

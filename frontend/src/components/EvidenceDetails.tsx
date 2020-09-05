@@ -62,7 +62,7 @@ const EvidenceDetails: React.FC<EvidenceDetailProps> = (props) => {
     <>
       <Card className={classes.card}>
         <CardContent>
-          <Typography variant='h4' gutterBottom>
+          <Typography variant='h1' gutterBottom>
             {
               loading ?
                 <Skeleton />
@@ -91,7 +91,7 @@ const EvidenceDetails: React.FC<EvidenceDetailProps> = (props) => {
           <ExpansionPanelSummary
             expandIcon={<ExpandMoreIcon />}
           >
-            <Typography variant='h5'>Source</Typography>
+            <Typography variant='h2'>Source</Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <SourceInfo source={loading ? undefined : evidence.source_of_evidence} loading={!evidence} />
@@ -103,7 +103,7 @@ const EvidenceDetails: React.FC<EvidenceDetailProps> = (props) => {
           <ExpansionPanelSummary
             expandIcon={<ExpandMoreIcon />}
           >
-            <Typography variant='h5'>Reviews</Typography>
+            <Typography variant='h2'>Reviews</Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <Typography variant='body1' paragraph>

@@ -28,7 +28,7 @@ const SourceInfo: React.FC<SourceDetailsProps> = (props) => {
   return (
     <Grid container direction='column' spacing={2}>
       <Grid item>
-        <Typography variant='h5'>
+        <Typography variant='h2'>
           {
             props.loading ?
               <Skeleton />
