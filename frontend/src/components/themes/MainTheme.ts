@@ -13,13 +13,13 @@ const MainTheme = createMuiTheme({
     fontFamily: 'gill-sans-roman',
     h4: {
       fontFamily: 'quadraat',
-      fontSize: '2rem',
+      fontSize: '1.75rem',
       letterSpacing: 'unset',
       fontVariantNumeric: 'lining-nums'
     },
     h5: {
       fontFamily: 'quadraat',
-      fontSize: '1.6rem',
+      fontSize: '1.5rem',
       fontVariantNumeric: 'lining-nums'
     },
     h6: {
