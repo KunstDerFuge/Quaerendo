@@ -27,6 +27,14 @@ const MainTheme = createMuiTheme({
       fontSize: '1.35rem',
       fontVariantNumeric: 'lining-nums'
     },
+    h4: {
+      fontFamily: 'gill-sans-roman',
+      fontSize: '1.25rem',
+    },
+    h5: {
+      fontFamily: 'gill-sans-roman',
+      fontSize: '1rem',
+    },
     overline: {
       fontSize: '0.8rem',
       fontWeight: 600,
