@@ -71,6 +71,11 @@ const useStyles = makeStyles(theme => ({
   },
   mobileCenteredIcon: {
     justifyContent: 'center'
+  },
+  logoContainer: {
+    minHeight: '46px',
+    display: 'flex',
+    flexDirection: 'column'
   }
 }))
 
@@ -148,7 +153,9 @@ const NavigationDrawer: React.FC<{}> = () => {
       }}
     >
       <div className={classes.mainNavigationContent}>
-        <QuaerendoLogo />
+        <div className={classes.logoContainer}>
+          <QuaerendoLogo />
+        </div>
         <Divider />
         <List>
           <NavigationItem
