@@ -75,7 +75,7 @@ const useStyles = makeStyles(theme => ({
   logoContainer: {
     minHeight: '46px',
     display: 'flex',
-    flexDirection: 'column'
+    alignSelf: 'center'
   }
 }))
 

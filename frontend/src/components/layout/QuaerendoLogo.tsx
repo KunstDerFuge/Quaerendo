@@ -8,7 +8,8 @@ const useStyles = makeStyles(theme => ({
     margin: '3px',
     display: 'flex',
     fontVariantLigatures: 'contextual',
-    WebkitFontVariantLigatures: 'contextual'
+    WebkitFontVariantLigatures: 'contextual',
+    fontFamily: 'garamond-premier-pro'
   }
 }))
 
