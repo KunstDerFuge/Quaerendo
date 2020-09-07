@@ -16,6 +16,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { RestfulProvider } from 'restful-react'
 import { useAuth } from './utilities/auth'
 import ReviewEvidencePage from './pages/ReviewEvidencePage'
+import LandingPage from './pages/LandingPage'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -27,7 +28,7 @@ const useStyles = makeStyles(theme => ({
     width: '100%'
   },
   content: {
-    flex: 1,
+    flex: 1
   },
   mainWindow: {
     flex: 1,
@@ -51,36 +52,44 @@ const AppContent: React.FC<{}> = () => {
       // @ts-ignore
       requestOptions={authToken ? {headers: {Authorization: 'TOKEN ' + authToken}} : {}}>
       <Router>
-        <div className={classes.root}>
-          <NavigationDrawer />
-          <Grid container direction='column' alignContent='space-between' className={classes.mainWindow}>
-            <HeaderAppBar />
-            <Grid item className={classes.content}>
-              <Switch>
-                <Route path='/claim/:id'
-                       component={(routerProps: any) => <ClaimDetails id={routerProps.match.params.id} />} />
-                <Route path='/evidence/:id'
-                       component={(routerProps: any) => <EvidenceDetails id={routerProps.match.params.id} />} />
-                <Route path='/submit/claim'
-                       component={SubmitClaim} />
-                <Route path='/submit/evidence/for/:id'
-                       component={(routerProps: any) => <SubmitEvidence id={routerProps.match.params.id} />} />
-                <Route path='/review/:id'
-                       component={(routerProps: any) => <ReviewEvidencePage id={routerProps.match.params.id} />} />
-                <Route path='/review'
-                       component={ReviewInvitationPage} />
-                <Route path='/register'
-                       component={RegistrationPage} />
-                <Route path='/login'
-                       component={LoginPage} />
-                <Route path='/'>
-                  <ClaimList />
-                </Route>
-              </Switch>
-            </Grid>
-            <Footer />
-          </Grid>
-        </div>
+        <Switch>
+          {
+            !authToken &&
+            <Route exact path='/' component={LandingPage} />
+          }
+          <Route>
+            <div className={classes.root}>
+              <NavigationDrawer />
+              <Grid container direction='column' alignContent='space-between' className={classes.mainWindow}>
+                <HeaderAppBar />
+                <Grid item className={classes.content}>
+                  <Switch>
+                    <Route path='/claim/:id'
+                           component={(routerProps: any) => <ClaimDetails id={routerProps.match.params.id} />} />
+                    <Route path='/evidence/:id'
+                           component={(routerProps: any) => <EvidenceDetails id={routerProps.match.params.id} />} />
+                    <Route path='/submit/claim'
+                           component={SubmitClaim} />
+                    <Route path='/submit/evidence/for/:id'
+                           component={(routerProps: any) => <SubmitEvidence id={routerProps.match.params.id} />} />
+                    <Route path='/review/:id'
+                           component={(routerProps: any) => <ReviewEvidencePage id={routerProps.match.params.id} />} />
+                    <Route path='/review'
+                           component={ReviewInvitationPage} />
+                    <Route path='/register'
+                           component={RegistrationPage} />
+                    <Route path='/login'
+                           component={LoginPage} />
+                    <Route path='/'>
+                      <ClaimList />
+                    </Route>
+                  </Switch>
+                </Grid>
+                <Footer />
+              </Grid>
+            </div>
+          </Route>
+        </Switch>
       </Router>
     </RestfulProvider>
   )
