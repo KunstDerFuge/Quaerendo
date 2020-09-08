@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   hero: {
     minHeight: '80vh',
     display: 'flex',
-    alignItems: 'end',
+    alignItems: 'flex-end',
     background: 'url("/static/frontend/misinfo_blurred-min.png") repeat-y',
     backgroundSize: '100%',
     width: '100%',
