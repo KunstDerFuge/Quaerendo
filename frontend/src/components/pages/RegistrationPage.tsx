@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { FormEvent } from 'react'
-import { Button, CardActions, Grid, TextField, Theme, Typography } from '@material-ui/core'
+import { Button, CardActions, Grid, TextField, Theme, Typography, useMediaQuery, useTheme } from '@material-ui/core'
 import CardPage from '../layout/CardPage'
 import CardFormField from '../layout/CardFormField'
 import { useMutate } from 'restful-react'
@@ -45,6 +45,8 @@ const RegistrationPage: React.FC<{}> = () => {
 
   // @ts-ignore
   const {setAuthToken, authToken} = useAuth()
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('xs'))
 
   const submitForm = (event: FormEvent) => {
     event.preventDefault()
@@ -80,7 +82,7 @@ const RegistrationPage: React.FC<{}> = () => {
     <Grid container className={classes.root}>
       <Grid item>
         <form>
-          <CardPage title='Register' actions={cardActions} width='30em'>
+          <CardPage title='Register' actions={cardActions} width={isMobile ? '100%' : '30em'}>
             <CardFormField fieldName='Username' required={true}>
               <TextField fullWidth label='Username' variant='outlined' value={username}
                          onChange={e => setUsername(e.target.value)} error={formErrors.hasOwnProperty('username')}
