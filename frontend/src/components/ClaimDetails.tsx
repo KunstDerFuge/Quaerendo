@@ -129,7 +129,19 @@ const ClaimDetails: React.FC<ClaimDetailsProps> = (props) => {
                 }
               </Typography>
             </Grid>
-
+            <Grid item>
+              <Typography variant='subtitle2'>
+                {
+                  loading ?
+                    <Skeleton />
+                    :
+                    claim!.submitted_by.first_name ?
+                      'Claim submitted by ' + claim!.submitted_by.first_name + ' ' + claim!.submitted_by.last_name
+                      :
+                      'Claim submitted by ' + claim!.submitted_by.username
+                }
+              </Typography>
+            </Grid>
           </Grid>
         </CardContent>
       </Card>
