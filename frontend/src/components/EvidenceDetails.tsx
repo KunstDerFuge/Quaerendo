@@ -24,7 +24,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     margin: theme.spacing(2)
   },
   description: {
-    marginTop: theme.spacing(1)
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1)
   },
   link: {
     color: theme.palette.primary.main,
@@ -82,6 +83,17 @@ const EvidenceDetails: React.FC<EvidenceDetailProps> = (props) => {
                   evidence.description
                   :
                   'No description has been provided for this piece of evidence.'
+            }
+          </Typography>
+          <Typography variant='subtitle2'>
+            {
+              loading ?
+                <Skeleton />
+                :
+                evidence!.submitted_by.first_name ?
+                  'Evidence submitted by ' + evidence!.submitted_by.first_name + ' ' + evidence!.submitted_by.last_name
+                  :
+                  'Evidence submitted by ' + evidence!.submitted_by.username
             }
           </Typography>
         </CardContent>
