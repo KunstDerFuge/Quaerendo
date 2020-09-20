@@ -96,11 +96,12 @@ class EvidenceSerializer(serializers.ModelSerializer):
     community_consensus_relationship = serializers.SerializerMethodField()
     num_expert_reviews = serializers.SerializerMethodField()
     num_community_reviews = serializers.SerializerMethodField()
+    submitted_by = UserSerializer(read_only=True)
 
     class Meta:
         model = Evidence
         fields = ['id', 'source_of_evidence', 'description', 'expert_consensus_relationship', 'num_expert_reviews',
-                  'community_consensus_relationship', 'num_community_reviews']
+                  'community_consensus_relationship', 'num_community_reviews', 'submitted_by']
 
     @extend_schema_field(serializers.ChoiceField(choices=EvidenceRelationship.choices))
     def get_expert_consensus_relationship(self, obj: Evidence) -> EvidenceRelationship:
