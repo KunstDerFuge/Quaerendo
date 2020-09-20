@@ -53,6 +53,7 @@ export interface Evidence {
   num_expert_reviews: number;
   community_consensus_relationship: EvidenceRelationship;
   num_community_reviews: number;
+  submitted_by: User;
 }
 
 export interface EvidenceAndClaimForReview {
@@ -140,6 +141,7 @@ export interface PatchedEvidence {
   num_expert_reviews?: number;
   community_consensus_relationship?: EvidenceRelationship;
   num_community_reviews?: number;
+  submitted_by?: User;
 }
 
 export interface PatchedEvidenceReview {
