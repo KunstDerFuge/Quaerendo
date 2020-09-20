@@ -4,6 +4,7 @@ from rest_framework.relations import PrimaryKeyRelatedField
 
 from api.models import Entity, Source, Claim, Evidence, EvidenceReview, Topic, EvidenceRelationship, TruthJudgement, \
     ReviewInvitation
+from users.serializers import UserSerializer
 
 
 class EntitySerializer(serializers.ModelSerializer):
@@ -48,11 +49,12 @@ class ClaimSerializer(serializers.ModelSerializer):
     claimants = EntitySerializer(many=True, read_only=True)
     expert_truth_consensus = serializers.SerializerMethodField(read_only=True)
     community_truth_consensus = serializers.SerializerMethodField(read_only=True)
+    submitted_by = UserSerializer(read_only=True)
 
     class Meta:
         model = Claim
         fields = ['id', 'claim_text', 'description', 'topics', 'source_of_claim', 'claimants', 'expert_truth_consensus',
-                  'community_truth_consensus']
+                  'community_truth_consensus', 'submitted_by']
 
     @extend_schema_field(serializers.ChoiceField(choices=TruthJudgement.choices) or None)
     def get_expert_truth_consensus(self, obj: Claim) -> TruthJudgement or None:
@@ -184,11 +186,12 @@ class ClaimWithEvidenceSerializer(serializers.ModelSerializer):
     related_evidence = EvidenceSerializer(many=True, read_only=True)
     expert_truth_consensus = serializers.SerializerMethodField(read_only=True)
     community_truth_consensus = serializers.SerializerMethodField(read_only=True)
+    submitted_by = UserSerializer(read_only=True)
 
     class Meta:
         model = Claim
         fields = ['id', 'claim_text', 'description', 'topics', 'source_of_claim', 'claimants', 'related_evidence',
-                  'expert_truth_consensus', 'community_truth_consensus']
+                  'expert_truth_consensus', 'community_truth_consensus', 'submitted_by']
 
     @extend_schema_field(serializers.ChoiceField(choices=TruthJudgement.choices) or None)
     def get_expert_truth_consensus(self, obj: Claim) -> TruthJudgement or None:
