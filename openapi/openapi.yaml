@@ -1229,6 +1229,7 @@ components:
       - expert_truth_consensus
       - id
       - source_of_claim
+      - submitted_by
       - topics
       type: object
       properties:
@@ -1262,6 +1263,10 @@ components:
           readOnly: true
           allOf:
           - $ref: '#/components/schemas/TruthJudgement'
+        submitted_by:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/User'
     ClaimForReview:
       required:
       - claim_text
@@ -1302,6 +1307,7 @@ components:
       - id
       - related_evidence
       - source_of_claim
+      - submitted_by
       - topics
       type: object
       properties:
@@ -1340,6 +1346,10 @@ components:
           readOnly: true
           allOf:
           - $ref: '#/components/schemas/TruthJudgement'
+        submitted_by:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/User'
     Entity:
       required:
       - id
@@ -1560,6 +1570,10 @@ components:
           readOnly: true
           allOf:
           - $ref: '#/components/schemas/TruthJudgement'
+        submitted_by:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/User'
     PatchedEntity:
       type: object
       properties:
