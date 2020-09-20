@@ -56,6 +56,9 @@ const MainTheme = createMuiTheme({
     subtitle1: {
       color: '#6D6D6D'
     },
+    subtitle2: {
+      color: '#6D6D6D'
+    },
     button: {
       fontFamily: 'gill-sans-roman',
       fontSize: '0.9rem',
