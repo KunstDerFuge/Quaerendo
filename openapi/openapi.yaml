@@ -1373,6 +1373,7 @@ components:
       - num_community_reviews
       - num_expert_reviews
       - source_of_evidence
+      - submitted_by
       type: object
       properties:
         id:
@@ -1398,6 +1399,10 @@ components:
         num_community_reviews:
           type: integer
           readOnly: true
+        submitted_by:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/User'
     EvidenceAndClaimForReview:
       required:
       - claim
@@ -1612,6 +1617,10 @@ components:
         num_community_reviews:
           type: integer
           readOnly: true
+        submitted_by:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/User'
     PatchedEvidenceReview:
       type: object
       properties:
