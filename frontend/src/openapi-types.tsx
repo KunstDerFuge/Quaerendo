@@ -14,6 +14,7 @@ export interface Claim {
   claimants: Entity[];
   expert_truth_consensus: TruthJudgement;
   community_truth_consensus: TruthJudgement;
+  submitted_by: User;
 }
 
 export interface ClaimForReview {
@@ -35,6 +36,7 @@ export interface ClaimWithEvidence {
   related_evidence: Evidence[];
   expert_truth_consensus: TruthJudgement;
   community_truth_consensus: TruthJudgement;
+  submitted_by: User;
 }
 
 export interface Entity {
@@ -121,6 +123,7 @@ export interface PatchedClaimWithEvidence {
   related_evidence?: Evidence[];
   expert_truth_consensus?: TruthJudgement;
   community_truth_consensus?: TruthJudgement;
+  submitted_by?: User;
 }
 
 export interface PatchedEntity {
