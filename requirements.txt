@@ -10,7 +10,7 @@ Django==3.0.7
 django-allauth==0.42.0
 django-cors-headers==3.3.0
 django-rest-auth==0.9.5
-djangorestframework==3.11.0
+djangorestframework==3.11.2
 drf-spectacular==0.9.7
 feedfinder2==0.0.4
 feedparser==5.2.1
